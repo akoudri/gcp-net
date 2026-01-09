@@ -1,5 +1,4 @@
 # Module 1 - Travaux Pratiques Réseau
-## Proposition de Labs pour illustrer les couches TCP/IP
 
 ---
 
@@ -36,12 +35,9 @@ Ces travaux pratiques permettront aux apprenants de :
 - Packet Tracer (compte Cisco Networking Academy gratuit)
 - Accès root/sudo pour certaines commandes
 
-### Durée totale estimée : 4-5 heures
-
 ---
 
 ## Lab 1.1 : Exploration des interfaces réseau (Couche 2-3)
-**Durée : 30 minutes**
 
 ### Objectifs
 - Identifier les interfaces réseau de la machine
@@ -110,7 +106,6 @@ Capture d'écran annotée montrant : interfaces, adresses MAC, adresses IP, masq
 ---
 
 ## Lab 1.2 : La table ARP et la résolution d'adresses (Couche 2)
-**Durée : 30 minutes**
 
 ### Objectifs
 - Comprendre le rôle du protocole ARP
@@ -187,7 +182,6 @@ Capture Wireshark montrant un échange ARP complet (requête + réponse) avec an
 ---
 
 ## Lab 1.3 : Analyse de trames Ethernet et paquets IP (Couches 2-3)
-**Durée : 45 minutes**
 
 ### Objectifs
 - Décortiquer une trame Ethernet complète
@@ -267,7 +261,6 @@ Tableau récapitulatif des champs d'une trame capturée avec valeurs et signific
 ---
 
 ## Lab 1.4 : Traceroute - Comprendre le chemin des paquets (Couche 3)
-**Durée : 30 minutes**
 
 ### Objectifs
 - Comprendre le fonctionnement de traceroute
@@ -344,7 +337,6 @@ Schéma du chemin réseau vers une destination avec les routeurs identifiés.
 ---
 
 ## Lab 1.5 : TCP vs UDP en pratique (Couche 4)
-**Durée : 45 minutes**
 
 ### Objectifs
 - Observer les différences entre TCP et UDP
@@ -444,7 +436,6 @@ Capture annotée montrant le 3-way handshake TCP complet avec explication de cha
 ---
 
 ## Lab 1.6 : DNS - La résolution de noms (Couche 7)
-**Durée : 45 minutes**
 
 ### Objectifs
 - Comprendre le fonctionnement du DNS
@@ -563,7 +554,6 @@ Tableau comparatif des temps de réponse de différents serveurs DNS + capture W
 ---
 
 ## Lab 1.7 : Simulation réseau avec Packet Tracer (Toutes couches)
-**Durée : 60 minutes**
 
 ### Objectifs
 - Construire une topologie réseau complète
@@ -691,7 +681,6 @@ Fichier Packet Tracer (.pkt) avec topologie fonctionnelle + captures d'écran du
 ---
 
 ## Lab 1.8 : Synthèse - Analyse d'une requête HTTP complète
-**Durée : 30 minutes**
 
 ### Objectifs
 - Consolider toutes les connaissances
