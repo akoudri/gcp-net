@@ -25,7 +25,7 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Labs proposés
 
 | Lab | Titre | Difficulté |
-|-----|-------|-------|------------|
+|-----|-------|------------|
 | 11.1 | Enjeux de l'observabilité réseau | ⭐ |
 | 11.2 | VPC Flow Logs - Activation et configuration | ⭐⭐ |
 | 11.3 | VPC Flow Logs - Analyse et requêtes | ⭐⭐ |

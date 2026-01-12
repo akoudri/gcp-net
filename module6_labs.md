@@ -26,7 +26,7 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Labs proposés
 
 | Lab | Titre | Difficulté |
-|-----|-------|-------|------------|
+|-----|-------|------------|
 | 6.1 | Zones privées - Configuration de base | ⭐ |
 | 6.2 | DNS interne automatique GCP | ⭐ |
 | 6.3 | Zones publiques et enregistrements | ⭐⭐ |

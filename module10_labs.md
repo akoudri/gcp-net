@@ -26,7 +26,7 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Labs proposés
 
 | Lab | Titre | Difficulté |
-|-----|-------|-------|------------|
+|-----|-------|------------|
 | 10.1 | Vue d'ensemble des Load Balancers GCP | ⭐ |
 | 10.2 | Global External Application LB - Configuration complète | ⭐⭐ |
 | 10.3 | URL Maps et routage avancé | ⭐⭐ |

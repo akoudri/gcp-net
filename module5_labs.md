@@ -23,7 +23,7 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Labs proposés
 
 | Lab | Titre | Difficulté |
-|-----|-------|-------|------------|
+|-----|-------|------------|
 | 5.1 | Private Google Access - Configuration de base | ⭐ |
 | 5.2 | PGA - Configuration DNS avancée | ⭐⭐ |
 | 5.3 | Private Services Access - Cloud SQL | ⭐⭐ |

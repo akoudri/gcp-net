@@ -22,7 +22,7 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Labs proposés
 
 | Lab | Titre | Difficulté |
-|-----|-------|-------|------------|
+|-----|-------|------------|
 | 3.1 | Comprendre les routes système et la table de routage | ⭐ |
 | 3.2 | Routes statiques personnalisées et priorités | ⭐⭐ |
 | 3.3 | Routage via appliance avec tags réseau | ⭐⭐⭐ |

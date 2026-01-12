@@ -28,7 +28,7 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Labs proposés
 
 | Lab | Titre | Difficulté |
-|-----|-------|-------|------------|
+|-----|-------|------------|
 | 8.1 | IAM Réseau - Rôles et permissions | ⭐ |
 | 8.2 | Règles de pare-feu VPC - Fondamentaux | ⭐⭐ |
 | 8.3 | Tags réseau vs Service Accounts | ⭐⭐ |

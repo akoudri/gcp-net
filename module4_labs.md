@@ -27,7 +27,7 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Labs proposés
 
 | Lab | Titre | Difficulté | Prérequis |
-|-----|-------|-------|------------|-----------|
+|-----|-------|------------|-----------|
 | 4.1 | VPC Peering - Configuration de base | ⭐⭐ | 2 VPC |
 | 4.2 | VPC Peering - Options avancées et routes | ⭐⭐ | Lab 4.1 |
 | 4.3 | VPC Peering - Non-transitivité et solutions | ⭐⭐⭐ | Lab 4.1 |

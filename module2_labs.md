@@ -23,15 +23,16 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Labs proposés
 
 | Lab | Titre | Difficulté |
-|-----|-------|-------|------------|
+|-----|-------|------------|
 | 2.1 | Découverte du VPC default et ses risques | ⭐ |
 | 2.2 | Créer un VPC custom multi-régions | ⭐⭐ |
 | 2.3 | Planification et extension des sous-réseaux | ⭐⭐ |
 | 2.4 | VM avec interfaces réseau multiples | ⭐⭐⭐ |
 | 2.5 | Comparaison des Network Tiers | ⭐⭐ |
-| 2.6 | Mode de routage dynamique | 30 min | ⭐⭐ |
+| 2.6 | Mode de routage dynamique | ⭐⭐ |
 | 2.7 | Scénario complet : Architecture entreprise | ⭐⭐⭐ |
 | 2.8 | Troubleshooting VPC | ⭐⭐⭐ |
+
 
 ---
 

@@ -28,7 +28,7 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Labs proposés
 
 | Lab | Titre | Difficulté |
-|-----|-------|-------|------------|
+|-----|-------|------------|
 | 9.1 | Comprendre les attaques DDoS et les protections GCP | ⭐ |
 | 9.2 | Déployer un Application Load Balancer | ⭐⭐ |
 | 9.3 | Créer une politique Cloud Armor de base | ⭐⭐ |

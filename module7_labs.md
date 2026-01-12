@@ -32,7 +32,7 @@ Les labs VPN sont entièrement réalisables dans un environnement GCP standard.
 ### Labs proposés
 
 | Lab | Titre | Difficulté | Type |
-|-----|-------|-------|------------|------|
+|-----|-------|------------|------|
 | 7.1 | Cloud VPN HA - Configuration complète | ⭐⭐ | Pratique |
 | 7.2 | BGP avec Cloud Router | ⭐⭐ | Pratique |
 | 7.3 | VPN Actif/Actif vs Actif/Passif | ⭐⭐⭐ | Pratique |
