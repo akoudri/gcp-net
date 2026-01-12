@@ -24,27 +24,25 @@ Ces travaux pratiques permettront aux apprenants de :
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté |
+| Lab | Titre | Difficulté |
 |-----|-------|-------|------------|
-| 11.1 | Enjeux de l'observabilité réseau | 20 min | ⭐ |
-| 11.2 | VPC Flow Logs - Activation et configuration | 35 min | ⭐⭐ |
-| 11.3 | VPC Flow Logs - Analyse et requêtes | 40 min | ⭐⭐ |
-| 11.4 | VPC Flow Logs - Export vers BigQuery | 35 min | ⭐⭐ |
-| 11.5 | Firewall Rules Logging | 30 min | ⭐⭐ |
-| 11.6 | Packet Mirroring - Architecture et configuration | 45 min | ⭐⭐⭐ |
-| 11.7 | Cloud Monitoring - Métriques réseau | 35 min | ⭐⭐ |
-| 11.8 | Cloud Monitoring - Dashboards personnalisés | 35 min | ⭐⭐ |
-| 11.9 | Alerting - Configuration des alertes | 40 min | ⭐⭐ |
-| 11.10 | Network Intelligence Center | 40 min | ⭐⭐ |
-| 11.11 | Optimisation des coûts d'observabilité | 25 min | ⭐⭐ |
-| 11.12 | Scénario intégrateur - Observabilité complète | 50 min | ⭐⭐⭐ |
-
-**Durée totale estimée : ~7h10**
+| 11.1 | Enjeux de l'observabilité réseau | ⭐ |
+| 11.2 | VPC Flow Logs - Activation et configuration | ⭐⭐ |
+| 11.3 | VPC Flow Logs - Analyse et requêtes | ⭐⭐ |
+| 11.4 | VPC Flow Logs - Export vers BigQuery | ⭐⭐ |
+| 11.5 | Firewall Rules Logging | ⭐⭐ |
+| 11.6 | Packet Mirroring - Architecture et configuration | ⭐⭐⭐ |
+| 11.7 | Cloud Monitoring - Métriques réseau | ⭐⭐ |
+| 11.8 | Cloud Monitoring - Dashboards personnalisés | ⭐⭐ |
+| 11.9 | Alerting - Configuration des alertes | ⭐⭐ |
+| 11.10 | Network Intelligence Center | ⭐⭐ |
+| 11.11 | Optimisation des coûts d'observabilité | ⭐⭐ |
+| 11.12 | Scénario intégrateur - Observabilité complète | ⭐⭐⭐ |
 
 ---
 
 ## Lab 11.1 : Enjeux de l'observabilité réseau
-**Durée : 20 minutes | Difficulté : ⭐**
+**Difficulté : ⭐**
 
 ### Objectifs
 - Comprendre les enjeux de l'observabilité réseau
@@ -167,7 +165,7 @@ Documentation des enjeux et outils d'observabilité.
 ---
 
 ## Lab 11.2 : VPC Flow Logs - Activation et configuration
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Activer les VPC Flow Logs sur un sous-réseau
@@ -374,7 +372,7 @@ VPC Flow Logs activés et configurés avec les paramètres appropriés.
 ---
 
 ## Lab 11.3 : VPC Flow Logs - Analyse et requêtes
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre la structure des logs
@@ -550,7 +548,7 @@ Requêtes d'analyse des Flow Logs maîtrisées.
 ---
 
 ## Lab 11.4 : VPC Flow Logs - Export vers BigQuery
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer un sink vers BigQuery
@@ -694,7 +692,7 @@ Pipeline d'export vers BigQuery avec requêtes de sécurité.
 ---
 
 ## Lab 11.5 : Firewall Rules Logging
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Activer le logging sur les règles de pare-feu
@@ -844,7 +842,7 @@ Firewall Rules Logging configuré et analysé.
 ---
 
 ## Lab 11.6 : Packet Mirroring - Architecture et configuration
-**Durée : 45 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Comprendre l'architecture Packet Mirroring
@@ -1008,7 +1006,7 @@ Architecture Packet Mirroring fonctionnelle.
 ---
 
 ## Lab 11.7 : Cloud Monitoring - Métriques réseau
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Explorer les métriques réseau disponibles
@@ -1101,7 +1099,7 @@ Compréhension des métriques réseau GCP.
 ---
 
 ## Lab 11.8 : Cloud Monitoring - Dashboards personnalisés
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer un dashboard réseau personnalisé
@@ -1256,7 +1254,7 @@ Dashboard de monitoring réseau personnalisé.
 ---
 
 ## Lab 11.9 : Alerting - Configuration des alertes
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer des canaux de notification
@@ -1392,7 +1390,7 @@ Système d'alertes réseau configuré.
 ---
 
 ## Lab 11.10 : Network Intelligence Center
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Explorer Network Topology
@@ -1531,7 +1529,7 @@ Maîtrise de Network Intelligence Center.
 ---
 
 ## Lab 11.11 : Optimisation des coûts d'observabilité
-**Durée : 25 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre les sources de coûts
@@ -1624,7 +1622,7 @@ Configuration optimisée pour les coûts.
 ---
 
 ## Lab 11.12 : Scénario intégrateur - Observabilité complète
-**Durée : 50 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Déployer une solution d'observabilité complète

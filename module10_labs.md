@@ -25,27 +25,25 @@ Ces travaux pratiques permettront aux apprenants de :
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté |
+| Lab | Titre | Difficulté |
 |-----|-------|-------|------------|
-| 10.1 | Vue d'ensemble des Load Balancers GCP | 25 min | ⭐ |
-| 10.2 | Global External Application LB - Configuration complète | 45 min | ⭐⭐ |
-| 10.3 | URL Maps et routage avancé | 40 min | ⭐⭐ |
-| 10.4 | Gestion du trafic - Canary et Blue-Green | 45 min | ⭐⭐⭐ |
-| 10.5 | Session Affinity et persistance | 30 min | ⭐⭐ |
-| 10.6 | Internal Application Load Balancer | 40 min | ⭐⭐ |
-| 10.7 | Network Load Balancer (L4) | 35 min | ⭐⭐ |
-| 10.8 | Équilibrage hybride avec Hybrid NEG | 40 min | ⭐⭐⭐ |
-| 10.9 | Network Endpoint Groups (NEGs) | 35 min | ⭐⭐ |
-| 10.10 | Cloud CDN - Configuration et optimisation | 45 min | ⭐⭐ |
-| 10.11 | Cloud CDN - Signed URLs et contenu protégé | 35 min | ⭐⭐⭐ |
-| 10.12 | Scénario intégrateur - Architecture multi-tier | 50 min | ⭐⭐⭐ |
-
-**Durée totale estimée : ~7h45**
+| 10.1 | Vue d'ensemble des Load Balancers GCP | ⭐ |
+| 10.2 | Global External Application LB - Configuration complète | ⭐⭐ |
+| 10.3 | URL Maps et routage avancé | ⭐⭐ |
+| 10.4 | Gestion du trafic - Canary et Blue-Green | ⭐⭐⭐ |
+| 10.5 | Session Affinity et persistance | ⭐⭐ |
+| 10.6 | Internal Application Load Balancer | ⭐⭐ |
+| 10.7 | Network Load Balancer (L4) | ⭐⭐ |
+| 10.8 | Équilibrage hybride avec Hybrid NEG | ⭐⭐⭐ |
+| 10.9 | Network Endpoint Groups (NEGs) | ⭐⭐ |
+| 10.10 | Cloud CDN - Configuration et optimisation | ⭐⭐ |
+| 10.11 | Cloud CDN - Signed URLs et contenu protégé | ⭐⭐⭐ |
+| 10.12 | Scénario intégrateur - Architecture multi-tier | ⭐⭐⭐ |
 
 ---
 
 ## Lab 10.1 : Vue d'ensemble des Load Balancers GCP
-**Durée : 25 minutes | Difficulté : ⭐**
+**Difficulté : ⭐**
 
 ### Objectifs
 - Comprendre les différents types de Load Balancers
@@ -226,7 +224,7 @@ Documentation du choix de Load Balancer pour différents scénarios.
 ---
 
 ## Lab 10.2 : Global External Application LB - Configuration complète
-**Durée : 45 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer un Application Load Balancer global
@@ -529,7 +527,7 @@ Application Load Balancer global fonctionnel avec routage.
 ---
 
 ## Lab 10.3 : URL Maps et routage avancé
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Configurer le routage basé sur le host
@@ -679,7 +677,7 @@ URL Maps configurées avec routage avancé.
 ---
 
 ## Lab 10.4 : Gestion du trafic - Canary et Blue-Green
-**Durée : 45 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Implémenter un déploiement Canary avec traffic splitting
@@ -1005,7 +1003,7 @@ Déploiements Canary et Blue-Green fonctionnels.
 ---
 
 ## Lab 10.5 : Session Affinity et persistance
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre les types de session affinity
@@ -1103,7 +1101,7 @@ Configuration de session affinity fonctionnelle.
 ---
 
 ## Lab 10.6 : Internal Application Load Balancer
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Déployer un Internal Application LB
@@ -1296,7 +1294,7 @@ Internal Application Load Balancer fonctionnel.
 ---
 
 ## Lab 10.7 : Network Load Balancer (L4)
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Déployer un Network Load Balancer passthrough
@@ -1409,7 +1407,7 @@ Network Load Balancer passthrough fonctionnel.
 ---
 
 ## Lab 10.8 : Équilibrage hybride avec Hybrid NEG
-**Durée : 40 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Comprendre les Hybrid NEGs
@@ -1557,7 +1555,7 @@ Configuration Hybrid NEG documentée.
 ---
 
 ## Lab 10.9 : Network Endpoint Groups (NEGs)
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre les différents types de NEGs
@@ -1655,7 +1653,7 @@ NEGs de différents types configurés.
 ---
 
 ## Lab 10.10 : Cloud CDN - Configuration et optimisation
-**Durée : 45 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Activer Cloud CDN sur un backend
@@ -1801,7 +1799,7 @@ Cloud CDN configuré avec métriques de performance.
 ---
 
 ## Lab 10.11 : Cloud CDN - Signed URLs et contenu protégé
-**Durée : 35 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Créer des clés de signature pour Cloud CDN
@@ -1983,7 +1981,7 @@ Signed URLs fonctionnelles pour contenu protégé.
 ---
 
 ## Lab 10.12 : Scénario intégrateur - Architecture multi-tier
-**Durée : 50 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Déployer une architecture complète multi-tier

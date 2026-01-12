@@ -25,26 +25,24 @@ Ces travaux pratiques permettront aux apprenants de :
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté |
+| Lab | Titre | Difficulté |
 |-----|-------|-------|------------|
-| 6.1 | Zones privées - Configuration de base | 35 min | ⭐ |
-| 6.2 | DNS interne automatique GCP | 25 min | ⭐ |
-| 6.3 | Zones publiques et enregistrements | 40 min | ⭐⭐ |
-| 6.4 | Forwarding DNS vers on-premise | 45 min | ⭐⭐ |
-| 6.5 | Inbound Forwarding - Résolution depuis on-premise | 35 min | ⭐⭐ |
-| 6.6 | Peering DNS entre VPC | 35 min | ⭐⭐ |
-| 6.7 | Politiques DNS et Logging | 30 min | ⭐⭐ |
-| 6.8 | DNSSEC - Sécurisation du DNS | 30 min | ⭐⭐ |
-| 6.9 | Split-horizon DNS | 35 min | ⭐⭐⭐ |
-| 6.10 | Routing Policies - Routage intelligent | 40 min | ⭐⭐⭐ |
-| 6.11 | Scénario intégrateur - Architecture DNS hybride | 50 min | ⭐⭐⭐ |
-
-**Durée totale estimée : ~6h30**
+| 6.1 | Zones privées - Configuration de base | ⭐ |
+| 6.2 | DNS interne automatique GCP | ⭐ |
+| 6.3 | Zones publiques et enregistrements | ⭐⭐ |
+| 6.4 | Forwarding DNS vers on-premise | ⭐⭐ |
+| 6.5 | Inbound Forwarding - Résolution depuis on-premise | ⭐⭐ |
+| 6.6 | Peering DNS entre VPC | ⭐⭐ |
+| 6.7 | Politiques DNS et Logging | ⭐⭐ |
+| 6.8 | DNSSEC - Sécurisation du DNS | ⭐⭐ |
+| 6.9 | Split-horizon DNS | ⭐⭐⭐ |
+| 6.10 | Routing Policies - Routage intelligent | ⭐⭐⭐ |
+| 6.11 | Scénario intégrateur - Architecture DNS hybride | ⭐⭐⭐ |
 
 ---
 
 ## Lab 6.1 : Zones privées - Configuration de base
-**Durée : 35 minutes | Difficulté : ⭐**
+**Difficulté : ⭐**
 
 ### Objectifs
 - Créer une zone DNS privée
@@ -287,7 +285,7 @@ Zone DNS privée fonctionnelle avec tests de résolution réussis.
 ---
 
 ## Lab 6.2 : DNS interne automatique GCP
-**Durée : 25 minutes | Difficulté : ⭐**
+**Difficulté : ⭐**
 
 ### Objectifs
 - Comprendre le DNS interne automatique
@@ -384,7 +382,7 @@ Documentation du format DNS automatique utilisé dans votre projet.
 ---
 
 ## Lab 6.3 : Zones publiques et enregistrements
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer une zone DNS publique
@@ -565,7 +563,7 @@ Zone publique avec tous les types d'enregistrements courants.
 ---
 
 ## Lab 6.4 : Forwarding DNS vers on-premise
-**Durée : 45 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Configurer une zone de forwarding
@@ -737,7 +735,7 @@ Zone de forwarding fonctionnelle avec tests de résolution.
 ---
 
 ## Lab 6.5 : Inbound Forwarding - Résolution depuis on-premise
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Configurer l'inbound forwarding
@@ -859,7 +857,7 @@ Inbound forwarding configuré avec tests depuis le client simulé.
 ---
 
 ## Lab 6.6 : Peering DNS entre VPC
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre le peering DNS
@@ -1043,7 +1041,7 @@ Peering DNS fonctionnel entre VPC Hub et Spoke.
 ---
 
 ## Lab 6.7 : Politiques DNS et Logging
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer et gérer des politiques DNS
@@ -1168,7 +1166,7 @@ Politique DNS avec logging activé et exemples d'analyse des logs.
 ---
 
 ## Lab 6.8 : DNSSEC - Sécurisation du DNS
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre DNSSEC et son fonctionnement
@@ -1278,7 +1276,7 @@ Zone publique avec DNSSEC activé et DS record documenté.
 ---
 
 ## Lab 6.9 : Split-horizon DNS
-**Durée : 35 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Implémenter le split-horizon DNS
@@ -1450,7 +1448,7 @@ Configuration split-horizon fonctionnelle avec tests des deux vues.
 ---
 
 ## Lab 6.10 : Routing Policies - Routage intelligent
-**Durée : 40 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Configurer le routage géographique (Geolocation)
@@ -1612,7 +1610,7 @@ Configuration de routing policies avec documentation des cas d'usage.
 ---
 
 ## Lab 6.11 : Scénario intégrateur - Architecture DNS hybride
-**Durée : 50 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Combiner toutes les fonctionnalités Cloud DNS

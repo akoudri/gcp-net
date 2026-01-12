@@ -31,25 +31,23 @@ Les labs VPN sont entièrement réalisables dans un environnement GCP standard.
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté | Type |
+| Lab | Titre | Difficulté | Type |
 |-----|-------|-------|------------|------|
-| 7.1 | Cloud VPN HA - Configuration complète | 50 min | ⭐⭐ | Pratique |
-| 7.2 | BGP avec Cloud Router | 40 min | ⭐⭐ | Pratique |
-| 7.3 | VPN Actif/Actif vs Actif/Passif | 35 min | ⭐⭐⭐ | Pratique |
-| 7.4 | Failover et haute disponibilité VPN | 30 min | ⭐⭐ | Pratique |
-| 7.5 | Dedicated Interconnect - Concepts et simulation | 35 min | ⭐⭐ | Théorique |
-| 7.6 | Partner Interconnect - Concepts et simulation | 30 min | ⭐⭐ | Théorique |
-| 7.7 | Cross-Cloud Interconnect - Multi-cloud | 25 min | ⭐⭐ | Théorique |
-| 7.8 | Network Connectivity Center - Hub and Spoke | 40 min | ⭐⭐⭐ | Pratique |
-| 7.9 | Comparaison et choix de solutions | 25 min | ⭐⭐ | Analyse |
-| 7.10 | Scénario intégrateur - Architecture hybride multi-sites | 50 min | ⭐⭐⭐ | Pratique |
-
-**Durée totale estimée : ~6h**
+| 7.1 | Cloud VPN HA - Configuration complète | ⭐⭐ | Pratique |
+| 7.2 | BGP avec Cloud Router | ⭐⭐ | Pratique |
+| 7.3 | VPN Actif/Actif vs Actif/Passif | ⭐⭐⭐ | Pratique |
+| 7.4 | Failover et haute disponibilité VPN | ⭐⭐ | Pratique |
+| 7.5 | Dedicated Interconnect - Concepts et simulation | ⭐⭐ | Théorique |
+| 7.6 | Partner Interconnect - Concepts et simulation |⭐⭐ | Théorique |
+| 7.7 | Cross-Cloud Interconnect - Multi-cloud | ⭐⭐ | Théorique |
+| 7.8 | Network Connectivity Center - Hub and Spoke | ⭐⭐⭐ | Pratique |
+| 7.9 | Comparaison et choix de solutions | ⭐⭐ | Analyse |
+| 7.10 | Scénario intégrateur - Architecture hybride multi-sites | ⭐⭐⭐ | Pratique |
 
 ---
 
 ## Lab 7.1 : Cloud VPN HA - Configuration complète
-**Durée : 50 minutes | Difficulté : ⭐⭐ | Type : Pratique**
+**Difficulté : ⭐⭐ | Type : Pratique**
 
 ### Objectifs
 - Créer une passerelle HA VPN
@@ -409,7 +407,7 @@ HA VPN fonctionnel avec sessions BGP établies et connectivité validée.
 ---
 
 ## Lab 7.2 : BGP avec Cloud Router
-**Durée : 40 minutes | Difficulté : ⭐⭐ | Type : Pratique**
+**Difficulté : ⭐⭐ | Type : Pratique**
 
 ### Objectifs
 - Comprendre le fonctionnement de BGP dans Cloud Router
@@ -550,7 +548,7 @@ Documentation des routes BGP échangées et configuration personnalisée.
 ---
 
 ## Lab 7.3 : VPN Actif/Actif vs Actif/Passif
-**Durée : 35 minutes | Difficulté : ⭐⭐⭐ | Type : Pratique**
+**Difficulté : ⭐⭐⭐ | Type : Pratique**
 
 ### Objectifs
 - Configurer le mode Actif/Actif (ECMP)
@@ -717,7 +715,7 @@ Configuration fonctionnelle des deux modes avec documentation des différences.
 ---
 
 ## Lab 7.4 : Failover et haute disponibilité VPN
-**Durée : 30 minutes | Difficulté : ⭐⭐ | Type : Pratique**
+**Difficulté : ⭐⭐ | Type : Pratique**
 
 ### Objectifs
 - Simuler une panne de tunnel
@@ -840,7 +838,7 @@ Rapport de test de failover avec temps de convergence mesurés.
 ---
 
 ## Lab 7.5 : Dedicated Interconnect - Concepts et simulation
-**Durée : 35 minutes | Difficulté : ⭐⭐ | Type : Théorique**
+**Difficulté : ⭐⭐ | Type : Théorique**
 
 ### Objectifs
 - Comprendre l'architecture Dedicated Interconnect
@@ -1018,7 +1016,7 @@ Documentation du processus de provisioning Dedicated Interconnect.
 ---
 
 ## Lab 7.6 : Partner Interconnect - Concepts et simulation
-**Durée : 30 minutes | Difficulté : ⭐⭐ | Type : Théorique**
+**Difficulté : ⭐⭐ | Type : Théorique**
 
 ### Objectifs
 - Comprendre les avantages de Partner Interconnect
@@ -1151,7 +1149,7 @@ Comparaison documentée entre Partner et Dedicated Interconnect.
 ---
 
 ## Lab 7.7 : Cross-Cloud Interconnect - Multi-cloud
-**Durée : 25 minutes | Difficulté : ⭐⭐ | Type : Théorique**
+**Difficulté : ⭐⭐ | Type : Théorique**
 
 ### Objectifs
 - Comprendre Cross-Cloud Interconnect
@@ -1274,7 +1272,7 @@ Documentation des cas d'usage multi-cloud avec Cross-Cloud Interconnect.
 ---
 
 ## Lab 7.8 : Network Connectivity Center - Hub and Spoke
-**Durée : 40 minutes | Difficulté : ⭐⭐⭐ | Type : Pratique**
+**Difficulté : ⭐⭐⭐ | Type : Pratique**
 
 ### Objectifs
 - Créer un hub Network Connectivity Center
@@ -1460,7 +1458,7 @@ Hub NCC fonctionnel avec documentation de la connectivité transitive.
 ---
 
 ## Lab 7.9 : Comparaison et choix de solutions
-**Durée : 25 minutes | Difficulté : ⭐⭐ | Type : Analyse**
+**Difficulté : ⭐⭐ | Type : Analyse**
 
 ### Objectifs
 - Comparer toutes les solutions de connectivité
@@ -1587,7 +1585,7 @@ Document de recommandation personnalisé selon votre contexte.
 ---
 
 ## Lab 7.10 : Scénario intégrateur - Architecture hybride multi-sites
-**Durée : 50 minutes | Difficulté : ⭐⭐⭐ | Type : Pratique**
+**Difficulté : ⭐⭐⭐ | Type : Pratique**
 
 ### Objectifs
 - Déployer une architecture hybride complète

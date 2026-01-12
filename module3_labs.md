@@ -21,24 +21,22 @@ Ces travaux pratiques permettront aux apprenants de :
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté |
+| Lab | Titre | Difficulté |
 |-----|-------|-------|------------|
-| 3.1 | Comprendre les routes système et la table de routage | 25 min | ⭐ |
-| 3.2 | Routes statiques personnalisées et priorités | 45 min | ⭐⭐ |
-| 3.3 | Routage via appliance avec tags réseau | 45 min | ⭐⭐⭐ |
-| 3.4 | Cloud Router et routes dynamiques (BGP) | 40 min | ⭐⭐⭐ |
-| 3.5 | Cloud NAT - Configuration et monitoring | 45 min | ⭐⭐ |
-| 3.6 | Private Google Access | 30 min | ⭐⭐ |
-| 3.7 | Cloud DNS - Zones privées | 40 min | ⭐⭐ |
-| 3.8 | Cloud DNS - Zones publiques et forwarding | 45 min | ⭐⭐⭐ |
-| 3.9 | Scénario intégrateur : Architecture hybride complète | 60 min | ⭐⭐⭐ |
-
-**Durée totale estimée : ~6 heures**
+| 3.1 | Comprendre les routes système et la table de routage | ⭐ |
+| 3.2 | Routes statiques personnalisées et priorités | ⭐⭐ |
+| 3.3 | Routage via appliance avec tags réseau | ⭐⭐⭐ |
+| 3.4 | Cloud Router et routes dynamiques (BGP) | ⭐⭐⭐ |
+| 3.5 | Cloud NAT - Configuration et monitoring | ⭐⭐ |
+| 3.6 | Private Google Access | ⭐⭐ |
+| 3.7 | Cloud DNS - Zones privées | ⭐⭐ |
+| 3.8 | Cloud DNS - Zones publiques et forwarding | ⭐⭐⭐ |
+| 3.9 | Scénario intégrateur : Architecture hybride complète | ⭐⭐⭐ |
 
 ---
 
 ## Lab 3.1 : Comprendre les routes système et la table de routage
-**Durée : 25 minutes | Difficulté : ⭐**
+**Difficulté : ⭐**
 
 ### Objectifs
 - Explorer la table de routage d'un VPC
@@ -148,7 +146,7 @@ Tableau récapitulatif des routes du VPC avec leur type, destination et next-hop
 ---
 
 ## Lab 3.2 : Routes statiques personnalisées et priorités
-**Durée : 45 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer des routes statiques vers différents next-hop
@@ -307,7 +305,7 @@ Document expliquant le fonctionnement du longest prefix match et des priorités 
 ---
 
 ## Lab 3.3 : Routage via appliance avec tags réseau
-**Durée : 45 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Router sélectivement le trafic via une appliance
@@ -482,7 +480,7 @@ Captures tcpdump montrant le trafic transitant (ou non) par le proxy selon les t
 ---
 
 ## Lab 3.4 : Cloud Router et routes dynamiques (BGP)
-**Durée : 40 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Créer et configurer un Cloud Router
@@ -578,7 +576,7 @@ Document expliquant le rôle de Cloud Router et le fonctionnement de BGP dans GC
 ---
 
 ## Lab 3.5 : Cloud NAT - Configuration et monitoring
-**Durée : 45 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Configurer Cloud NAT pour l'accès Internet sortant
@@ -779,7 +777,7 @@ Capture d'écran des logs NAT et documentation de la configuration.
 ---
 
 ## Lab 3.6 : Private Google Access
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre la différence entre Cloud NAT et Private Google Access
@@ -884,7 +882,7 @@ Tableau comparatif avec résultats des tests avant/après PGA.
 ---
 
 ## Lab 3.7 : Cloud DNS - Zones privées
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer une zone DNS privée
@@ -1015,7 +1013,7 @@ Liste des enregistrements DNS créés et captures des tests de résolution.
 ---
 
 ## Lab 3.8 : Cloud DNS - Zones publiques et forwarding
-**Durée : 45 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Créer une zone DNS publique (simulation)
@@ -1120,7 +1118,7 @@ Document décrivant les différents types de zones et politiques DNS.
 ---
 
 ## Lab 3.9 : Scénario intégrateur - Architecture hybride complète
-**Durée : 60 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Combiner toutes les connaissances du module

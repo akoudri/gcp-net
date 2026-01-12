@@ -27,26 +27,24 @@ Ces travaux pratiques permettront aux apprenants de :
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté |
+| Lab | Titre | Difficulté |
 |-----|-------|-------|------------|
-| 9.1 | Comprendre les attaques DDoS et les protections GCP | 25 min | ⭐ |
-| 9.2 | Déployer un Application Load Balancer | 40 min | ⭐⭐ |
-| 9.3 | Créer une politique Cloud Armor de base | 35 min | ⭐⭐ |
-| 9.4 | Filtrage par IP et géolocalisation | 30 min | ⭐⭐ |
-| 9.5 | Expressions CEL avancées | 35 min | ⭐⭐⭐ |
-| 9.6 | Règles WAF préconfigurées (OWASP) | 40 min | ⭐⭐ |
-| 9.7 | Rate Limiting et Throttling | 35 min | ⭐⭐ |
-| 9.8 | Mode Preview et analyse des logs | 30 min | ⭐⭐ |
-| 9.9 | Named IP Lists et Threat Intelligence | 30 min | ⭐⭐ |
-| 9.10 | Edge Security Policies | 30 min | ⭐⭐ |
-| 9.11 | Scénario intégrateur - Protection complète | 50 min | ⭐⭐⭐ |
-
-**Durée totale estimée : ~6h30**
+| 9.1 | Comprendre les attaques DDoS et les protections GCP | ⭐ |
+| 9.2 | Déployer un Application Load Balancer | ⭐⭐ |
+| 9.3 | Créer une politique Cloud Armor de base | ⭐⭐ |
+| 9.4 | Filtrage par IP et géolocalisation | ⭐⭐ |
+| 9.5 | Expressions CEL avancées | ⭐⭐⭐ |
+| 9.6 | Règles WAF préconfigurées (OWASP) | ⭐⭐ |
+| 9.7 | Rate Limiting et Throttling | ⭐⭐ |
+| 9.8 | Mode Preview et analyse des logs | ⭐⭐ |
+| 9.9 | Named IP Lists et Threat Intelligence | ⭐⭐ |
+| 9.10 | Edge Security Policies | ⭐⭐ |
+| 9.11 | Scénario intégrateur - Protection complète | ⭐⭐⭐ |
 
 ---
 
 ## Lab 9.1 : Comprendre les attaques DDoS et les protections GCP
-**Durée : 25 minutes | Difficulté : ⭐**
+**Difficulté : ⭐**
 
 ### Objectifs
 - Comprendre les différents types d'attaques DDoS
@@ -233,7 +231,7 @@ Documentation des concepts DDoS et des couches de protection GCP.
 ---
 
 ## Lab 9.2 : Déployer un Application Load Balancer
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer l'infrastructure nécessaire pour Cloud Armor
@@ -462,7 +460,7 @@ Application Load Balancer fonctionnel prêt pour Cloud Armor.
 ---
 
 ## Lab 9.3 : Créer une politique Cloud Armor de base
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer une politique de sécurité Cloud Armor
@@ -570,7 +568,7 @@ Politique Cloud Armor créée et attachée au backend service.
 ---
 
 ## Lab 9.4 : Filtrage par IP et géolocalisation
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Bloquer des plages IP spécifiques
@@ -679,7 +677,7 @@ Règles de filtrage IP et géolocalisation configurées.
 ---
 
 ## Lab 9.5 : Expressions CEL avancées
-**Durée : 35 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Maîtriser le Common Expression Language (CEL)
@@ -819,7 +817,7 @@ Règles CEL avancées configurées et testées.
 ---
 
 ## Lab 9.6 : Règles WAF préconfigurées (OWASP)
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Activer les règles WAF préconfigurées
@@ -946,7 +944,7 @@ Règles WAF OWASP configurées et testées.
 ---
 
 ## Lab 9.7 : Rate Limiting et Throttling
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Configurer le throttling (limitation de débit)
@@ -1093,7 +1091,7 @@ Configuration de rate limiting adaptée aux différents endpoints.
 ---
 
 ## Lab 9.8 : Mode Preview et analyse des logs
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Utiliser le mode Preview pour tester les règles
@@ -1258,7 +1256,7 @@ Analyse des logs Cloud Armor et workflow de validation documenté.
 ---
 
 ## Lab 9.9 : Named IP Lists et Threat Intelligence
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Utiliser les Named IP Lists gérées par Google
@@ -1349,7 +1347,7 @@ Configuration des Named IP Lists et Threat Intelligence.
 ---
 
 ## Lab 9.10 : Edge Security Policies
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre les Edge Security Policies
@@ -1505,7 +1503,7 @@ Edge Security Policy configurée pour Cloud CDN.
 ---
 
 ## Lab 9.11 : Scénario intégrateur - Protection complète
-**Durée : 50 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Déployer une politique de sécurité complète

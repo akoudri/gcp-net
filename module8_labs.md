@@ -27,26 +27,24 @@ Ces travaux pratiques permettront aux apprenants de :
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté |
+| Lab | Titre | Difficulté |
 |-----|-------|-------|------------|
-| 8.1 | IAM Réseau - Rôles et permissions | 30 min | ⭐ |
-| 8.2 | Règles de pare-feu VPC - Fondamentaux | 40 min | ⭐⭐ |
-| 8.3 | Tags réseau vs Service Accounts | 35 min | ⭐⭐ |
-| 8.4 | Network Firewall Policies - Global et Regional | 45 min | ⭐⭐ |
-| 8.5 | Hierarchical Firewall Policies | 40 min | ⭐⭐⭐ |
-| 8.6 | Logging et analyse des règles de pare-feu | 35 min | ⭐⭐ |
-| 8.7 | IAP (Identity-Aware Proxy) pour TCP | 35 min | ⭐⭐ |
-| 8.8 | Cloud IDS - Détection d'intrusion | 45 min | ⭐⭐⭐ |
-| 8.9 | Secure Web Proxy - Filtrage egress | 40 min | ⭐⭐⭐ |
-| 8.10 | Bonnes pratiques et hardening | 30 min | ⭐⭐ |
-| 8.11 | Scénario intégrateur - Architecture sécurisée | 50 min | ⭐⭐⭐ |
-
-**Durée totale estimée : ~7h**
+| 8.1 | IAM Réseau - Rôles et permissions | ⭐ |
+| 8.2 | Règles de pare-feu VPC - Fondamentaux | ⭐⭐ |
+| 8.3 | Tags réseau vs Service Accounts | ⭐⭐ |
+| 8.4 | Network Firewall Policies - Global et Regional | ⭐⭐ |
+| 8.5 | Hierarchical Firewall Policies | ⭐⭐⭐ |
+| 8.6 | Logging et analyse des règles de pare-feu | ⭐⭐ |
+| 8.7 | IAP (Identity-Aware Proxy) pour TCP | ⭐⭐ |
+| 8.8 | Cloud IDS - Détection d'intrusion | ⭐⭐⭐ |
+| 8.9 | Secure Web Proxy - Filtrage egress | ⭐⭐⭐ |
+| 8.10 | Bonnes pratiques et hardening | ⭐⭐ |
+| 8.11 | Scénario intégrateur - Architecture sécurisée | ⭐⭐⭐ |
 
 ---
 
 ## Lab 8.1 : IAM Réseau - Rôles et permissions
-**Durée : 30 minutes | Difficulté : ⭐**
+**Difficulté : ⭐**
 
 ### Objectifs
 - Comprendre les rôles IAM réseau
@@ -145,7 +143,7 @@ Documentation des rôles IAM réseau avec recommandations.
 ---
 
 ## Lab 8.2 : Règles de pare-feu VPC - Fondamentaux
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre les règles de pare-feu VPC
@@ -400,7 +398,7 @@ Configuration complète des règles de pare-feu avec tests de validation.
 ---
 
 ## Lab 8.3 : Tags réseau vs Service Accounts
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre les différences entre tags et service accounts
@@ -582,7 +580,7 @@ Configuration des règles de pare-feu basées sur Service Accounts.
 ---
 
 ## Lab 8.4 : Network Firewall Policies - Global et Regional
-**Durée : 45 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer des Network Firewall Policies
@@ -731,7 +729,7 @@ Network Firewall Policies configurées avec documentation de l'ordre d'évaluati
 ---
 
 ## Lab 8.5 : Hierarchical Firewall Policies
-**Durée : 40 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Créer des politiques hiérarchiques
@@ -903,7 +901,7 @@ Documentation de la stratégie de politiques hiérarchiques.
 ---
 
 ## Lab 8.6 : Logging et analyse des règles de pare-feu
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Activer le logging sur les règles de pare-feu
@@ -1047,7 +1045,7 @@ Analyse des logs de pare-feu avec métriques configurées.
 ---
 
 ## Lab 8.7 : IAP (Identity-Aware Proxy) pour TCP
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre IAP pour TCP (accès "bastionless")
@@ -1174,7 +1172,7 @@ Configuration IAP fonctionnelle avec documentation.
 ---
 
 ## Lab 8.8 : Cloud IDS - Détection d'intrusion
-**Durée : 45 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Déployer un endpoint Cloud IDS
@@ -1339,7 +1337,7 @@ Rapport des alertes IDS détectées avec analyse.
 ---
 
 ## Lab 8.9 : Secure Web Proxy - Filtrage egress
-**Durée : 40 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Comprendre Secure Web Proxy
@@ -1514,7 +1512,7 @@ Documentation de la stratégie de filtrage egress.
 ---
 
 ## Lab 8.10 : Bonnes pratiques et hardening
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Appliquer les bonnes pratiques de sécurité réseau
@@ -1649,7 +1647,7 @@ Rapport d'audit de sécurité avec recommandations.
 ---
 
 ## Lab 8.11 : Scénario intégrateur - Architecture sécurisée
-**Durée : 50 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Déployer une architecture sécurisée complète

@@ -26,24 +26,22 @@ Ces travaux pratiques permettront aux apprenants de :
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté | Prérequis |
+| Lab | Titre | Difficulté | Prérequis |
 |-----|-------|-------|------------|-----------|
-| 4.1 | VPC Peering - Configuration de base | 45 min | ⭐⭐ | 2 VPC |
-| 4.2 | VPC Peering - Options avancées et routes | 35 min | ⭐⭐ | Lab 4.1 |
-| 4.3 | VPC Peering - Non-transitivité et solutions | 50 min | ⭐⭐⭐ | Lab 4.1 |
-| 4.4 | Shared VPC - Architecture et rôles IAM | 30 min | ⭐⭐ | Organisation GCP |
-| 4.5 | Shared VPC - Configuration complète | 45 min | ⭐⭐⭐ | Organisation GCP |
-| 4.6 | Shared VPC - Simulation sans organisation | 40 min | ⭐⭐ | 1 projet |
-| 4.7 | Règles de pare-feu dans les réseaux partagés | 35 min | ⭐⭐ | Labs précédents |
-| 4.8 | Scénario : Choisir entre Shared VPC et Peering | 30 min | ⭐⭐ | Conceptuel |
-| 4.9 | Architecture hybride : Shared VPC + Peering | 50 min | ⭐⭐⭐ | Tous les labs |
-
-**Durée totale estimée : ~6 heures**
+| 4.1 | VPC Peering - Configuration de base | ⭐⭐ | 2 VPC |
+| 4.2 | VPC Peering - Options avancées et routes | ⭐⭐ | Lab 4.1 |
+| 4.3 | VPC Peering - Non-transitivité et solutions | ⭐⭐⭐ | Lab 4.1 |
+| 4.4 | Shared VPC - Architecture et rôles IAM | ⭐⭐ | Organisation GCP |
+| 4.5 | Shared VPC - Configuration complète | ⭐⭐⭐ | Organisation GCP |
+| 4.6 | Shared VPC - Simulation sans organisation | ⭐⭐ | 1 projet |
+| 4.7 | Règles de pare-feu dans les réseaux partagés | ⭐⭐ | Labs précédents |
+| 4.8 | Scénario : Choisir entre Shared VPC et Peering | ⭐⭐ | Conceptuel |
+| 4.9 | Architecture hybride : Shared VPC + Peering | ⭐⭐⭐ | Tous les labs |
 
 ---
 
 ## Lab 4.1 : VPC Peering - Configuration de base
-**Durée : 45 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer un peering VPC entre deux réseaux
@@ -251,7 +249,7 @@ Captures d'écran montrant le statut ACTIVE du peering et les tests de connectiv
 ---
 
 ## Lab 4.2 : VPC Peering - Options avancées et routes
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre l'export/import des routes personnalisées
@@ -361,7 +359,7 @@ Rapport montrant les routes échangées avant/après activation de l'export.
 ---
 
 ## Lab 4.3 : VPC Peering - Non-transitivité et solutions
-**Durée : 50 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Démontrer la non-transitivité du peering
@@ -613,7 +611,7 @@ Document expliquant la non-transitivité avec schémas et les solutions possible
 ---
 
 ## Lab 4.4 : Shared VPC - Architecture et rôles IAM
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### ⚠️ Prérequis : Organisation GCP
 Ce lab nécessite une organisation GCP. Sans organisation, consultez le Lab 4.6 pour une simulation.
@@ -739,7 +737,7 @@ Document de planification Shared VPC complété pour votre organisation.
 ---
 
 ## Lab 4.5 : Shared VPC - Configuration complète
-**Durée : 45 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### ⚠️ Prérequis : Organisation GCP et rôle compute.xpnAdmin
 
@@ -932,7 +930,7 @@ Architecture Shared VPC fonctionnelle avec projets de service et VMs déployées
 ---
 
 ## Lab 4.6 : Shared VPC - Simulation sans organisation
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Simuler l'architecture Shared VPC dans un seul projet
@@ -1149,7 +1147,7 @@ Architecture simulée fonctionnelle avec documentation des flux et des rôles.
 ---
 
 ## Lab 4.7 : Règles de pare-feu dans les réseaux partagés
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre comment les pare-feux fonctionnent avec Shared VPC et Peering
@@ -1290,7 +1288,7 @@ Rapport d'audit des règles de pare-feu avec recommandations.
 ---
 
 ## Lab 4.8 : Scénario - Choisir entre Shared VPC et Peering
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Analyser différents scénarios d'entreprise
@@ -1445,7 +1443,7 @@ Analyse de votre propre contexte avec recommandation justifiée.
 ---
 
 ## Lab 4.9 : Architecture hybride - Shared VPC + Peering
-**Durée : 50 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Combiner Shared VPC et VPC Peering

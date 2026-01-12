@@ -22,24 +22,22 @@ Ces travaux pratiques permettront aux apprenants de :
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté |
+| Lab | Titre | Difficulté |
 |-----|-------|-------|------------|
-| 5.1 | Private Google Access - Configuration de base | 35 min | ⭐ |
-| 5.2 | PGA - Configuration DNS avancée | 40 min | ⭐⭐ |
-| 5.3 | Private Services Access - Cloud SQL | 50 min | ⭐⭐ |
-| 5.4 | PSA - Memorystore Redis | 35 min | ⭐⭐ |
-| 5.5 | Private Service Connect - APIs Google | 45 min | ⭐⭐⭐ |
-| 5.6 | PSC - Publier un service (Producteur) | 50 min | ⭐⭐⭐ |
-| 5.7 | PSC - Consommer un service (Consommateur) | 40 min | ⭐⭐⭐ |
-| 5.8 | Comparaison PGA vs PSA vs PSC | 30 min | ⭐⭐ |
-| 5.9 | Scénario intégrateur : Architecture hybride sécurisée | 60 min | ⭐⭐⭐ |
-
-**Durée totale estimée : ~6h30**
+| 5.1 | Private Google Access - Configuration de base | ⭐ |
+| 5.2 | PGA - Configuration DNS avancée | ⭐⭐ |
+| 5.3 | Private Services Access - Cloud SQL | ⭐⭐ |
+| 5.4 | PSA - Memorystore Redis | ⭐⭐ |
+| 5.5 | Private Service Connect - APIs Google | ⭐⭐⭐ |
+| 5.6 | PSC - Publier un service (Producteur) | ⭐⭐⭐ |
+| 5.7 | PSC - Consommer un service (Consommateur) | ⭐⭐⭐ |
+| 5.8 | Comparaison PGA vs PSA vs PSC | ⭐⭐ |
+| 5.9 | Scénario intégrateur : Architecture hybride sécurisée | ⭐⭐⭐ |
 
 ---
 
 ## Lab 5.1 : Private Google Access - Configuration de base
-**Durée : 35 minutes | Difficulté : ⭐**
+**Difficulté : ⭐**
 
 ### Objectifs
 - Comprendre le fonctionnement de PGA
@@ -222,7 +220,7 @@ Captures d'écran montrant les tests avant/après activation de PGA.
 ---
 
 ## Lab 5.2 : PGA - Configuration DNS avancée
-**Durée : 40 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Configurer le DNS pour forcer l'utilisation de PGA
@@ -363,7 +361,7 @@ Configuration DNS complète avec tests de résolution.
 ---
 
 ## Lab 5.3 : Private Services Access - Cloud SQL
-**Durée : 50 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Configurer Private Services Access
@@ -549,7 +547,7 @@ Instance Cloud SQL fonctionnelle accessible uniquement via IP privée.
 ---
 
 ## Lab 5.4 : PSA - Memorystore Redis
-**Durée : 35 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Déployer Memorystore Redis avec PSA
@@ -638,7 +636,7 @@ Instance Memorystore Redis fonctionnelle via PSA.
 ---
 
 ## Lab 5.5 : Private Service Connect - APIs Google
-**Durée : 45 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Créer un endpoint PSC pour les APIs Google
@@ -834,7 +832,7 @@ Endpoint PSC fonctionnel avec tests de connectivité.
 ---
 
 ## Lab 5.6 : PSC - Publier un service (Producteur)
-**Durée : 50 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Créer un service backend avec Internal Load Balancer
@@ -1014,7 +1012,7 @@ Service Attachment PSC créé et prêt à être consommé.
 ---
 
 ## Lab 5.7 : PSC - Consommer un service (Consommateur)
-**Durée : 40 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Créer un endpoint PSC vers un service publié
@@ -1176,7 +1174,7 @@ Connexion PSC fonctionnelle entre producteur et consommateur.
 ---
 
 ## Lab 5.8 : Comparaison PGA vs PSA vs PSC
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comparer les trois solutions dans différents scénarios
@@ -1304,7 +1302,7 @@ Document de recommandation pour votre cas d'usage spécifique.
 ---
 
 ## Lab 5.9 : Scénario intégrateur - Architecture hybride sécurisée
-**Durée : 60 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Combiner toutes les solutions de connectivité privée

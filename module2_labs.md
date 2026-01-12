@@ -22,23 +22,21 @@ Ces travaux pratiques permettront aux apprenants de :
 
 ### Labs proposés
 
-| Lab | Titre | Durée | Difficulté |
+| Lab | Titre | Difficulté |
 |-----|-------|-------|------------|
-| 2.1 | Découverte du VPC default et ses risques | 20 min | ⭐ |
-| 2.2 | Créer un VPC custom multi-régions | 45 min | ⭐⭐ |
-| 2.3 | Planification et extension des sous-réseaux | 30 min | ⭐⭐ |
-| 2.4 | VM avec interfaces réseau multiples | 45 min | ⭐⭐⭐ |
-| 2.5 | Comparaison des Network Tiers | 30 min | ⭐⭐ |
+| 2.1 | Découverte du VPC default et ses risques | ⭐ |
+| 2.2 | Créer un VPC custom multi-régions | ⭐⭐ |
+| 2.3 | Planification et extension des sous-réseaux | ⭐⭐ |
+| 2.4 | VM avec interfaces réseau multiples | ⭐⭐⭐ |
+| 2.5 | Comparaison des Network Tiers | ⭐⭐ |
 | 2.6 | Mode de routage dynamique | 30 min | ⭐⭐ |
-| 2.7 | Scénario complet : Architecture entreprise | 60 min | ⭐⭐⭐ |
-| 2.8 | Troubleshooting VPC | 30 min | ⭐⭐⭐ |
-
-**Durée totale estimée : ~5 heures**
+| 2.7 | Scénario complet : Architecture entreprise | ⭐⭐⭐ |
+| 2.8 | Troubleshooting VPC | ⭐⭐⭐ |
 
 ---
 
 ## Lab 2.1 : Découverte du VPC default et ses risques
-**Durée : 20 minutes | Difficulté : ⭐**
+**Difficulté : ⭐**
 
 ### Objectifs
 - Explorer le VPC par défaut et comprendre sa structure
@@ -135,7 +133,7 @@ Rapport d'audit identifiant les risques de sécurité du VPC default avec recomm
 ---
 
 ## Lab 2.2 : Créer un VPC custom multi-régions
-**Durée : 45 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Créer un VPC en mode custom
@@ -325,7 +323,7 @@ Schéma de l'architecture déployée avec les IPs et résultats des tests de con
 ---
 
 ## Lab 2.3 : Planification et extension des sous-réseaux
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Planifier un schéma d'adressage IP cohérent
@@ -442,7 +440,7 @@ Document de planification d'adressage IP pour l'entreprise avec justifications.
 ---
 
 ## Lab 2.4 : VM avec interfaces réseau multiples (Multi-NIC)
-**Durée : 45 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Déployer une VM avec plusieurs interfaces réseau
@@ -652,7 +650,7 @@ Captures tcpdump montrant le trafic transitant par l'appliance + schéma d'archi
 ---
 
 ## Lab 2.5 : Comparaison des Network Tiers
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Déployer des ressources avec différents Network Tiers
@@ -787,7 +785,7 @@ Tableau comparatif des performances et coûts entre Premium et Standard Tier.
 ---
 
 ## Lab 2.6 : Mode de routage dynamique
-**Durée : 30 minutes | Difficulté : ⭐⭐**
+**Difficulté : ⭐⭐**
 
 ### Objectifs
 - Comprendre la différence entre routage régional et global
@@ -901,7 +899,7 @@ Schéma illustrant la propagation des routes en mode régional vs global.
 ---
 
 ## Lab 2.7 : Scénario complet - Architecture entreprise
-**Durée : 60 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Concevoir et déployer une architecture VPC complète
@@ -1128,7 +1126,7 @@ Documentation complète de l'architecture déployée.
 ---
 
 ## Lab 2.8 : Troubleshooting VPC
-**Durée : 30 minutes | Difficulté : ⭐⭐⭐**
+**Difficulté : ⭐⭐⭐**
 
 ### Objectifs
 - Diagnostiquer les problèmes de connectivité VPC courants
