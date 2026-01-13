@@ -149,8 +149,8 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 ```
                         VPC Security Lab
-    ┌─────────────────────────────────────────────────────────────┐
-    │                                                             │
+    ┌────────────────────────────────────────────────────────────┐
+    │                                                            │
     │   ┌─────────────────┐         ┌─────────────────┐          │
     │   │ subnet-frontend │         │ subnet-backend  │          │
     │   │  10.0.1.0/24    │         │  10.0.2.0/24    │          │
@@ -166,13 +166,13 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
     │                               │ │ tag: db     │ │          │
     │                               │ └─────────────┘ │          │
     │                               └─────────────────┘          │
-    │                                                             │
+    │                                                            │
     │   Règles de pare-feu:                                      │
     │   - Internet → web: 80, 443                                │
     │   - web → api: 8080                                        │
     │   - api → db: 5432                                         │
     │   - Deny all other                                         │
-    └─────────────────────────────────────────────────────────────┘
+    └────────────────────────────────────────────────────────────┘
 ```
 
 ### Exercices
@@ -428,7 +428,7 @@ EOF
 │                                                                             │
 │ ❌ Inconvénients:                                                           │
 │    - Configuration plus complexe                                            │
-│    - Nécessite une stratégie de Service Accounts                           │
+│    - Nécessite une stratégie de Service Accounts                            │
 │    - Un seul SA par VM                                                      │
 └─────────────────────────────────────────────────────────────────────────────┘
 
@@ -818,7 +818,7 @@ Requête HTTP arrive
        ▼
 ┌──────────────────────────┐
 │ Hierarchical Policy      │
-│ (Dossier)               │
+│ (Dossier)                │
 │ Règle HTTP: ALLOW        │──► Autorise et ARRÊTE
 └──────────────────────────┘
 ```
@@ -945,9 +945,7 @@ gcloud logging read "
 
 #### Exercice 8.6.4 : Structure des logs de pare-feu
 
-```
-=== Structure des logs de pare-feu ===
-
+```json
 {
   "jsonPayload": {
     "connection": {
@@ -1030,13 +1028,13 @@ gcloud logging metrics create firewall-denied-count \
             │    Google                  │               │ 3. SSH          │
             ▼                            │               │    tunnel       │
     ┌───────────────┐                    │   ┌───────────┴───────────┐     │
-    │  IAP Service  │──────────────────────►│   IAP TCP Forwarder   │     │
+    │  IAP Service  │───────────────────────►│   IAP TCP Forwarder   │     │
     │  (Google)     │  2. Tunnel HTTPS   │   │   35.235.240.0/20     │     │
     └───────────────┘                    │   └───────────────────────┘     │
                                          │                                 │
-                                         │   Règle pare-feu:              │
-                                         │   ALLOW tcp:22                 │
-                                         │   FROM 35.235.240.0/20         │
+                                         │   Règle pare-feu:               │
+                                         │   ALLOW tcp:22                  │
+                                         │   FROM 35.235.240.0/20          │
                                          └─────────────────────────────────┘
 
 Avantages:
@@ -1148,14 +1146,14 @@ gcloud logging read '
                                     VPC
     ┌──────────────────────────────────────────────────────────────────┐
     │                                                                  │
-    │   ┌─────────────────────────────────────────────────────────┐   │
-    │   │              Subnet surveillé                            │   │
-    │   │                                                         │   │
-    │   │   ┌──────────┐     ┌──────────┐     ┌──────────┐       │   │
-    │   │   │  VM-1    │     │  VM-2    │     │  VM-3    │       │   │
-    │   │   └────┬─────┘     └────┬─────┘     └────┬─────┘       │   │
-    │   │        │                │                │              │   │
-    │   └────────┼────────────────┼────────────────┼──────────────┘   │
+    │   ┌─────────────────────────────────────────────────────────┐    │
+    │   │              Subnet surveillé                           │    │
+    │   │                                                         │    │
+    │   │   ┌──────────┐     ┌──────────┐     ┌──────────┐        │    │
+    │   │   │  VM-1    │     │  VM-2    │     │  VM-3    │        │    │
+    │   │   └────┬─────┘     └────┬─────┘     └────┬─────┘        │    │
+    │   │        │                │                │              │    │
+    │   └────────┼────────────────┼────────────────┼──────────────┘    │
     │            │                │                │                   │
     │            └────────────────┼────────────────┘                   │
     │                             │                                    │
@@ -1308,8 +1306,6 @@ echo "Cloud IDS nettoyé pour éviter les frais"
 
 #### Exercice 8.9.1 : Comprendre Secure Web Proxy
 
-=== Secure Web Proxy (SWP) ===
-
 Secure Web Proxy est un proxy cloud-native pour filtrer le trafic 
 HTTP/HTTPS sortant des VMs.
 
@@ -1416,13 +1412,13 @@ gcloud network-services gateways create swp-gateway \
 
 Exemples de règles:
 
-# Autoriser uniquement les APIs Google
+- Autoriser uniquement les APIs Google
 --session-matcher='host().endsWith(".googleapis.com")'
 
-# Bloquer les réseaux sociaux
+- Bloquer les réseaux sociaux
 --session-matcher='host().endsWith(".facebook.com") || host().endsWith(".twitter.com")'
 
-# Autoriser uniquement certains chemins
+- Autoriser uniquement certains chemins
 --session-matcher='host() == "api.example.com" && request.path().startsWith("/v1/")'
 
 #### Exercice 8.9.4 : Configuration des VMs pour utiliser le proxy
@@ -1467,18 +1463,16 @@ Note: NO_PROXY est important pour ne pas proxifier:
 
 #### Exercice 8.10.1 : Checklist de sécurité pare-feu
 
-=== Checklist Sécurité Pare-feu ===
-
-☐ Supprimer les règles default-allow-* du VPC default
-☐ Utiliser des priorités cohérentes:
+- ☐ Supprimer les règles default-allow-* du VPC default
+- ☐ Utiliser des priorités cohérentes:
    - deny: 100-500 (priorité haute)
    - allow: 1000+ (priorité normale)
-☐ Préférer Service Accounts aux tags en production
-☐ Activer le logging sur les règles critiques
-☐ Documenter chaque règle avec une description claire
-☐ Réviser régulièrement les règles (trimestriel)
-☐ Utiliser des Network Firewall Policies pour les règles globales
-☐ Implémenter deny-all par défaut, puis autoriser explicitement
+- ☐ Préférer Service Accounts aux tags en production
+- ☐ Activer le logging sur les règles critiques
+- ☐ Documenter chaque règle avec une description claire
+- ☐ Réviser régulièrement les règles (trimestriel)
+- ☐ Utiliser des Network Firewall Policies pour les règles globales
+- ☐ Implémenter deny-all par défaut, puis autoriser explicitement
 
 ```bash
 # Audit des règles sans description
@@ -1496,16 +1490,14 @@ gcloud compute firewall-rules list \
 
 #### Exercice 8.10.2 : Checklist architecture
 
-=== Checklist Architecture Réseau ===
-
-☐ Segmenter par environnement (prod/dev/staging)
-☐ Segmenter par fonction (frontend/backend/db)
-☐ Utiliser des sous-réseaux privés (pas d'IP publiques)
-☐ Implémenter Private Google Access pour les APIs
-☐ Utiliser Cloud NAT pour l'accès Internet sortant
-☐ Configurer IAP pour l'accès administrateur
-☐ Implémenter VPC Service Controls pour les données sensibles
-☐ Utiliser Shared VPC pour centraliser la gestion
+- ☐ Segmenter par environnement (prod/dev/staging)
+- ☐ Segmenter par fonction (frontend/backend/db)
+- ☐ Utiliser des sous-réseaux privés (pas d'IP publiques)
+- ☐ Implémenter Private Google Access pour les APIs
+- ☐ Utiliser Cloud NAT pour l'accès Internet sortant
+- ☐ Configurer IAP pour l'accès administrateur
+- ☐ Implémenter VPC Service Controls pour les données sensibles
+- ☐ Utiliser Shared VPC pour centraliser la gestion
 
 # Audit des VMs avec IP publique
 ```bash
@@ -1517,14 +1509,12 @@ gcloud compute instances list \
 
 #### Exercice 8.10.3 : Checklist surveillance
 
-=== Checklist Surveillance ===
-
-☐ Activer VPC Flow Logs sur les sous-réseaux sensibles
-☐ Déployer Cloud IDS pour la détection des menaces
-☐ Configurer des alertes sur les événements critiques
-☐ Exporter les logs vers un SIEM (Chronicle, Splunk...)
-☐ Auditer les accès IAM réseau périodiquement
-☐ Monitorer les changements de configuration (Cloud Audit Logs)
+- ☐ Activer VPC Flow Logs sur les sous-réseaux sensibles
+- ☐ Déployer Cloud IDS pour la détection des menaces
+- ☐ Configurer des alertes sur les événements critiques
+- ☐ Exporter les logs vers un SIEM (Chronicle, Splunk...)
+- ☐ Auditer les accès IAM réseau périodiquement
+- ☐ Monitorer les changements de configuration (Cloud Audit Logs)
 
 # Vérifier si VPC Flow Logs est activé
 ```bash
@@ -1595,39 +1585,39 @@ echo "=========================================="
 ┌────────────────────────────────────────────────────────────────────────────────────┐
 │                                ARCHITECTURE SÉCURISÉE                              │
 │                                                                                    │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐ │
-│  │                        Global Network Firewall Policy                         │ │
-│  │   - Deny dangerous ports (23, 445, 3389 externe)                             │ │
-│  │   - Allow Health Checks                                                       │ │
-│  │   - Allow IAP                                                                 │ │
-│  └──────────────────────────────────────────────────────────────────────────────┘ │
+│  ┌──────────────────────────────────────────────────────────────────────────────┐  │
+│  │                        Global Network Firewall Policy                        │  │
+│  │   - Deny dangerous ports (23, 445, 3389 externe)                             │  │
+│  │   - Allow Health Checks                                                      │  │
+│  │   - Allow IAP                                                                │  │
+│  └──────────────────────────────────────────────────────────────────────────────┘  │
 │                                                                                    │
-│  ┌──────────────────────────────────────────────────────────────────────────────┐ │
-│  │                               VPC Sécurisé                                    │ │
-│  │                                                                              │ │
-│  │   DMZ (subnet-dmz)              Backend (subnet-backend)                     │ │
-│  │   10.0.1.0/24                   10.0.2.0/24                                  │ │
-│  │   ┌─────────────────┐           ┌─────────────────────────────────┐          │ │
-│  │   │                 │           │                                 │          │ │
-│  │   │  ┌───────────┐  │   HTTP    │  ┌───────────┐  ┌───────────┐  │          │ │
-│  │   │  │  Web (SA) │  │──────────►│  │  API (SA) │  │  DB (SA)  │  │          │ │
-│  │   │  │  :80/:443 │  │  :8080    │  │  :8080    │──│  :5432    │  │          │ │
-│  │   │  └───────────┘  │           │  └───────────┘  └───────────┘  │          │ │
-│  │   │       ▲         │           │                                 │          │ │
-│  │   └───────┼─────────┘           └─────────────────────────────────┘          │ │
-│  │           │                                                                   │ │
-│  │   Internet (via Load Balancer)                                               │ │
-│  │                                                                              │ │
-│  │   Règles de pare-feu:                                                        │ │
-│  │   - LB → Web (SA): 80, 443                                                   │ │
-│  │   - Web (SA) → API (SA): 8080                                                │ │
-│  │   - API (SA) → DB (SA): 5432                                                 │ │
-│  │   - IAP → All: 22                                                            │ │
-│  │   - Deny all other                                                           │ │
-│  │                                                                              │ │
-│  │   Logging: Activé sur toutes les règles                                      │ │
-│  │   VPC Flow Logs: Activé                                                      │ │
-│  └──────────────────────────────────────────────────────────────────────────────┘ │
+│  ┌──────────────────────────────────────────────────────────────────────────────┐  │
+│  │                               VPC Sécurisé                                   │  │
+│  │                                                                              │  │
+│  │   DMZ (subnet-dmz)              Backend (subnet-backend)                     │  │
+│  │   10.0.1.0/24                   10.0.2.0/24                                  │  │
+│  │   ┌─────────────────┐           ┌─────────────────────────────────┐          │  │
+│  │   │                 │           │                                 │          │  │
+│  │   │  ┌───────────┐  │   HTTP    │  ┌───────────┐  ┌───────────┐  │           │  │
+│  │   │  │  Web (SA) │  │──────────►│  │  API (SA) │  │  DB (SA)  │  │           │  │
+│  │   │  │  :80/:443 │  │  :8080    │  │  :8080    │──│  :5432    │  │           │  │
+│  │   │  └───────────┘  │           │  └───────────┘  └───────────┘  │           │  │
+│  │   │       ▲         │           │                                 │          │  │
+│  │   └───────┼─────────┘           └─────────────────────────────────┘          │  │
+│  │           │                                                                  │  │
+│  │   Internet (via Load Balancer)                                               │  │
+│  │                                                                              │  │
+│  │   Règles de pare-feu:                                                        │  │
+│  │   - LB → Web (SA): 80, 443                                                   │  │
+│  │   - Web (SA) → API (SA): 8080                                                │  │
+│  │   - API (SA) → DB (SA): 5432                                                 │  │
+│  │   - IAP → All: 22                                                            │  │
+│  │   - Deny all other                                                           │  │
+│  │                                                                              │  │
+│  │   Logging: Activé sur toutes les règles                                      │  │
+│  │   VPC Flow Logs: Activé                                                      │  │
+│  └──────────────────────────────────────────────────────────────────────────────┘  │
 └────────────────────────────────────────────────────────────────────────────────────┘
 ```
 

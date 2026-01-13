@@ -169,10 +169,10 @@ Besoin                              │ Outil recommandé
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                              VPC Flow Logs                                  │
 │                                                                             │
-│   ┌─────────────┐        ┌─────────────┐        ┌─────────────┐            │
-│   │   VM-A      │◄──────►│   VM-B      │◄──────►│  Internet   │            │
-│   │ 10.0.1.10   │        │ 10.0.1.11   │        │             │            │
-│   └─────────────┘        └─────────────┘        └─────────────┘            │
+│   ┌─────────────┐        ┌─────────────┐        ┌─────────────┐             │
+│   │   VM-A      │◄──────►│   VM-B      │◄──────►│  Internet   │             │
+│   │ 10.0.1.10   │        │ 10.0.1.11   │        │             │             │
+│   └─────────────┘        └─────────────┘        └─────────────┘             │
 │          │                      │                      │                    │
 │          └──────────────────────┴──────────────────────┘                    │
 │                                 │                                           │
@@ -185,7 +185,7 @@ Besoin                              │ Outil recommandé
 │                    │    Cloud Logging        │                              │
 │                    │                         │                              │
 │                    │  ┌─────────────────┐    │                              │
-│                    │  │    BigQuery     │    │   Export optionnel          │
+│                    │  │    BigQuery     │    │   Export optionnel           │
 │                    │  └─────────────────┘    │                              │
 │                    └─────────────────────────┘                              │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -371,11 +371,7 @@ EOF
 
 #### Exercice 11.3.1 : Structure des Flow Logs
 
-```
-═══════════════════════════════════════════════════════════════════════════════
-                    STRUCTURE D'UN VPC FLOW LOG
-═══════════════════════════════════════════════════════════════════════════════
-
+```json
 {
   "connection": {
     "src_ip": "10.0.1.10",           // IP source
@@ -696,13 +692,14 @@ Information         │ Volumes, durées         │ Règle appliquée, action
 Sampling            │ Configurable (0-100%)   │ Pas d'échantillonnage
 Action              │ Trafic passé            │ ALLOWED ou DENIED
 Utilité             │ Analyse de flux         │ Audit de sécurité
+```
 
 Quand utiliser quoi:
 • "Combien de GB vers Internet ?" → VPC Flow Logs
 • "Pourquoi cette connexion est bloquée ?" → Firewall Logs
 • "Quelle règle a autorisé ce trafic ?" → Firewall Logs
 • "Top des destinations par volume" → VPC Flow Logs
-```
+
 
 #### Exercice 11.5.2 : Activer le logging sur les règles existantes
 
@@ -779,11 +776,7 @@ jsonPayload.disposition="DENIED"
 
 #### Exercice 11.5.5 : Structure des Firewall Logs
 
-```
-═══════════════════════════════════════════════════════════════════════════════
-                    STRUCTURE D'UN FIREWALL LOG
-═══════════════════════════════════════════════════════════════════════════════
-
+```json
 {
   "connection": {
     "src_ip": "10.0.1.10",
@@ -831,7 +824,7 @@ jsonPayload.disposition="DENIED"
 │   Sources (VMs mirrorées)                      Collecteur                   │
 │   ┌──────────────────────┐                     ┌──────────────────────┐     │
 │   │   ┌─────────────┐    │                     │  Internal LB         │     │
-│   │   │  VM-Prod-1  │────┼─────────────────────┼─►(Mirroring Collector)│     │
+│   │   │  VM-Prod-1  │────┼─────────────────────┼►(Mirroring Collector)│     │
 │   │   └─────────────┘    │     Copie des       │         │            │     │
 │   │   ┌─────────────┐    │     paquets         │         ▼            │     │
 │   │   │  VM-Prod-2  │────┼─────────────────────┼──►┌─────────────┐    │     │
@@ -1357,11 +1350,6 @@ EOF
 
 #### Exercice 11.10.1 : Network Topology
 
-```
-═══════════════════════════════════════════════════════════════════════════════
-                        NETWORK TOPOLOGY
-═══════════════════════════════════════════════════════════════════════════════
-
 Network Topology permet de visualiser:
 • L'architecture de vos VPCs
 • Les flux de trafic entre ressources
@@ -1375,7 +1363,6 @@ Fonctionnalités:
 • Filtrage par projet, VPC, région
 • Détails des flux de trafic
 • Export de la topologie
-```
 
 ```bash
 # Via l'API (pour lister les entités)
@@ -1583,7 +1570,7 @@ gcloud logging sinks create archive-old-logs \
 │  ┌─────────────────────────────────────────────────────────────────────┐    │
 │  │                        SOURCES DE DONNÉES                           │    │
 │  ├─────────────────────────────────────────────────────────────────────┤    │
-│  │  VPC Flow Logs     │  Firewall Logs    │  LB Logs    │  NAT Logs   │    │
+│  │  VPC Flow Logs     │  Firewall Logs    │  LB Logs     │  NAT Logs   │    │
 │  │  (sampling 0.5)    │  (règles critiques)│             │             │    │
 │  └─────────────────────────────────────────────────────────────────────┘    │
 │                                    │                                        │
@@ -1606,7 +1593,7 @@ gcloud logging sinks create archive-old-logs \
 │  ┌─────────────────────────────────────────────────────────────────────┐    │
 │  │                    NETWORK INTELLIGENCE CENTER                      │    │
 │  ├─────────────────────────────────────────────────────────────────────┤    │
-│  │  Topology │ Connectivity Tests │ Firewall Insights │ Network Analyzer│   │
+│  │ Topology │ Connectivity Tests │ Firewall Insights │ Network Analyzer│    │
 │  └─────────────────────────────────────────────────────────────────────┘    │
 │                                                                             │
 │  ┌─────────────────────────────────────────────────────────────────────┐    │

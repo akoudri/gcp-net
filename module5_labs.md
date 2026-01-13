@@ -56,18 +56,18 @@ Ces travaux pratiques permettront aux apprenants de :
                                          │
     ┌────────────────────────────────────┴─────────────────────────────────┐
     │                              VPC                                     │
-    │   ┌─────────────────────────────────────────────────────────────┐   │
-    │   │                    subnet-pga                                │   │
-    │   │                   10.0.0.0/24                                │   │
-    │   │                 PGA: ENABLED ✓                               │   │
-    │   │                                                              │   │
-    │   │   ┌───────────────┐                                         │   │
-    │   │   │    vm-pga     │ ──────► Cloud Storage                   │   │
-    │   │   │ (no external  │         BigQuery                        │   │
-    │   │   │     IP)       │         Pub/Sub                         │   │
-    │   │   └───────────────┘         etc.                            │   │
-    │   │                                                              │   │
-    │   └─────────────────────────────────────────────────────────────┘   │
+    │   ┌─────────────────────────────────────────────────────────────┐    │
+    │   │                    subnet-pga                               │    │
+    │   │                   10.0.0.0/24                               │    │
+    │   │                 PGA: ENABLED ✓                              │    │
+    │   │                                                             │    │
+    │   │   ┌───────────────┐                                         │    │
+    │   │   │    vm-pga     │ ──────► Cloud Storage                   │    │
+    │   │   │ (no external  │         BigQuery                        │    │
+    │   │   │     IP)       │         Pub/Sub                         │    │
+    │   │   └───────────────┘         etc.                            │    │
+    │   │                                                             │    │
+    │   └─────────────────────────────────────────────────────────────┘    │
     └──────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -364,13 +364,13 @@ gcloud dns record-sets create "*.googleapis.com." \
               Votre VPC                              VPC Google (Services Managés)
     ┌──────────────────────────┐              ┌──────────────────────────────────┐
     │                          │              │                                  │
-    │   subnet-app             │   Peering   │   Plage réservée: 10.100.0.0/24  │
-    │   10.0.0.0/24            │◄───────────►│                                  │
-    │                          │  (automatique) │   ┌──────────────────────┐    │
-    │   ┌───────────────┐      │              │   │    Cloud SQL          │    │
-    │   │    vm-app     │──────┼──────────────┼──►│    10.100.0.2         │    │
-    │   │   10.0.0.10   │      │              │   │    PostgreSQL         │    │
-    │   └───────────────┘      │              │   └──────────────────────┘    │
+    │   subnet-app             │   Peering    │   Plage réservée: 10.100.0.0/24  │
+    │   10.0.0.0/24            │◄────────────►│                                  │
+    │                          │(automatique) │   ┌────────────────────────┐     │
+    │   ┌───────────────┐      │              │   │    Cloud SQL           │     │
+    │   │    vm-app     │──────┼──────────────┼──►│    10.100.0.2          │     │
+    │   │   10.0.0.10   │      │              │   │    PostgreSQL          │     │
+    │   └───────────────┘      │              │   └────────────────────────┘     │
     │                          │              │                                  │
     └──────────────────────────┘              └──────────────────────────────────┘
 ```
@@ -636,20 +636,20 @@ gcloud compute networks peerings list --network=$VPC_NAME
     ┌────────────────────────────────────┴─────────────────────────────────┐
     │                              VPC                                     │
     │                                                                      │
-    │   ┌─────────────────────────────────────────────────────────────┐   │
+    │   ┌──────────────────────────────────────────────────────────────┐   │
     │   │                    subnet-psc                                │   │
     │   │                   10.1.0.0/24                                │   │
     │   │                                                              │   │
-    │   │   ┌───────────────┐        ┌───────────────────────┐        │   │
-    │   │   │    vm-psc     │───────►│   PSC Endpoint        │────────┼───┼──► APIs Google
-    │   │   │   10.1.0.10   │        │   10.1.0.100          │        │   │
-    │   │   └───────────────┘        │   (all-apis bundle)   │        │   │
-    │   │                            └───────────────────────┘        │   │
+    │   │   ┌───────────────┐        ┌───────────────────────┐         │   │
+    │   │   │    vm-psc     │───────►│   PSC Endpoint        │─────────┼───┼──► APIs Google
+    │   │   │   10.1.0.10   │        │   10.1.0.100          │         │   │
+    │   │   └───────────────┘        │   (all-apis bundle)   │         │   │
+    │   │                            └───────────────────────┘         │   │
     │   │                                     ▲                        │   │
     │   │                                     │                        │   │
     │   │                            DNS: *.googleapis.com             │   │
     │   │                                 → 10.1.0.100                 │   │
-    │   └─────────────────────────────────────────────────────────────┘   │
+    │   └──────────────────────────────────────────────────────────────┘   │
     └──────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -833,10 +833,10 @@ Quand PGA suffit :
     │   └───────┬───────┘                                                  │
     │           │                                                          │
     │           ▼                                                          │
-    │   ┌───────────────────┐         ┌────────────────────────┐          │
-    │   │  Internal LB      │────────►│  Service Attachment    │──────────┼──► Vers consommateurs
-    │   │  10.50.0.100      │         │  (PSC Producteur)      │          │
-    │   └───────────────────┘         └────────────────────────┘          │
+    │   ┌───────────────────┐         ┌────────────────────────┐           │
+    │   │  Internal LB      │────────►│  Service Attachment    │───────────┼──► Vers consommateurs
+    │   │  10.50.0.100      │         │  (PSC Producteur)      │           │
+    │   └───────────────────┘         └────────────────────────┘           │
     │                                                                      │
     └──────────────────────────────────────────────────────────────────────┘
 ```
@@ -1009,8 +1009,8 @@ echo "Service Attachment URI: $SERVICE_ATTACHMENT_URI"
     │   └───────┬───────┘        │                    │   └───────────────┘        │
     │           │                │                    │           ▲                │
     │           ▼                │                    │           │                │
-    │   ┌───────────────────┐    │     PSC          │   ┌───────────────┐        │
-    │   │  PSC Endpoint     │────┼─────────────────►│   │  Service      │        │
+    │   ┌───────────────────┐    │     PSC            │   ┌───────────────┐        │
+    │   │  PSC Endpoint     │────┼───────────────────►│   │  Service      │        │
     │   │  10.60.0.100      │    │                    │   │  Attachment   │        │
     │   └───────────────────┘    │                    │   └───────────────┘        │
     │                            │                    │                            │
@@ -1176,37 +1176,37 @@ EOF
 
 SCÉNARIO 1: VMs GCP accédant à Cloud Storage
 ┌─────────────────────────────────────────────────────────────┐
-│ Contexte: VMs sans IP externe, besoin d'accès Storage      │
+│ Contexte: VMs sans IP externe, besoin d'accès Storage       │
 │ Recommandation: PGA                                         │
-│ Raison: Simple, gratuit, suffisant pour ce cas             │
+│ Raison: Simple, gratuit, suffisant pour ce cas              │
 └─────────────────────────────────────────────────────────────┘
 
 SCÉNARIO 2: Application avec base de données Cloud SQL
 ┌─────────────────────────────────────────────────────────────┐
-│ Contexte: App GKE/VMs connectée à Cloud SQL                │
+│ Contexte: App GKE/VMs connectée à Cloud SQL                 │
 │ Recommandation: PSA                                         │
-│ Raison: Cloud SQL utilise PSA, IP privée automatique       │
+│ Raison: Cloud SQL utilise PSA, IP privée automatique        │
 └─────────────────────────────────────────────────────────────┘
 
 SCÉNARIO 3: Accès aux APIs Google depuis datacenter on-premise
 ┌─────────────────────────────────────────────────────────────┐
-│ Contexte: Serveurs on-prem via VPN/Interconnect            │
+│ Contexte: Serveurs on-prem via VPN/Interconnect             │
 │ Recommandation: PSC                                         │
-│ Raison: IP dans votre espace d'adressage, routable         │
+│ Raison: IP dans votre espace d'adressage, routable          │
 └─────────────────────────────────────────────────────────────┘
 
 SCÉNARIO 4: Service partagé entre équipes/organisations
 ┌─────────────────────────────────────────────────────────────┐
-│ Contexte: API interne exposée à plusieurs consommateurs    │
-│ Recommandation: PSC (Producteur/Consommateur)              │
-│ Raison: Isolation, contrôle, pas de VPC Peering            │
+│ Contexte: API interne exposée à plusieurs consommateurs     │
+│ Recommandation: PSC (Producteur/Consommateur)               │
+│ Raison: Isolation, contrôle, pas de VPC Peering             │
 └─────────────────────────────────────────────────────────────┘
 
 SCÉNARIO 5: Conformité VPC Service Controls
 ┌─────────────────────────────────────────────────────────────┐
-│ Contexte: Données sensibles, périmètre de sécurité         │
+│ Contexte: Données sensibles, périmètre de sécurité          │
 │ Recommandation: PSC avec bundle vpc-sc                      │
-│ Raison: Contrôle strict, compatibilité VPC-SC              │
+│ Raison: Contrôle strict, compatibilité VPC-SC               │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -1237,8 +1237,8 @@ SCÉNARIO 5: Conformité VPC Service Controls
    ┌─────┐       ┌─────┐          ┌─────┐               ┌─────┐
    │ OUI │       │ NON │          │ PSA │               │ PSC │
    └──┬──┘       └──┬──┘          └─────┘               │Prod/│
-      │             │                                    │Cons │
-      ▼             ▼                                    └─────┘
+      │             │                                   │Cons │
+      ▼             ▼                                   └─────┘
    ┌─────┐       ┌─────┐
    │ PSC │       │ PGA │
    │APIs │       │     │
@@ -1265,9 +1265,9 @@ SCÉNARIO 5: Conformité VPC Service Controls
                                                   │
                                                   │ PSC Endpoint
                                                   │
-    ┌─────────────────────────────────────────────┴──────────────────────────────────────┐
-    │                                    VPC Hub                                         │
-    │                                                                                    │
+    ┌─────────────────────────────────────────────┴─────────────────────────────────────┐
+    │                                    VPC Hub                                        │
+    │                                                                                   │
     │   ┌──────────────────┐    ┌──────────────────┐    ┌──────────────────┐            │
     │   │  subnet-psc      │    │  subnet-app      │    │  subnet-data     │            │
     │   │  10.0.1.0/24     │    │  10.0.2.0/24     │    │  10.0.3.0/24     │            │
@@ -1431,13 +1431,12 @@ gcloud compute instances create app-vm \
         apt-get update && apt-get install -y curl dnsutils postgresql-client redis-tools'
 
 echo "=== 8. (Optionnel) Cloud SQL avec PSA ==="
-# Décommenter pour créer Cloud SQL
-# gcloud sql instances create sql-secure \
-#     --database-version=POSTGRES_14 \
-#     --tier=db-f1-micro \
-#     --region=$REGION \
-#     --network=$VPC_HUB \
-#     --no-assign-ip
+gcloud sql instances create sql-secure \
+    --database-version=POSTGRES_14 \
+    --tier=db-f1-micro \
+    --region=$REGION \
+    --network=$VPC_HUB \
+    --no-assign-ip
 
 echo "=== Déploiement terminé ==="
 echo ""

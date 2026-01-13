@@ -73,7 +73,7 @@ Les labs VPN sont entièrement réalisables dans un environnement GCP standard.
     │   └───────┬───────┘            │           │            └───────┬───────┘   │
     │           │                    │           │                    │           │
     │   ┌───────┴───────┐            │           │            ┌───────┴───────┐   │
-    │   │  HA VPN GW    │◄═══════════╪═══════════╪════════════►│  HA VPN GW    │   │
+    │   │  HA VPN GW    │◄═══════════╪═══════════╪═══════════►│  HA VPN GW    │   │
     │   │ Interface 0,1 │  Tunnel 0  │           │  Tunnel 0  │ Interface 0,1 │   │
     │   └───────────────┘  Tunnel 1  │           │  Tunnel 1  └───────────────┘   │
     │                                │           │                                │
@@ -430,7 +430,6 @@ gcloud compute routers describe router-gcp --region=$REGION \
 
 #### Exercice 7.2.2 : Comprendre les routes échangées
 
-```
 === Fonctionnement de l'échange de routes BGP ===
 
 Cloud Router annonce automatiquement:
@@ -447,7 +446,6 @@ Après l'échange BGP:
 - router-gcp apprend 192.168.0.0/24 de router-onprem
 - router-onprem apprend 10.0.0.0/24 de router-gcp
 - Les routes sont installées automatiquement dans les VPC
-```
 
 ```bash
 # Voir les routes dans le VPC GCP
@@ -509,7 +507,6 @@ gcloud compute routers get-status router-onprem --region=$REGION \
 
 #### Exercice 7.2.5 : Comprendre les attributs BGP
 
-```
 === Attributs BGP importants dans Cloud Router ===
 
 1. ASN (Autonomous System Number)
@@ -535,7 +532,6 @@ gcloud compute routers get-status router-onprem --region=$REGION \
    - Keepalive: 20 secondes (par défaut Cloud Router)
    - Hold: 60 secondes (3x keepalive)
    - Si aucun message reçu pendant le hold timer, session down
-```
 
 ---
 
@@ -558,11 +554,11 @@ gcloud compute routers get-status router-onprem --region=$REGION \
     │   Trafic réparti     │                  │   Trafic principal   │
     │   50% / 50%          │                  │   100% / 0%          │
     │                      │                  │                      │
-    │   ┌──────┬──────┐    │                  │   ┌──────┬──────┐    │
-    │   │  T0  │  T1  │    │                  │   │  T0  │  T1  │    │
+    │   ┌──────┬──────┐    │                  │   ┌──────┬───────┐   │
+    │   │  T0  │  T1  │    │                  │   │  T0  │  T1   │   │
     │   │Active│Active│    │                  │   │Active│Standby│   │
-    │   │MED100│MED100│    │                  │   │MED100│MED200│    │
-    │   └──────┴──────┘    │                  │   └──────┴──────┘    │
+    │   │MED100│MED100│    │                  │   │MED100│MED200 │   │
+    │   └──────┴──────┘    │                  │   └──────┴───────┘   │
     └──────────────────────┘                  └──────────────────────┘
     
     Avantages:                                Avantages:
@@ -830,84 +826,76 @@ Bonnes pratiques pour minimiser le temps de convergence:
 ```
 === Architecture Dedicated Interconnect ===
 
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           Colocation Facility                                │
-│                        (ex: Equinix Paris PA2)                              │
-│                                                                             │
+┌────────────────────────────────────────────────────────────────────────────┐
+│                           Colocation Facility                              │
+│                        (ex: Equinix Paris PA2)                             │
+│                                                                            │
 │   ┌─────────────────────┐           ┌─────────────────────┐                │
 │   │  Votre équipement   │           │   Google Edge       │                │
-│   │  (Router/Switch)    │           │   (Point of Presence)│                │
+│   │  (Router/Switch)    │           │  (Point of Presence)│                │
 │   │                     │           │                     │                │
 │   │  ┌───────────────┐  │           │  ┌───────────────┐  │                │
 │   │  │ Port 10/100G  │──┼───────────┼──│ Port 10/100G  │  │                │
 │   │  └───────────────┘  │  Cross-   │  └───────────────┘  │                │
 │   │                     │  Connect  │                     │                │
 │   └─────────────────────┘           └─────────────────────┘                │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
             │                                       │
             │                                       │
             ▼                                       ▼
     ┌───────────────────┐                   ┌───────────────────┐
-    │  Datacenter       │                   │     Google Cloud   │
+    │  Datacenter       │                   │     Google Cloud  │
     │  On-premise       │                   │                   │
-    │                   │                   │   ┌───────────┐   │
-    │  192.168.0.0/16   │◄─── BGP ────────►│   │Cloud Router│   │
-    │                   │                   │   └───────────┘   │
-    │                   │                   │        │         │
-    └───────────────────┘                   │        ▼         │
+    │                   │                   │   ┌────────────┐  │
+    │  192.168.0.0/16   │◄─── BGP ─────────►│   │Cloud Router│  │
+    │                   │                   │   └────────────┘  │
+    │                   │                   │        │          │
+    └───────────────────┘                   │        ▼          │
                                             │   ┌───────────┐   │
                                             │   │    VPC    │   │
                                             │   │10.0.0.0/8 │   │
                                             │   └───────────┘   │
                                             └───────────────────┘
 
+```
 Caractéristiques:
 - Connexion physique directe (pas Internet)
 - 10 Gbps ou 100 Gbps par lien
 - Latence très faible et stable
 - SLA jusqu'à 99.99%
 - Trafic à tarif réduit
-```
+
 
 #### Exercice 7.5.2 : Processus de provisioning
 
-```
-=== Processus de provisioning Dedicated Interconnect ===
-
-Étape 1: Planification (1-2 semaines)
-─────────────────────────────────────
+1. Planification (1-2 semaines)
 - Identifier la colocation facility
 - Vérifier la présence de Google (Point of Presence)
 - Planifier la capacité (10G ou 100G, nombre de liens)
 - Préparer l'équipement on-premise
 
-Étape 2: Commande (1-2 jours)
-─────────────────────────────
+2. Commande (1-2 jours)
 - Commander l'Interconnect dans la console GCP
 - Recevoir la LOA-CFA (Letter of Authorization - Connecting Facility Assignment)
 - Ce document autorise le cross-connect
 
-Étape 3: Cross-connect (1-4 semaines)
-─────────────────────────────────────
+3. Cross-connect (1-4 semaines)
 - Fournir la LOA-CFA à la colocation
 - La colo établit le câblage physique
 - Délai variable selon la colo et disponibilité
 
-Étape 4: Activation (1-2 jours)
-───────────────────────────────
+4. Activation (1-2 jours)
 - Google détecte le lien et l'active
 - Configurer les VLAN attachments
 - Établir les sessions BGP
 
-Étape 5: Tests et validation
-────────────────────────────
+5. Tests et validation
 - Tester la connectivité
 - Vérifier les performances
 - Valider la redondance
 
-DÉLAI TOTAL: 4-8 semaines
-```
+**DÉLAI TOTAL: 4-8 semaines**
 
 #### Exercice 7.5.3 : Explorer les commandes (simulation)
 
@@ -959,9 +947,6 @@ gcloud compute routers add-bgp-peer router-interconnect \
 
 #### Exercice 7.5.4 : Points de présence Google en Europe
 
-```
-=== Points de Présence Google - Europe ===
-
 | Ville     | Facility      | Location ID   |
 |-----------|---------------|---------------|
 | Paris     | Equinix PA2   | par-zone1-16  |
@@ -978,7 +963,6 @@ gcloud compute routers add-bgp-peer router-interconnect \
 | Dublin    | Equinix DB1   | dub-zone1-8   |
 
 Liste complète: https://cloud.google.com/network-connectivity/docs/interconnect/concepts/colocation-facilities
-```
 
 ---
 
@@ -1023,22 +1007,23 @@ Capacités Partner Interconnect:
 │  Datacenter  │      │  (Orange, Colt...)   │      │                  │
 │              │      │                      │      │                  │
 │              │ MPLS │   ┌──────────────┐   │      │ ┌──────────────┐ │
-│  ┌────────┐  │ ou   │   │  Edge Router │   │ Peering│ │ Cloud Router│ │
+│  ┌────────┐  │ ou   │   │  Edge Router │   │ Peering│ Cloud Router │ │
 │  │ Router │──┼──────┼───│              │───┼──────┼─│              │ │
 │  └────────┘  │ VPN  │   └──────────────┘   │      │ └──────────────┘ │
-│              │      │                      │      │        │        │
-└──────────────┘      └──────────────────────┘      │        ▼        │
-                                                    │   ┌──────────┐  │
-                                                    │   │   VPC    │  │
-                                                    │   └──────────┘  │
+│              │      │                      │      │        │         │
+└──────────────┘      └──────────────────────┘      │        ▼         │
+                                                    │   ┌──────────┐   │
+                                                    │   │   VPC    │   │
+                                                    │   └──────────┘   │
                                                     └──────────────────┘
 
+```
 Avantages:
 - Pas besoin d'être dans une colo Google
 - Le partenaire gère la connexion physique
 - Flexibilité des capacités
 - Déploiement plus rapide
-```
+
 
 #### Exercice 7.6.3 : Partenaires disponibles en France
 
@@ -1112,20 +1097,18 @@ gcloud compute interconnects attachments describe partner-attachment \
 
 #### Exercice 7.7.1 : Vue d'ensemble Cross-Cloud Interconnect
 
-```
-=== Cross-Cloud Interconnect ===
-
 Cross-Cloud Interconnect fournit une connexion dédiée haute performance
 entre GCP et d'autres fournisseurs cloud.
 
 Clouds supportés:
+```
 ┌──────────────────────────────────────────────────────────┐
-│  Google Cloud ◄──────────────────────► AWS              │
-│  Google Cloud ◄──────────────────────► Microsoft Azure  │
-│  Google Cloud ◄──────────────────────► Oracle Cloud     │
-│  Google Cloud ◄──────────────────────► Alibaba Cloud    │
+│  Google Cloud ◄──────────────────────► AWS               │
+│  Google Cloud ◄──────────────────────► Microsoft Azure   │
+│  Google Cloud ◄──────────────────────► Oracle Cloud      │
+│  Google Cloud ◄──────────────────────► Alibaba Cloud     │
 └──────────────────────────────────────────────────────────┘
-
+```
 Caractéristiques:
 - Bande passante: 10-100 Gbps
 - Connexion privée (pas Internet)
@@ -1139,7 +1122,6 @@ Cas d'usage:
 3. Migration entre clouds
 4. Arbitrage de services (utiliser le meilleur service de chaque cloud)
 5. Conformité réglementaire (données dans plusieurs régions/providers)
-```
 
 #### Exercice 7.7.2 : Architecture Cross-Cloud
 
@@ -1147,14 +1129,14 @@ Cas d'usage:
 === Architecture Cross-Cloud Interconnect (exemple GCP ↔ AWS) ===
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         Colocation Facility                                  │
+│                         Colocation Facility                                 │
 │                      (zone commune GCP et AWS)                              │
 │                                                                             │
-│   ┌─────────────────────┐           ┌─────────────────────┐                │
-│   │   Google Edge       │           │   AWS Direct Connect │                │
-│   │   (Cross-Cloud      │───────────│   Location          │                │
-│   │    Interconnect)    │           │                     │                │
-│   └─────────────────────┘           └─────────────────────┘                │
+│   ┌─────────────────────┐           ┌─────────────────────┐                 │
+│   │   Google Edge       │           │  AWS Direct Connect │                 │
+│   │   (Cross-Cloud      │───────────│   Location          │                 │
+│   │    Interconnect)    │           │                     │                 │
+│   └─────────────────────┘           └─────────────────────┘                 │
 │             │                                   │                           │
 └─────────────┼───────────────────────────────────┼───────────────────────────┘
               │                                   │
@@ -1426,11 +1408,11 @@ Avec 10 sites:
                     │ Besoin de connectivité hybride ?    │
                     └─────────────────┬───────────────────┘
                                       │
-                         ┌────────────┴────────────┐
-                         │                         │
+                         ┌────────────┴───────────┐
+                         │                        │
                     Multi-cloud ?             On-premise ?
-                         │                         │
-                         ▼                         │
+                         │                        │
+                         ▼                        │
             ┌────────────────────────┐            │
             │  Cross-Cloud           │            │
             │  Interconnect          │            │

@@ -808,6 +808,7 @@ pathMatchers:
         weight: 90
       - backendService: https://www.googleapis.com/compute/v1/projects/${PROJECT_ID}/global/backendServices/backend-v2
         weight: 10
+EOF
 ```
 
 ```bash
@@ -1102,9 +1103,9 @@ curl -H "Authorization: Bearer tokenA" -s http://$LB_IP/api/ | head -1
     │          ┌────────────────┼────────────────┐                │
     │          │                │                │                │
     │          ▼                ▼                ▼                │
-    │   ┌────────────┐   ┌────────────┐   ┌────────────┐         │
-    │   │  ig-users  │   │ ig-orders  │   │ ig-default │         │
-    │   └────────────┘   └────────────┘   └────────────┘         │
+    │   ┌────────────┐   ┌────────────┐   ┌────────────┐          │
+    │   │  ig-users  │   │ ig-orders  │   │ ig-default │          │
+    │   └────────────┘   └────────────┘   └────────────┘          │
     │                                                             │
     │   ┌─────────────────────────────────────────────────────┐   │
     │   │              Client VM                              │   │
@@ -1349,28 +1350,22 @@ echo "Internal Network LB créé: 10.0.3.100:5432"
 
 #### Exercice 10.7.2 : Comparer Proxy vs Passthrough
 
-```
-═══════════════════════════════════════════════════════════════════════════════
-              APPLICATION LB (L7) vs NETWORK LB PASSTHROUGH (L4)
-═══════════════════════════════════════════════════════════════════════════════
-
-Aspect                    │ Application LB (L7)      │ Network LB Passthrough
-──────────────────────────┼──────────────────────────┼─────────────────────────
-Couche OSI                │ Layer 7 (HTTP/HTTPS)     │ Layer 4 (TCP/UDP)
-Mode                      │ Proxy                    │ Passthrough (DSR)
-Terminaison connexion     │ Oui (au LB)              │ Non
-IP client préservée       │ Non (X-Forwarded-For)    │ Oui
-Latence                   │ Légèrement plus élevée   │ Minimale
-Routage intelligent       │ Oui (URL, headers)       │ Non
-TLS termination           │ Oui                      │ Non
-Cloud Armor               │ Oui                      │ Non
-CDN                       │ Oui                      │ Non
-Health checks             │ HTTP/HTTPS/HTTP2         │ TCP/SSL/HTTP
+| Aspect                | Application LB (L7)      | Network LB Passthrough  |
+|-----------------------|--------------------------|-------------------------|
+| Couche OSI            | Layer 7 (HTTP/HTTPS)     | Layer 4 (TCP/UDP)       |
+| Mode                  | Proxy                    | Passthrough (DSR)       |
+| Terminaison connexion | Oui (au LB)              | Non                     |
+| IP client préservée   | Non (X-Forwarded-For)    | Oui                     |
+| Latence               | Légèrement plus élevée   | Minimale                |
+| Routage intelligent   | Oui (URL, headers)       | Non                     |
+| TLS termination       | Oui                      | Non                     |
+| Cloud Armor           | Oui                      | Non                     |
+| CDN                   | Oui                      | Non                     |
+| Health checks         | HTTP/HTTPS/HTTP2         | TCP/SSL/HTTP            |
 
 Cas d'usage:
 • Application LB: Web apps, APIs, microservices HTTP
 • Network LB: Bases de données, jeux, VoIP, streaming, protocoles custom
-```
 
 ---
 
@@ -1411,11 +1406,6 @@ Cas d'usage:
 
 #### Exercice 10.8.1 : Comprendre les Hybrid NEGs
 
-```
-═══════════════════════════════════════════════════════════════════════════════
-                           HYBRID NEG
-═══════════════════════════════════════════════════════════════════════════════
-
 Un Hybrid NEG permet d'inclure des backends EXTERNES à GCP dans un 
 Load Balancer GCP:
 
@@ -1434,7 +1424,6 @@ Limites:
 • Uniquement pour Global external Application LB
 • Max 100 endpoints par NEG
 • Les endpoints doivent avoir des IPs privées (RFC 1918)
-```
 
 #### Exercice 10.8.2 : Créer un Hybrid NEG (simulation)
 
@@ -1529,28 +1518,13 @@ gcloud compute url-maps import urlmap-hybrid \
 
 #### Exercice 10.9.1 : Types de NEGs
 
-```
-═══════════════════════════════════════════════════════════════════════════════
-                        TYPES DE NETWORK ENDPOINT GROUPS
-═══════════════════════════════════════════════════════════════════════════════
-
-Type                      │ Backends                  │ Portée
-──────────────────────────┼───────────────────────────┼──────────────────
-Zonal NEG                 │ VMs, containers GKE       │ Zone
-(GCE_VM_IP_PORT)          │                           │
-──────────────────────────┼───────────────────────────┼──────────────────
-Serverless NEG            │ Cloud Run, Cloud          │ Région
-(SERVERLESS)              │ Functions, App Engine     │
-──────────────────────────┼───────────────────────────┼──────────────────
-Internet NEG              │ Endpoints publics         │ Global
-(INTERNET_FQDN_PORT)      │ (FQDN ou IP externe)      │
-──────────────────────────┼───────────────────────────┼──────────────────
-Hybrid NEG                │ On-premise, autres clouds │ Zone
-(NON_GCP_PRIVATE_IP_PORT) │                           │
-──────────────────────────┼───────────────────────────┼──────────────────
-PSC NEG                   │ Services via Private      │ Région
-(PRIVATE_SERVICE_CONNECT) │ Service Connect           │
-```
+| Type                                   | Backends                                | Portée |
+|----------------------------------------|-----------------------------------------|--------|
+| Zonal NEG<br>(GCE_VM_IP_PORT)          | VMs, containers GKE                     | Zone   |
+| Serverless NEG<br>(SERVERLESS)         | Cloud Run, Cloud Functions, App Engine  | Région |
+| Internet NEG<br>(INTERNET_FQDN_PORT)   | Endpoints publics (FQDN ou IP externe)  | Global |
+| Hybrid NEG<br>(NON_GCP_PRIVATE_IP_PORT)| On-premise, autres clouds               | Zone   |
+| PSC NEG<br>(PRIVATE_SERVICE_CONNECT)   | Services via Private Service Connect    | Région |
 
 #### Exercice 10.9.2 : Créer un Serverless NEG (Cloud Run)
 
@@ -1638,34 +1612,18 @@ gcloud compute backend-services describe backend-web \
     --format="yaml(enableCDN,cdnPolicy)"
 ```
 
-#### Exercice 10.10.2 : Modes de cache
+#### Exercice 10.10.2 : Modes de cache CDN
 
-```
-═══════════════════════════════════════════════════════════════════════════════
-                          MODES DE CACHE CDN
-═══════════════════════════════════════════════════════════════════════════════
-
-Mode                  │ Comportement
-──────────────────────┼────────────────────────────────────────────────────────
-CACHE_ALL_STATIC      │ Cache automatique du contenu statique:
-                      │ - Images (jpg, png, gif, webp, ico)
-                      │ - CSS, JS
-                      │ - Fonts (woff, woff2)
-                      │ - Documents (pdf)
-──────────────────────┼────────────────────────────────────────────────────────
-USE_ORIGIN_HEADERS    │ Respecte les headers Cache-Control de l'origin
-                      │ - Flexible, contrôle côté application
-                      │ - Nécessite une configuration applicative correcte
-──────────────────────┼────────────────────────────────────────────────────────
-FORCE_CACHE_ALL       │ Cache TOUT le contenu (ignore les headers)
-                      │ - Agressif, attention aux données dynamiques
-                      │ - Utile pour CDN origin avec contenu 100% statique
+| Mode                | Comportement                                                                                                                                                     |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| CACHE_ALL_STATIC    | Cache automatique du contenu statique:<br>- Images (jpg, png, gif, webp, ico)<br>- CSS, JS<br>- Fonts (woff, woff2)<br>- Documents (pdf)                       |
+| USE_ORIGIN_HEADERS  | Respecte les headers Cache-Control de l'origin<br>- Flexible, contrôle côté application<br>- Nécessite une configuration applicative correcte                  |
+| FORCE_CACHE_ALL     | Cache TOUT le contenu (ignore les headers)<br>- Agressif, attention aux données dynamiques<br>- Utile pour CDN origin avec contenu 100% statique                |
 
 Paramètres TTL:
 - default-ttl: TTL par défaut si pas de header (défaut: 3600s)
 - max-ttl: TTL maximum (cap les valeurs trop longues)
 - client-ttl: TTL envoyé au client (Cache-Control: max-age)
-```
 
 ```bash
 # Configurer pour respecter les headers origin
@@ -1730,11 +1688,10 @@ gcloud compute url-maps invalidate-cdn-cache urlmap-app \
 echo "⚠️ L'invalidation peut prendre quelques minutes à se propager"
 ```
 
-#### Exercice 10.10.6 : Métriques CDN
+#### Exercice 10.10.6 : Métriques Cloud CDN
 
 ```
-# Métriques importantes
-Métriques Cloud CDN:
+Métriques Importantes :
 ──────────────────────────────────────────────────────────────────────────────
 cdn/cache_hit_count         │ Nombre de requêtes servies depuis le cache
 cdn/cache_miss_count        │ Nombre de requêtes envoyées à l'origin
@@ -1765,11 +1722,6 @@ gcloud monitoring metrics list --filter="metric.type:cdn"
 
 #### Exercice 10.11.1 : Comprendre les Signed URLs
 
-```
-═══════════════════════════════════════════════════════════════════════════════
-                           SIGNED URLs
-═══════════════════════════════════════════════════════════════════════════════
-
 Les Signed URLs permettent de:
 - Donner un accès temporaire à du contenu
 - Protéger du contenu premium/payant
@@ -1789,7 +1741,6 @@ Signed Cookies:
 - Même principe mais via cookie HTTP
 - Permet l'accès à plusieurs ressources
 - Utile pour le streaming vidéo
-```
 
 #### Exercice 10.11.2 : Créer une clé de signature
 
@@ -1948,17 +1899,17 @@ gcloud compute backend-services add-signed-url-key backend-web \
 │                    Global External Application LB                            │
 │                    (Cloud Armor + CDN)                                       │
 │                                                                              │
-│   /static/* → Cloud Storage (CDN)                                           │
+│   /static/* → Cloud Storage (CDN)                                            │
 │   /api/* → Backend API                                                       │
-│   /* → Backend Web (Canary 90/10)                                           │
+│   /* → Backend Web (Canary 90/10)                                            │
 └──────────────────────────────────────────────────────────────────────────────┘
                                  │
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                           Frontend Tier                                      │
-│   ┌─────────────────┐              ┌─────────────────┐                      │
-│   │  ig-web-v1 (90%)│              │  ig-web-v2 (10%)│                      │
-│   └─────────────────┘              └─────────────────┘                      │
+│   ┌─────────────────┐              ┌─────────────────┐                       │
+│   │  ig-web-v1 (90%)│              │  ig-web-v2 (10%)│                       │
+│   └─────────────────┘              └─────────────────┘                       │
 └──────────────────────────────────────────────────────────────────────────────┘
                                  │
                                  ▼

@@ -64,18 +64,18 @@ Ces travaux pratiques permettront aux apprenants de :
                       └──────────┬──────────┘
                                  │
     ┌────────────────────────────┴────────────────────────────┐
-    │                         VPC                              │
+    │                         VPC                             │
     │   ┌─────────────────────────────────────────────────┐   │
-    │   │                  subnet-dns                      │   │
-    │   │                 10.0.0.0/24                      │   │
-    │   │                                                  │   │
+    │   │                  subnet-dns                     │   │
+    │   │                 10.0.0.0/24                     │   │
+    │   │                                                 │   │
     │   │   ┌───────────┐  ┌───────────┐  ┌───────────┐   │   │
     │   │   │   vm1     │  │   vm2     │  │    db     │   │   │
     │   │   │ 10.0.0.10 │  │ 10.0.0.20 │  │ 10.0.0.30 │   │   │
     │   │   └───────────┘  └───────────┘  └───────────┘   │   │
-    │   │                                                  │   │
+    │   │                                                 │   │
     │   └─────────────────────────────────────────────────┘   │
-    └──────────────────────────────────────────────────────────┘
+    └─────────────────────────────────────────────────────────┘
 ```
 
 ### Exercices
@@ -325,7 +325,6 @@ gcloud compute project-info describe \
 
 #### Exercice 6.2.3 : Comprendre les formats DNS
 
-```
 === Formats de noms DNS internes GCP ===
 
 FORMAT ZONAL (recommandé):
@@ -348,7 +347,6 @@ Inconvénients:
 NOMS COURTS:
 - vm1 (sans suffixe)
 - Fonctionnent grâce au search domain dans /etc/resolv.conf
-```
 
 ```bash
 # Voir le search domain configuré
@@ -856,8 +854,8 @@ exit
     ┌────────────────────────────┐             ┌────────────────────────────┐
     │                            │             │                            │
     │   Zone: services.internal  │             │   Zone peering vers Hub    │
-    │   api → 10.10.0.10         │  Peering   │                            │
-    │   cache → 10.10.0.20       │◄───DNS─────│   ┌───────────────┐        │
+    │   api → 10.10.0.10         │  Peering    │                            │
+    │   cache → 10.10.0.20       │◄───DNS──────│   ┌───────────────┐        │
     │   monitoring → 10.10.0.30  │             │   │   vm-spoke    │        │
     │                            │             │   │   10.20.0.10  │        │
     │   ┌───────────────┐        │             │   └───────────────┘        │
@@ -1169,7 +1167,7 @@ SOLUTION DNSSEC:
 TYPES DE CLÉS:
 ┌─────────────────────────────────────────────────────────┐
 │ KSK (Key Signing Key)                                   │
-│ - Signe les clés de zone                               │
+│ - Signe les clés de zone                                │
 │ - Référencée dans le DS record chez le registrar        │
 │ - Rotation moins fréquente                              │
 ├─────────────────────────────────────────────────────────┤
@@ -1259,7 +1257,7 @@ gcloud dns dns-keys list --zone=zone-public-lab \
 ```
                                 api.example.com
                                       │
-                   ┌──────────────────┴──────────────────┐
+                   ┌──────────────────┴───────────────────┐
                    │                                      │
            Depuis Internet                         Depuis VPC
            (Zone publique)                        (Zone privée)
@@ -1267,7 +1265,7 @@ gcloud dns dns-keys list --zone=zone-public-lab \
                    ▼                                      ▼
            ┌─────────────┐                        ┌─────────────┐
            │  35.x.x.x   │                        │  10.0.0.50  │
-           │ (IP publique)│                        │ (IP privée) │
+           │(IP publique)│                        │ (IP privée) │
            └─────────────┘                        └─────────────┘
                    │                                      │
                    └──────────────────┬───────────────────┘
@@ -1585,34 +1583,34 @@ gcloud dns record-sets delete "geo.example.com." \
                                             │ example.com
                                             │
     ┌───────────────────────────────────────┴───────────────────────────────────────┐
-    │                                                                                │
-    │                              VPC Production                                    │
-    │                                                                                │
+    │                                                                               │
+    │                              VPC Production                                   │
+    │                                                                               │
     │   ┌────────────────────────────────────────────────────────────────────────┐  │
     │   │                                                                        │  │
-    │   │   Zone privée: prod.internal                                          │  │
-    │   │   - api.prod.internal → 10.1.0.10                                     │  │
-    │   │   - db.prod.internal → 10.1.0.20                                      │  │
-    │   │   - cache.prod.internal → 10.1.0.30                                   │  │
+    │   │   Zone privée: prod.internal                                           │  │
+    │   │   - api.prod.internal → 10.1.0.10                                      │  │
+    │   │   - db.prod.internal → 10.1.0.20                                       │  │
+    │   │   - cache.prod.internal → 10.1.0.30                                    │  │
     │   │                                                                        │  │
     │   │   Split-horizon: api.example.com                                       │  │
-    │   │   - Externe: IP publique                                              │  │
-    │   │   - Interne: 10.1.0.10                                                │  │
+    │   │   - Externe: IP publique                                               │  │
+    │   │   - Interne: 10.1.0.10                                                 │  │
     │   │                                                                        │  │
-    │   │   Forwarding: corp.local → DNS on-premise (192.168.1.53)             │  │
+    │   │   Forwarding: corp.local → DNS on-premise (192.168.1.53)               │  │
     │   │                                                                        │  │
-    │   │   Inbound: Permet résolution depuis on-premise                        │  │
+    │   │   Inbound: Permet résolution depuis on-premise                         │  │
     │   │                                                                        │  │
-    │   │   Logging: Activé pour audit                                          │  │
+    │   │   Logging: Activé pour audit                                           │  │
     │   │                                                                        │  │
     │   └────────────────────────────────────────────────────────────────────────┘  │
-    │                                                                                │
+    │                                                                               │
     │                                     │ VPN/Interconnect                        │
-    │                                     ▼                                          │
-    │                              On-premise                                        │
+    │                                     ▼                                         │
+    │                              On-premise                                       │
     │                           (192.168.0.0/16)                                    │
-    │                                                                                │
-    └────────────────────────────────────────────────────────────────────────────────┘
+    │                                                                               │
+    └───────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Exercice : Déploiement complet
@@ -1820,6 +1818,7 @@ EOF
 echo "=== Logs DNS récents ==="
 gcloud logging read 'resource.type="dns_query"' --limit=10 \
     --format="table(timestamp,jsonPayload.queryName,jsonPayload.responseCode)"
+```
 
 ---
 

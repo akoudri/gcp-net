@@ -528,11 +528,11 @@ Policy: policy-web-app
     ├── Action: allow (ou deny selon configuration)
     └── Preview: false
 
+```
 Évaluation:
 1. Les règles sont évaluées par priorité croissante (100 avant 200 avant 1000)
 2. La première règle qui matche est appliquée
 3. Si aucune règle ne matche, la règle par défaut s'applique
-```
 
 #### Exercice 9.3.5 : Tester que la politique est active
 
@@ -1122,13 +1122,9 @@ gcloud logging read "
 )"
 ```
 
-#### Exercice 9.8.4 : Structure des logs
+#### Exercice 9.8.4 : Structure des logs CLOUD ARMOR
 
-```
-═══════════════════════════════════════════════════════════════════════════════
-                    STRUCTURE DES LOGS CLOUD ARMOR
-═══════════════════════════════════════════════════════════════════════════════
-
+```json
 {
   "httpRequest": {
     "requestMethod": "GET",

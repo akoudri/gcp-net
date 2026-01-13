@@ -373,8 +373,8 @@ chmod +x document_peerings.sh
                     │             │          │             │          │             │
                     └─────────────┘          └─────────────┘          └─────────────┘
                            │                                                │
-                           │          Pas de connectivité directe          │
-                           └───────────────── ✗ ──────────────────────────┘
+                           │          Pas de connectivité directe           │
+                           └───────────────── ✗ ────────────────────────────┘
 ```
 
 ### Exercices
@@ -677,47 +677,44 @@ gcloud iam roles describe roles/compute.networkUser
 
 #### Exercice 4.4.4 : Planifier l'architecture Shared VPC
 
-```bash
-# Template de planification
-cat << 'EOF' > shared_vpc_plan.md
-# Plan d'Architecture Shared VPC
+=== Template de planification ===
+=== Plan d'Architecture Shared VPC ===
 
-## 1. Projet Hôte
+1. Projet Hôte
 - Nom: network-host-prod
 - Usage: Héberge le VPC partagé (aucune workload applicative)
 
-## 2. Projets de Service
-| Projet | Équipe | Environnement | Sous-réseaux autorisés |
-|--------|--------|---------------|------------------------|
-| app-frontend-prod | Web | Production | subnet-frontend-prod |
-| app-backend-prod | API | Production | subnet-backend-prod |
-| app-data-prod | Data | Production | subnet-data-prod |
-| app-dev | DevOps | Développement | subnet-dev |
+2. Projets de Service
 
-## 3. Sous-réseaux
-| Sous-réseau | Région | Plage IP | Usage |
-|-------------|--------|----------|-------|
-| subnet-frontend-prod | europe-west1 | 10.100.0.0/24 | Frontend web |
-| subnet-backend-prod | europe-west1 | 10.100.1.0/24 | APIs backend |
-| subnet-data-prod | europe-west1 | 10.100.2.0/24 | Bases de données |
-| subnet-dev | europe-west1 | 10.200.0.0/24 | Environnement dev |
-| subnet-gke-nodes | europe-west1 | 10.100.10.0/24 | Nœuds GKE |
-| subnet-gke-pods | europe-west1 | 10.101.0.0/16 | Pods GKE (secondaire) |
-| subnet-gke-services | europe-west1 | 10.102.0.0/20 | Services GKE (secondaire) |
+| Projet            | Équipe | Environnement  | Sous-réseaux autorisés |
+|-------------------|--------|----------------|------------------------|
+| app-frontend-prod | Web    | Production     | subnet-frontend-prod   |
+| app-backend-prod  | API    | Production     | subnet-backend-prod    |
+| app-data-prod     | Data   | Production     | subnet-data-prod       |
+| app-dev           | DevOps | Développement  | subnet-dev             |
 
-## 4. Attribution des Rôles
-| Utilisateur/Groupe | Rôle | Portée |
-|--------------------|------|--------|
-| network-admins@company.com | compute.xpnAdmin | Organisation |
-| network-admins@company.com | compute.networkAdmin | network-host-prod |
-| security-team@company.com | compute.securityAdmin | network-host-prod |
-| frontend-devs@company.com | compute.networkUser | subnet-frontend-prod |
-| backend-devs@company.com | compute.networkUser | subnet-backend-prod |
-| data-team@company.com | compute.networkUser | subnet-data-prod |
-EOF
+3. Sous-réseaux
 
-cat shared_vpc_plan.md
-```
+| Sous-réseau         | Région        | Plage IP       | Usage                  |
+|---------------------|---------------|----------------|------------------------|
+| subnet-frontend-prod| europe-west1  | 10.100.0.0/24  | Frontend web           |
+| subnet-backend-prod | europe-west1  | 10.100.1.0/24  | APIs backend           |
+| subnet-data-prod    | europe-west1  | 10.100.2.0/24  | Bases de données       |
+| subnet-dev          | europe-west1  | 10.200.0.0/24  | Environnement dev      |
+| subnet-gke-nodes    | europe-west1  | 10.100.10.0/24 | Nœuds GKE              |
+| subnet-gke-pods     | europe-west1  | 10.101.0.0/16  | Pods GKE (secondaire)  |
+| subnet-gke-services | europe-west1  | 10.102.0.0/20  | Services GKE (secondaire) |
+
+4. Attribution des Rôles
+
+| Utilisateur/Groupe         | Rôle                    | Portée             |
+|----------------------------|-------------------------|--------------------|
+| network-admins@company.com | compute.xpnAdmin        | Organisation       |
+| network-admins@company.com | compute.networkAdmin    | network-host-prod  |
+| security-team@company.com  | compute.securityAdmin   | network-host-prod  |
+| frontend-devs@company.com  | compute.networkUser     | subnet-frontend-prod |
+| backend-devs@company.com   | compute.networkUser     | subnet-backend-prod  |
+| data-team@company.com      | compute.networkUser     | subnet-data-prod     |
 
 ---
 
@@ -927,14 +924,14 @@ EOF
     │                          shared-vpc                                 │
     │                                                                     │
     │   subnet-frontend                          subnet-backend           │
-    │   10.100.0.0/24                           10.100.1.0/24            │
-    │   ┌─────────────────┐                    ┌─────────────────┐       │
-    │   │                 │                    │                 │       │
-    │   │  vm-frontend    │◄──────────────────►│   vm-backend    │       │
-    │   │  (simule projet │                    │  (simule projet │       │
-    │   │   de service)   │                    │   de service)   │       │
-    │   │                 │                    │                 │       │
-    │   └─────────────────┘                    └─────────────────┘       │
+    │   10.100.0.0/24                           10.100.1.0/24             │
+    │   ┌─────────────────┐                    ┌─────────────────┐        │
+    │   │                 │                    │                 │        │
+    │   │  vm-frontend    │◄──────────────────►│   vm-backend    │        │
+    │   │  (simule projet │                    │  (simule projet │        │
+    │   │   de service)   │                    │   de service)   │        │
+    │   │                 │                    │                 │        │
+    │   └─────────────────┘                    └─────────────────┘        │
     │                                                                     │
     │   Règles de pare-feu centralisées (simule gestion par équipe réseau)│
     └─────────────────────────────────────────────────────────────────────┘
@@ -1096,29 +1093,29 @@ Dans un vrai Shared VPC, les permissions seraient:
 === Simulation des Rôles IAM ===
 
 ÉQUIPE RÉSEAU (compute.networkAdmin sur projet hôte):
-✅ Peut créer/modifier les sous-réseaux
-✅ Peut voir toutes les ressources réseau
-❌ Ne peut pas créer de VMs
+- ✅ Peut créer/modifier les sous-réseaux
+- ✅ Peut voir toutes les ressources réseau
+- ❌ Ne peut pas créer de VMs
 
 ÉQUIPE SÉCURITÉ (compute.securityAdmin sur projet hôte):
-✅ Peut créer/modifier les règles de pare-feu
-✅ Peut auditer le trafic
-❌ Ne peut pas modifier les sous-réseaux
+- ✅ Peut créer/modifier les règles de pare-feu
+- ✅ Peut auditer le trafic
+- ❌ Ne peut pas modifier les sous-réseaux
 
 ÉQUIPE FRONTEND (compute.networkUser sur subnet-frontend):
-✅ Peut créer des VMs dans subnet-frontend
-❌ Ne peut pas créer de VMs dans subnet-backend
-❌ Ne peut pas modifier les règles de pare-feu
+- ✅ Peut créer des VMs dans subnet-frontend
+- ❌ Ne peut pas créer de VMs dans subnet-backend
+- ❌ Ne peut pas modifier les règles de pare-feu
 
 ÉQUIPE BACKEND (compute.networkUser sur subnet-backend):
-✅ Peut créer des VMs dans subnet-backend
-❌ Ne peut pas créer de VMs dans subnet-frontend
-❌ Ne peut pas modifier les règles de pare-feu
+- ✅ Peut créer des VMs dans subnet-backend
+- ❌ Ne peut pas créer de VMs dans subnet-frontend
+- ❌ Ne peut pas modifier les règles de pare-feu
 
 ÉQUIPE DATA (compute.networkUser sur subnet-data):
-✅ Peut créer des VMs/Cloud SQL dans subnet-data
-❌ Ne peut pas accéder aux autres sous-réseaux
-❌ Ne peut pas modifier les règles de pare-feu
+- ✅ Peut créer des VMs/Cloud SQL dans subnet-data
+- ❌ Ne peut pas accéder aux autres sous-réseaux
+- ❌ Ne peut pas modifier les règles de pare-feu
 
 ---
 
@@ -1199,9 +1196,9 @@ DANS LE PROJET HÔTE (centralisé):
 | deny-all-ingress       | 0.0.0.0/0       | Tout (priorité basse)    |
 
 DANS LES PROJETS DE SERVICE:
-❌ Impossible de créer des règles de pare-feu
-❌ Impossible de modifier les règles existantes
-✅ Peuvent utiliser les tags définis dans le projet hôte
+- ❌ Impossible de créer des règles de pare-feu
+- ❌ Impossible de modifier les règles existantes
+- ✅ Peuvent utiliser les tags définis dans le projet hôte
 
 #### Exercice 4.7.4 : Bonnes pratiques de pare-feu
 
@@ -1265,7 +1262,6 @@ chmod +x audit_firewall.sh
 
 #### Exercice 4.8.1 : Scénario 1 - Startup en croissance
 
-```
 CONTEXTE:
 - Startup avec 20 développeurs
 - 3 équipes: Frontend, Backend, Data
@@ -1274,7 +1270,6 @@ CONTEXTE:
 - Besoin de communication entre les équipes
 
 QUESTION: Shared VPC ou VPC Peering?
-```
 
 **Analyse:**
 - ❌ Pas d'organisation GCP → Shared VPC impossible
@@ -1284,7 +1279,6 @@ QUESTION: Shared VPC ou VPC Peering?
 
 #### Exercice 4.8.2 : Scénario 2 - Grande entreprise
 
-```
 CONTEXTE:
 - Entreprise de 500 personnes
 - Organisation GCP existante
@@ -1294,7 +1288,6 @@ CONTEXTE:
 - Besoin de politiques de sécurité uniformes
 
 QUESTION: Shared VPC ou VPC Peering?
-```
 
 **Analyse:**
 - ✅ Organisation GCP → Shared VPC possible
@@ -1306,7 +1299,6 @@ QUESTION: Shared VPC ou VPC Peering?
 
 #### Exercice 4.8.3 : Scénario 3 - Multi-cloud / Partenaires
 
-```
 CONTEXTE:
 - Entreprise utilisant GCP et AWS
 - Partenaire externe sur GCP (autre organisation)
@@ -1314,7 +1306,6 @@ CONTEXTE:
 - Chaque organisation gère son propre réseau
 
 QUESTION: Shared VPC ou VPC Peering?
-```
 
 **Analyse:**
 - ❌ Cross-organisation → Shared VPC impossible
@@ -1324,7 +1315,6 @@ QUESTION: Shared VPC ou VPC Peering?
 
 #### Exercice 4.8.4 : Scénario 4 - Architecture hybride
 
-```
 CONTEXTE:
 - Grande entreprise avec organisation GCP
 - Départements internes (Finance, RH, IT)
@@ -1332,7 +1322,6 @@ CONTEXTE:
 - Connexion on-premise via Cloud Interconnect
 
 QUESTION: Quelle architecture?
-```
 
 **Analyse:**
 - Interne → Shared VPC (gestion centralisée)
@@ -1413,30 +1402,30 @@ RÉSUMÉ:
                                     Organisation Interne
     ┌─────────────────────────────────────────────────────────────────────────┐
     │                                                                         │
-    │    Shared VPC (Projet Hôte: network-hub)                               │
-    │    ┌─────────────────────────────────────────────────────────────────┐ │
-    │    │                                                                 │ │
-    │    │   subnet-prod          subnet-staging        subnet-dev        │ │
-    │    │   10.10.0.0/24         10.20.0.0/24         10.30.0.0/24       │ │
-    │    │       │                     │                    │             │ │
-    │    │       ▼                     ▼                    ▼             │ │
-    │    │   Projet Service:      Projet Service:     Projet Service:     │ │
-    │    │   app-prod             app-staging         app-dev             │ │
-    │    │                                                                 │ │
-    │    └────────────────────────────┬────────────────────────────────────┘ │
-    │                                 │                                      │
-    └─────────────────────────────────┼──────────────────────────────────────┘
+    │    Shared VPC (Projet Hôte: network-hub)                                │
+    │    ┌─────────────────────────────────────────────────────────────────┐  │
+    │    │                                                                 │  │
+    │    │   subnet-prod          subnet-staging        subnet-dev         │  │
+    │    │   10.10.0.0/24         10.20.0.0/24         10.30.0.0/24        │  │
+    │    │       │                     │                    │              │  │
+    │    │       ▼                     ▼                    ▼              │  │
+    │    │   Projet Service:      Projet Service:     Projet Service:      │  │
+    │    │   app-prod             app-staging         app-dev              │  │
+    │    │                                                                 │  │
+    │    └────────────────────────────┬────────────────────────────────────┘  │
+    │                                 │                                       │
+    └─────────────────────────────────┼───────────────────────────────────────┘
                                       │ VPC Peering
                                       ▼
     ┌─────────────────────────────────────────────────────────────────────────┐
     │                     Organisation Partenaire                             │
-    │    ┌─────────────────────────────────────────────────────────────────┐ │
-    │    │                      VPC Partenaire                             │ │
-    │    │                      10.200.0.0/16                              │ │
-    │    │                                                                 │ │
-    │    │                     Services partagés                           │ │
-    │    │                     (API, données)                              │ │
-    │    └─────────────────────────────────────────────────────────────────┘ │
+    │    ┌─────────────────────────────────────────────────────────────────┐  │
+    │    │                      VPC Partenaire                             │  │
+    │    │                      10.200.0.0/16                              │  │
+    │    │                                                                 │  │
+    │    │                     Services partagés                           │  │
+    │    │                     (API, données)                              │  │
+    │    └─────────────────────────────────────────────────────────────────┘  │
     └─────────────────────────────────────────────────────────────────────────┘
 ```
 
