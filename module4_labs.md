@@ -500,22 +500,19 @@ gcloud compute networks peerings list --network=$VPC_GAMMA --format="value(name)
 # Calculer le nombre de peerings pour un full mesh
 # Formule : n × (n-1) / 2 connexions, mais chaque connexion = 2 peerings
 # Donc : n × (n-1) peerings au total
-
-cat << 'EOF'
+```
 === Limites du Full Mesh ===
 
-Nombre de VPC | Peerings par VPC | Total peerings
---------------|------------------|---------------
-     3        |        2         |       6
-     5        |        4         |      20
-    10        |        9         |      90
-    25        |       24         |     600
-    26        |       25         |     650 ⚠️ LIMITE ATTEINTE
+| Nombre de VPC | Peerings par VPC | Total peerings |
+|---------------|------------------|----------------|
+| 3             | 2                | 6              |
+| 5             | 4                | 20             |
+| 10            | 9                | 90             |
+| 25            | 24               | 600            |
+| 26            | 25               | 650 ⚠️ LIMITE ATTEINTE |
 
 Avec la limite de 25 peerings par VPC, le full mesh ne fonctionne que jusqu'à 26 VPC.
 Pour plus de VPC, il faut une architecture hub-and-spoke avec transit.
-EOF
-```
 
 #### Exercice 4.3.6 : Solution 2 - Transit via une appliance (Hub)
 
@@ -1094,9 +1091,8 @@ EOF
 
 #### Exercice 4.6.5 : Simuler les rôles IAM
 
-```bash
-# Dans un vrai Shared VPC, les permissions seraient:
-cat << 'EOF'
+Dans un vrai Shared VPC, les permissions seraient:
+
 === Simulation des Rôles IAM ===
 
 ÉQUIPE RÉSEAU (compute.networkAdmin sur projet hôte):
@@ -1123,8 +1119,6 @@ cat << 'EOF'
 ✅ Peut créer des VMs/Cloud SQL dans subnet-data
 ❌ Ne peut pas accéder aux autres sous-réseaux
 ❌ Ne peut pas modifier les règles de pare-feu
-EOF
-```
 
 ---
 
@@ -1190,31 +1184,24 @@ gcloud compute firewall-rules create ${VPC_BETA}-allow-internal \
 
 #### Exercice 4.7.3 : Pare-feu avec Shared VPC (conceptuel)
 
-```bash
-# Dans un Shared VPC, toutes les règles sont dans le projet HÔTE
-# Les projets de service NE PEUVENT PAS créer leurs propres règles
+Dans un Shared VPC, toutes les règles sont dans le projet HÔTE
+Les projets de service NE PEUVENT PAS créer leurs propres règles
 
-cat << 'EOF'
 === Règles de pare-feu Shared VPC ===
 
 DANS LE PROJET HÔTE (centralisé):
-┌─────────────────────────────────────────────────────────────┐
-│ Règle                  │ Source         │ Cible           │
-├────────────────────────┼────────────────┼─────────────────┤
-│ allow-internal         │ 10.0.0.0/8     │ Tout le VPC     │
-│ allow-ssh-iap          │ 35.235.240.0/20│ tag:ssh-allowed │
-│ allow-http-external    │ 0.0.0.0/0      │ tag:web-server  │
-│ allow-frontend-backend │ tag:frontend   │ tag:backend     │
-│ deny-all-ingress       │ 0.0.0.0/0      │ Tout (priorité  │
-│                        │                │ basse)          │
-└─────────────────────────────────────────────────────────────┘
+| Règle                  | Source          | Cible                    |
+|------------------------|-----------------|--------------------------|
+| allow-internal         | 10.0.0.0/8      | Tout le VPC              |
+| allow-ssh-iap          | 35.235.240.0/20 | tag:ssh-allowed          |
+| allow-http-external    | 0.0.0.0/0       | tag:web-server           |
+| allow-frontend-backend | tag:frontend    | tag:backend              |
+| deny-all-ingress       | 0.0.0.0/0       | Tout (priorité basse)    |
 
 DANS LES PROJETS DE SERVICE:
 ❌ Impossible de créer des règles de pare-feu
 ❌ Impossible de modifier les règles existantes
 ✅ Peuvent utiliser les tags définis dans le projet hôte
-EOF
-```
 
 #### Exercice 4.7.4 : Bonnes pratiques de pare-feu
 
@@ -1375,10 +1362,9 @@ QUESTION: Quelle architecture?
 
 #### Exercice 4.8.5 : Arbre de décision interactif
 
-```bash
-cat << 'EOF'
 === ARBRE DE DÉCISION: SHARED VPC vs VPC PEERING ===
 
+```
 Q1: Avez-vous une organisation GCP?
     │
     ├─► NON → VPC Peering (seule option)
@@ -1402,19 +1388,14 @@ Q1: Avez-vous une organisation GCP?
                                 │                                 ou Shared VPC
                                 │
                                 └─► NON → VPC Peering (gestion décentralisée)
+```
 
 RÉSUMÉ:
-┌────────────────────┬─────────────────────────────────────────────┐
-│ Choisir Shared VPC │ Grande org, équipe réseau centralisée,     │
-│                    │ sécurité uniforme, >25 connexions          │
-├────────────────────┼─────────────────────────────────────────────┤
-│ Choisir VPC Peering│ Pas d'org GCP, cross-organisation,         │
-│                    │ équipes autonomes, <25 connexions          │
-├────────────────────┼─────────────────────────────────────────────┤
-│ Combiner les deux  │ Grande entreprise avec partenaires externes│
-└────────────────────┴─────────────────────────────────────────────┘
-EOF
-```
+| Scénario            | Utilisation                                                              |
+|---------------------|--------------------------------------------------------------------------|
+| Choisir Shared VPC  | Grande org, équipe réseau centralisée, sécurité uniforme, >25 connexions |
+| Choisir VPC Peering | Pas d'org GCP, cross-organisation, équipes autonomes, <25 connexions     |
+| Combiner les deux   | Grande entreprise avec partenaires externes                              |
 
 ---
 

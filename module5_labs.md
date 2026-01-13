@@ -300,11 +300,9 @@ exit
 
 #### Exercice 5.2.5 : Comprendre restricted.googleapis.com
 
-```bash
-# restricted.googleapis.com est utilisé avec VPC Service Controls
-# IPs: 199.36.153.4/30
+restricted.googleapis.com est utilisé avec VPC Service Controls
+IPs: 199.36.153.4/30
 
-cat << 'EOF'
 === Comparaison private.googleapis.com vs restricted.googleapis.com ===
 
 | Aspect | private.googleapis.com | restricted.googleapis.com |
@@ -320,7 +318,7 @@ Quand utiliser restricted.googleapis.com :
 - Exigences de conformité strictes (HIPAA, PCI-DSS)
 - Prévention de l'exfiltration de données
 EOF
-```
+
 
 #### Exercice 5.2.6 : (Optionnel) Configurer pour restricted.googleapis.com
 
@@ -328,7 +326,6 @@ EOF
 # Créer une zone DNS pour restricted (ne pas faire si vous n'avez pas VPC-SC)
 # Ceci est fourni à titre informatif
 
-cat << 'EOF'
 # Zone pour VPC Service Controls
 gcloud dns managed-zones create googleapis-restricted \
     --dns-name="googleapis.com." \
@@ -349,7 +346,6 @@ gcloud dns record-sets create "*.googleapis.com." \
     --type=CNAME \
     --ttl=300 \
     --rrdatas="restricted.googleapis.com."
-EOF
 ```
 
 ---
@@ -787,8 +783,6 @@ exit
 
 #### Exercice 5.5.7 : Comparer PSC avec PGA
 
-```bash
-cat << 'EOF'
 === Comparaison PSC vs PGA pour les APIs Google ===
 
 | Aspect | PGA | PSC |
@@ -811,8 +805,7 @@ Quand PGA suffit :
 ✅ VMs GCP uniquement
 ✅ Configuration simple
 ✅ Pas d'exigences on-premise
-EOF
-```
+
 
 ---
 
@@ -1164,43 +1157,21 @@ EOF
 
 #### Exercice 5.8.1 : Tableau comparatif complet
 
-```bash
-cat << 'EOF'
-╔═══════════════════════════════════════════════════════════════════════════════════════════╗
-║                    COMPARAISON PGA vs PSA vs PSC                                          ║
-╠═══════════════════════════════════════════════════════════════════════════════════════════╣
-║ Critère            │ PGA                 │ PSA                  │ PSC                     ║
-╠════════════════════╪═════════════════════╪══════════════════════╪═════════════════════════╣
-║ Cible principale   │ APIs Google         │ Services managés     │ APIs Google +           ║
-║                    │ (Storage, BigQuery) │ (Cloud SQL, Redis)   │ Services tiers          ║
-╠════════════════════╪═════════════════════╪══════════════════════╪═════════════════════════╣
-║ Mécanisme          │ Routage vers IPs    │ VPC Peering avec     │ Endpoint privé dans     ║
-║                    │ Google + DNS        │ VPC Google           │ votre VPC               ║
-╠════════════════════╪═════════════════════╪══════════════════════╪═════════════════════════╣
-║ IP utilisée        │ IPs Google          │ IP dans plage        │ IP de votre             ║
-║                    │ (199.36.153.x)      │ réservée (PSA)       │ sous-réseau             ║
-╠════════════════════╪═════════════════════╪══════════════════════╪═════════════════════════╣
-║ Configuration      │ Par sous-réseau     │ Par VPC              │ Par endpoint            ║
-╠════════════════════╪═════════════════════╪══════════════════════╪═════════════════════════╣
-║ Transitivité       │ Via routes + DNS    │ Nécessite export     │ Native                  ║
-║ on-premise         │ on-premise          │ routes custom        │ (IP routable)           ║
-╠════════════════════╪═════════════════════╪══════════════════════╪═════════════════════════╣
-║ VPC Service        │ restricted.         │ Supporté             │ Supporté                ║
-║ Controls           │ googleapis.com      │                      │                         ║
-╠════════════════════╪═════════════════════╪══════════════════════╪═════════════════════════╣
-║ Isolation          │ Partagé             │ Partagé              │ Dédié par endpoint      ║
-╠════════════════════╪═════════════════════╪══════════════════════╪═════════════════════════╣
-║ Complexité         │ ⭐ Simple           │ ⭐⭐ Moyenne         │ ⭐⭐⭐ Avancée          ║
-╠════════════════════╪═════════════════════╪══════════════════════╪═════════════════════════╣
-║ Coût               │ Gratuit             │ Selon le service     │ Faible coût endpoint    ║
-╚═══════════════════════════════════════════════════════════════════════════════════════════╝
-EOF
-```
+| Critère                  | PGA                                        | PSA                                    | PSC                                      |
+|--------------------------|--------------------------------------------|-----------------------------------------|------------------------------------------|
+| Cible principale         | APIs Google (Storage, BigQuery)            | Services managés (Cloud SQL, Redis)    | APIs Google + Services tiers             |
+| Mécanisme                | Routage vers IPs Google + DNS              | VPC Peering avec VPC Google            | Endpoint privé dans votre VPC            |
+| IP utilisée              | IPs Google (199.36.153.x)                  | IP dans plage réservée (PSA)           | IP de votre sous-réseau                  |
+| Configuration            | Par sous-réseau                            | Par VPC                                | Par endpoint                             |
+| Transitivité on-premise  | Via routes + DNS on-premise                | Nécessite export routes custom         | Native (IP routable)                     |
+| VPC Service Controls     | restricted.googleapis.com                  | Supporté                               | Supporté                                 |
+| Isolation                | Partagé                                    | Partagé                                | Dédié par endpoint                       |
+| Complexité               | ⭐ Simple                                  | ⭐⭐ Moyenne                            | ⭐⭐⭐ Avancée                            |
+| Coût                     | Gratuit                                    | Selon le service                       | Faible coût endpoint                     |
 
 #### Exercice 5.8.2 : Scénarios de décision
 
-```bash
-cat << 'EOF'
+```
 === SCÉNARIOS ET RECOMMANDATIONS ===
 
 SCÉNARIO 1: VMs GCP accédant à Cloud Storage
@@ -1237,7 +1208,6 @@ SCÉNARIO 5: Conformité VPC Service Controls
 │ Recommandation: PSC avec bundle vpc-sc                      │
 │ Raison: Contrôle strict, compatibilité VPC-SC              │
 └─────────────────────────────────────────────────────────────┘
-EOF
 ```
 
 #### Exercice 5.8.3 : Arbre de décision

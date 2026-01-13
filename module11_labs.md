@@ -53,48 +53,45 @@ Ces travaux pratiques permettront aux apprenants de :
 
 #### Exercice 11.1.1 : Enjeux de l'observabilité
 
-```bash
-cat << 'EOF'
+```
 ╔════════════════════════════════════════════════════════════════════════════════╗
 ║                    ENJEUX DE L'OBSERVABILITÉ RÉSEAU                            ║
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                ║
 ║  SÉCURITÉ                                                                      ║
-║  ─────────────────────────────────────────────────────────────────────────────║
-║  • Détecter les intrusions et tentatives d'attaque                            ║
+║  ───────────────────────────────────────────────────────────────────────────── ║
+║  • Détecter les intrusions et tentatives d'attaque                             ║
 ║  • Identifier le trafic suspect ou anormal                                     ║
-║  • Audit et conformité (PCI-DSS, HIPAA, RGPD)                                 ║
+║  • Audit et conformité (PCI-DSS, HIPAA, RGPD)                                  ║
 ║  • Investigation forensique après incident                                     ║
 ║                                                                                ║
 ║  PERFORMANCE                                                                   ║
-║  ─────────────────────────────────────────────────────────────────────────────║
+║  ───────────────────────────────────────────────────────────────────────────── ║
 ║  • Identifier les goulots d'étranglement                                       ║
 ║  • Mesurer la latence entre services                                           ║
 ║  • Optimiser le routage du trafic                                              ║
 ║  • Planifier la capacité                                                       ║
 ║                                                                                ║
 ║  DÉPANNAGE                                                                     ║
-║  ─────────────────────────────────────────────────────────────────────────────║
+║  ───────────────────────────────────────────────────────────────────────────── ║
 ║  • Diagnostiquer les problèmes de connectivité                                 ║
 ║  • Identifier les règles de pare-feu bloquantes                                ║
 ║  • Valider les configurations réseau                                           ║
 ║  • Tracer le chemin des paquets                                                ║
 ║                                                                                ║
 ║  OPTIMISATION DES COÛTS                                                        ║
-║  ─────────────────────────────────────────────────────────────────────────────║
+║  ───────────────────────────────────────────────────────────────────────────── ║
 ║  • Identifier le trafic inutile ou excessif                                    ║
 ║  • Optimiser l'utilisation du NAT                                              ║
 ║  • Réduire le trafic inter-régions                                             ║
 ║  • Valider l'efficacité du CDN                                                 ║
 ║                                                                                ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
-EOF
 ```
 
 #### Exercice 11.1.2 : Panorama des outils d'observabilité
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     OUTILS D'OBSERVABILITÉ RÉSEAU GCP
 ═══════════════════════════════════════════════════════════════════════════════
@@ -102,17 +99,17 @@ cat << 'EOF'
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                              LOGS                                           │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ VPC Flow Logs      │ Métadonnées des flux (IPs, ports, bytes)              │
-│ Firewall Logs      │ Décisions du pare-feu (ALLOW/DENY)                    │
-│ Load Balancer Logs │ Requêtes HTTP et réponses                             │
+│ VPC Flow Logs      │ Métadonnées des flux (IPs, ports, bytes)               │
+│ Firewall Logs      │ Décisions du pare-feu (ALLOW/DENY)                     │
+│ Load Balancer Logs │ Requêtes HTTP et réponses                              │
 │ Cloud NAT Logs     │ Translations d'adresses                                │
-│ Cloud Armor Logs   │ Décisions de sécurité WAF                             │
+│ Cloud Armor Logs   │ Décisions de sécurité WAF                              │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                            MÉTRIQUES                                        │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ Cloud Monitoring   │ Métriques VMs, LB, VPN, NAT, Interconnect             │
+│ Cloud Monitoring   │ Métriques VMs, LB, VPN, NAT, Interconnect              │
 │ Dashboards         │ Visualisation temps réel                               │
 │ Alerting           │ Notifications proactives                               │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -120,26 +117,24 @@ cat << 'EOF'
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                      INSPECTION APPROFONDIE                                 │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ Packet Mirroring   │ Copie des paquets pour IDS/forensics                  │
-│ Cloud IDS          │ Détection d'intrusion managée                         │
+│ Packet Mirroring   │ Copie des paquets pour IDS/forensics                   │
+│ Cloud IDS          │ Détection d'intrusion managée                          │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    NETWORK INTELLIGENCE CENTER                              │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ Network Topology   │ Visualisation de l'architecture                       │
-│ Connectivity Tests │ Diagnostic de connectivité                            │
-│ Firewall Insights  │ Optimisation des règles                               │
-│ Network Analyzer   │ Détection des misconfigurations                       │
-│ Performance Dashboard │ Latence et perte entre zones/régions               │
+│ Network Topology   │ Visualisation de l'architecture                        │
+│ Connectivity Tests │ Diagnostic de connectivité                             │
+│ Firewall Insights  │ Optimisation des règles                                │
+│ Network Analyzer   │ Détection des misconfigurations                        │
+│ Performance Dashboard │ Latence et perte entre zones/régions                │
 └─────────────────────────────────────────────────────────────────────────────┘
-EOF
 ```
 
 #### Exercice 11.1.3 : Choisir le bon outil
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     QUEL OUTIL POUR QUEL BESOIN ?
 ═══════════════════════════════════════════════════════════════════════════════
@@ -156,7 +151,6 @@ Besoin                              │ Outil recommandé
 "Erreurs de configuration ?"        │ Network Analyzer
 "Performance inter-régions ?"       │ Performance Dashboard
 "Requêtes SQL dans BigQuery"        │ VPC Flow Logs → BigQuery export
-EOF
 ```
 
 ---
@@ -276,9 +270,8 @@ gcloud compute networks subnets describe subnet-monitored \
 
 #### Exercice 11.2.3 : Configurer les paramètres avancés
 
-```bash
+```
 # Comprendre les paramètres
-cat << 'EOF'
 ═══════════════════════════════════════════════════════════════════════════════
                     PARAMÈTRES VPC FLOW LOGS
 ═══════════════════════════════════════════════════════════════════════════════
@@ -309,8 +302,9 @@ FILTER EXPRESSION (--logging-filter-expr)
 ──────────────────────────────────────────────────────────────────────────────
 • Filtrer pour réduire le volume
 • Exemples: src_ip, dest_ip, src_port, dest_port
-EOF
+```
 
+```bash
 # Configurer avec des paramètres optimisés pour la production
 gcloud compute networks subnets update subnet-monitored \
     --region=$REGION \
@@ -377,8 +371,7 @@ EOF
 
 #### Exercice 11.3.1 : Structure des Flow Logs
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     STRUCTURE D'UN VPC FLOW LOG
 ═══════════════════════════════════════════════════════════════════════════════
@@ -417,7 +410,6 @@ cat << 'EOF'
     "region": "California"
   }
 }
-EOF
 ```
 
 #### Exercice 11.3.2 : Requêtes de base dans Cloud Logging
@@ -691,8 +683,7 @@ LIMIT 20
 
 #### Exercice 11.5.1 : Différence Flow Logs vs Firewall Logs
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                 VPC FLOW LOGS vs FIREWALL RULES LOGGING
 ═══════════════════════════════════════════════════════════════════════════════
@@ -711,7 +702,6 @@ Quand utiliser quoi:
 • "Pourquoi cette connexion est bloquée ?" → Firewall Logs
 • "Quelle règle a autorisé ce trafic ?" → Firewall Logs
 • "Top des destinations par volume" → VPC Flow Logs
-EOF
 ```
 
 #### Exercice 11.5.2 : Activer le logging sur les règles existantes
@@ -789,8 +779,7 @@ jsonPayload.disposition="DENIED"
 
 #### Exercice 11.5.5 : Structure des Firewall Logs
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     STRUCTURE D'UN FIREWALL LOG
 ═══════════════════════════════════════════════════════════════════════════════
@@ -821,7 +810,6 @@ cat << 'EOF'
     "vpc_name": "vpc-observability"
   }
 }
-EOF
 ```
 
 ---
@@ -999,8 +987,7 @@ EOF
 
 #### Exercice 11.7.1 : Métriques réseau disponibles
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     MÉTRIQUES RÉSEAU GCP
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1045,7 +1032,6 @@ CDN
 loadbalancing.googleapis.com/https/cdn/cache_hit_ratio
 loadbalancing.googleapis.com/https/cdn/cache_fill_bytes_count
 loadbalancing.googleapis.com/https/cdn/cache_hit_bytes_count
-EOF
 ```
 
 #### Exercice 11.7.2 : Lister les métriques disponibles
@@ -1208,8 +1194,7 @@ gcloud monitoring dashboards list
 
 #### Exercice 11.8.2 : Widgets recommandés
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     WIDGETS RECOMMANDÉS POUR UN DASHBOARD RÉSEAU
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1224,7 +1209,6 @@ NAT Port Usage          │ nat/port_usage                    │ Saturation NAT
 CDN Hit Ratio           │ cdn/cache_hit_ratio               │ Efficacité du cache
 Dropped Packets         │ dropped_packets_count             │ Problèmes de capacité
 Backend Health          │ backend healthy count             │ État des backends
-EOF
 ```
 
 ---
@@ -1258,8 +1242,7 @@ echo "Channel ID: $CHANNEL_ID"
 
 #### Exercice 11.9.2 : Alertes recommandées
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     ALERTES RÉSEAU RECOMMANDÉES
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1288,7 +1271,6 @@ SÉCURITÉ (Info/Warning)
 • Firewall Denies Spike  │ denied > baseline + 200%      │ 5 minutes
 • Unusual Egress         │ egress > baseline + 300%      │ 15 minutes
 • Cloud Armor Blocks     │ blocked > 1000/min            │ 1 minute
-EOF
 ```
 
 #### Exercice 11.9.3 : Créer une alerte sur la bande passante
@@ -1375,8 +1357,7 @@ EOF
 
 #### Exercice 11.10.1 : Network Topology
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                         NETWORK TOPOLOGY
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1394,8 +1375,9 @@ Fonctionnalités:
 • Filtrage par projet, VPC, région
 • Détails des flux de trafic
 • Export de la topologie
-EOF
+```
 
+```bash
 # Via l'API (pour lister les entités)
 # Note: Network Topology est principalement une fonctionnalité de la Console
 echo "Network Topology est accessible dans la Console GCP"
@@ -1432,8 +1414,7 @@ gcloud network-management connectivity-tests list
 
 #### Exercice 11.10.3 : Interpréter les résultats
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     RÉSULTATS CONNECTIVITY TESTS
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1450,7 +1431,6 @@ Informations fournies:
 • Règle de pare-feu appliquée
 • Route utilisée
 • Point de blocage éventuel
-EOF
 ```
 
 #### Exercice 11.10.4 : Firewall Insights
@@ -1472,8 +1452,7 @@ gcloud recommender insights list \
 
 #### Exercice 11.10.5 : Network Analyzer
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                         NETWORK ANALYZER
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1490,8 +1469,9 @@ DNS               │ Zones en conflit
 NAT               │ Configuration incomplète
 
 Accès: Console → Network Intelligence Center → Network Analyzer
-EOF
+```
 
+```bash
 # Via l'API
 gcloud network-management operations list
 ```
@@ -1510,8 +1490,7 @@ gcloud network-management operations list
 
 #### Exercice 11.11.1 : Sources de coûts
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     COÛTS D'OBSERVABILITÉ RÉSEAU
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1531,7 +1510,6 @@ Cloud Logging       │ Ingestion + stockage       │ $0.50/GiB ingéré
 ────────────────────┼────────────────────────────┼────────────────────────────
 BigQuery export     │ Stockage + requêtes        │ $0.02/GB stockage
                     │                            │ $5/TB requêtes
-EOF
 ```
 
 #### Exercice 11.11.2 : Optimiser le sampling
@@ -1641,8 +1619,7 @@ gcloud logging sinks create archive-old-logs \
 
 ### Checklist d'implémentation
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
               CHECKLIST OBSERVABILITÉ RÉSEAU COMPLÈTE
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1681,7 +1658,6 @@ RÉTENTION & COÛTS
 ☐ Rétention configurée (30j Cloud Logging, BigQuery pour long terme)
 ☐ Archivage vers Cloud Storage pour les vieux logs
 ☐ Budget d'alerte configuré si nécessaire
-EOF
 ```
 
 ---

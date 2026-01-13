@@ -55,56 +55,53 @@ Ces travaux pratiques permettront aux apprenants de :
 
 #### Exercice 9.1.1 : Types d'attaques DDoS
 
-```bash
-cat << 'EOF'
+```
 ╔════════════════════════════════════════════════════════════════════════════════╗
 ║                          TYPES D'ATTAQUES DDoS                                 ║
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                ║
-║  COUCHE 3/4 - VOLUMÉTRIQUES                                                   ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Objectif: Saturer la bande passante                                     │  ║
-║  │                                                                         │  ║
-║  │ • UDP Flood: Inondation de paquets UDP                                  │  ║
-║  │ • SYN Flood: Épuisement des connexions TCP (half-open)                  │  ║
-║  │ • ICMP Flood: Ping of death, smurf attack                               │  ║
-║  │ • Amplification: DNS, NTP, memcached (facteur x50-x1000)                │  ║
-║  │                                                                         │  ║
-║  │ Volume: Jusqu'à plusieurs Tbps                                          │  ║
-║  │ Protection GCP: Automatique (infrastructure + edge)                     │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  COUCHE 3/4 - VOLUMÉTRIQUES                                                    ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Objectif: Saturer la bande passante                                     │   ║
+║  │                                                                         │   ║
+║  │ • UDP Flood: Inondation de paquets UDP                                  │   ║
+║  │ • SYN Flood: Épuisement des connexions TCP (half-open)                  │   ║
+║  │ • ICMP Flood: Ping of death, smurf attack                               │   ║
+║  │ • Amplification: DNS, NTP, memcached (facteur x50-x1000)                │   ║
+║  │                                                                         │   ║
+║  │ Volume: Jusqu'à plusieurs Tbps                                          │   ║
+║  │ Protection GCP: Automatique (infrastructure + edge)                     │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
-║  COUCHE 4 - PROTOCOLE                                                         ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Objectif: Épuiser les tables d'état                                     │  ║
-║  │                                                                         │  ║
-║  │ • TCP State Exhaustion: Connexions zombie                               │  ║
-║  │ • Fragmentation: Paquets fragmentés malformés                           │  ║
-║  │                                                                         │  ║
-║  │ Protection GCP: Automatique (Load Balancer proxy)                       │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  COUCHE 4 - PROTOCOLE                                                          ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Objectif: Épuiser les tables d'état                                     │   ║
+║  │                                                                         │   ║
+║  │ • TCP State Exhaustion: Connexions zombie                               │   ║
+║  │ • Fragmentation: Paquets fragmentés malformés                           │   ║
+║  │                                                                         │   ║
+║  │ Protection GCP: Automatique (Load Balancer proxy)                       │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
-║  COUCHE 7 - APPLICATIVES                                                      ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Objectif: Épuiser les ressources applicatives                           │  ║
-║  │                                                                         │  ║
-║  │ • HTTP Flood: Requêtes HTTP légitimes en masse                          │  ║
-║  │ • Slowloris: Connexions lentes gardées ouvertes                         │  ║
-║  │ • API Abuse: Appels API coûteux en masse                                │  ║
-║  │ • Scraping: Extraction massive de contenu                               │  ║
-║  │                                                                         │  ║
-║  │ Volume: Record Google 2023 = 46 millions RPS                            │  ║
-║  │ Protection GCP: Cloud Armor (à configurer)                              │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  COUCHE 7 - APPLICATIVES                                                       ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Objectif: Épuiser les ressources applicatives                           │   ║
+║  │                                                                         │   ║
+║  │ • HTTP Flood: Requêtes HTTP légitimes en masse                          │   ║
+║  │ • Slowloris: Connexions lentes gardées ouvertes                         │   ║
+║  │ • API Abuse: Appels API coûteux en masse                                │   ║
+║  │ • Scraping: Extraction massive de contenu                               │   ║
+║  │                                                                         │   ║
+║  │ Volume: Record Google 2023 = 46 millions RPS                            │   ║
+║  │ Protection GCP: Cloud Armor (à configurer)                              │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
-EOF
 ```
 
 #### Exercice 9.1.2 : Les 4 couches de protection Google Cloud
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     4 COUCHES DE PROTECTION DDoS GCP
 ═══════════════════════════════════════════════════════════════════════════════
@@ -154,13 +151,11 @@ cat << 'EOF'
                                │
                                ▼
                          Backend Services
-EOF
 ```
 
 #### Exercice 9.1.3 : Fonctionnalités Cloud Armor par tier
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                      CLOUD ARMOR - TIERS DE SERVICE
 ═══════════════════════════════════════════════════════════════════════════════
@@ -178,7 +173,7 @@ cat << 'EOF'
 │ ❌ Threat Intelligence complet                                              │
 │ ❌ DDoS Response Team                                                       │
 │                                                                             │
-│ Tarification: Par règle (~$5/mois) + requêtes (~$0.75/million)             │
+│ Tarification: Par règle (~$5/mois) + requêtes (~$0.75/million)              │
 │ Recommandé pour: PME, applications non critiques                            │
 └─────────────────────────────────────────────────────────────────────────────┘
 
@@ -197,13 +192,11 @@ cat << 'EOF'
 └─────────────────────────────────────────────────────────────────────────────┘
 
 * Les coûts de Load Balancer sont séparés
-EOF
 ```
 
 #### Exercice 9.1.4 : Load Balancers compatibles
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                    CLOUD ARMOR - LOAD BALANCERS COMPATIBLES
 ═══════════════════════════════════════════════════════════════════════════════
@@ -222,7 +215,6 @@ Internal proxy Network LB                       │     ❌      │ Interne seu
 
 🔑 Cloud Armor fonctionne UNIQUEMENT avec les Load Balancers de type PROXY
    qui terminent les connexions (pas les passthrough).
-EOF
 ```
 
 ---
@@ -509,8 +501,7 @@ gcloud compute backend-services describe backend-web \
 
 #### Exercice 9.3.4 : Comprendre la structure des politiques
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     STRUCTURE D'UNE POLITIQUE CLOUD ARMOR
 ═══════════════════════════════════════════════════════════════════════════════
@@ -541,7 +532,6 @@ Policy: policy-web-app
 1. Les règles sont évaluées par priorité croissante (100 avant 200 avant 1000)
 2. La première règle qui matche est appliquée
 3. Si aucune règle ne matche, la règle par défaut s'applique
-EOF
 ```
 
 #### Exercice 9.3.5 : Tester que la politique est active
@@ -638,29 +628,23 @@ gcloud compute security-policies rules create 200 \
 
 #### Exercice 9.4.5 : Actions disponibles
 
-```bash
-cat << 'EOF'
-═══════════════════════════════════════════════════════════════════════════════
-                        ACTIONS CLOUD ARMOR
-═══════════════════════════════════════════════════════════════════════════════
+ACTIONS CLOUD ARMOR
 
-Action          │ Code HTTP │ Comportement
-────────────────┼───────────┼────────────────────────────────────────────────
-allow           │ -         │ Autorise la requête (passe au backend)
-deny-403        │ 403       │ Bloque avec "Forbidden"
-deny-404        │ 404       │ Bloque avec "Not Found" (masque l'existence)
-deny-502        │ 502       │ Bloque avec "Bad Gateway"
-redirect        │ 302       │ Redirige vers une URL spécifiée
-throttle        │ 429       │ Limite le débit (rate limiting)
-rate_based_ban  │ 403       │ Ban temporaire si seuil dépassé
+| Action         | Code HTTP | Comportement                                  |
+|----------------|-----------|-----------------------------------------------|
+| allow          | -         | Autorise la requête (passe au backend)        |
+| deny-403       | 403       | Bloque avec "Forbidden"                       |
+| deny-404       | 404       | Bloque avec "Not Found" (masque l'existence)  |
+| deny-502       | 502       | Bloque avec "Bad Gateway"                     |
+| redirect       | 302       | Redirige vers une URL spécifiée               |
+| throttle       | 429       | Limite le débit (rate limiting)               |
+| rate_based_ban | 403       | Ban temporaire si seuil dépassé               |
 
 Recommandations:
 - deny-403: Pour les blocages explicites (IPs blacklistées)
 - deny-404: Pour cacher l'existence d'un endpoint
 - deny-502: Pour simuler une erreur backend
 - redirect: Pour les migrations ou pages de maintenance
-EOF
-```
 
 ---
 
@@ -676,8 +660,7 @@ EOF
 
 #### Exercice 9.5.1 : Attributs disponibles
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     ATTRIBUTS CEL DISPONIBLES
 ═══════════════════════════════════════════════════════════════════════════════
@@ -710,7 +693,6 @@ OPÉRATEURS
 ==, !=                     │ Égalité
 &&, ||                     │ ET, OU logique
 !                          │ Négation
-EOF
 ```
 
 #### Exercice 9.5.2 : Filtrage par chemin (path)
@@ -813,35 +795,29 @@ curl -s -o /dev/null -w "%{http_code}\n" "http://$LB_IP/?id=1%20OR%201=1"
 
 #### Exercice 9.6.1 : Règles WAF disponibles
 
-```bash
-cat << 'EOF'
-═══════════════════════════════════════════════════════════════════════════════
-                    RÈGLES WAF PRÉCONFIGURÉES (OWASP CRS)
-═══════════════════════════════════════════════════════════════════════════════
+RÈGLES WAF PRÉCONFIGURÉES (OWASP CRS)
 
-Règle                    │ Protection contre
-─────────────────────────┼──────────────────────────────────────────────────────
-sqli-v33-stable          │ Injection SQL
-sqli-v33-canary          │ Injection SQL (règles expérimentales)
-xss-v33-stable           │ Cross-Site Scripting (XSS)
-xss-v33-canary           │ XSS (expérimental)
-lfi-v33-stable           │ Local File Inclusion
-rfi-v33-stable           │ Remote File Inclusion
-rce-v33-stable           │ Remote Code Execution
-scanner-detection-v33-stable │ Scanners de vulnérabilités
-protocol-attack-v33-stable   │ Attaques protocolaires
-php-v33-stable           │ Attaques spécifiques PHP
-session-fixation-v33-stable  │ Fixation de session
-java-v33-stable          │ Attaques spécifiques Java
-nodejs-v33-stable        │ Attaques spécifiques Node.js
-cve-canary              │ CVE spécifiques (expérimental)
+| Règle                          | Protection contre                      |
+|--------------------------------|----------------------------------------|
+| sqli-v33-stable                | Injection SQL                          |
+| sqli-v33-canary                | Injection SQL (règles expérimentales)  |
+| xss-v33-stable                 | Cross-Site Scripting (XSS)             |
+| xss-v33-canary                 | XSS (expérimental)                     |
+| lfi-v33-stable                 | Local File Inclusion                   |
+| rfi-v33-stable                 | Remote File Inclusion                  |
+| rce-v33-stable                 | Remote Code Execution                  |
+| scanner-detection-v33-stable   | Scanners de vulnérabilités             |
+| protocol-attack-v33-stable     | Attaques protocolaires                 |
+| php-v33-stable                 | Attaques spécifiques PHP               |
+| session-fixation-v33-stable    | Fixation de session                    |
+| java-v33-stable                | Attaques spécifiques Java              |
+| nodejs-v33-stable              | Attaques spécifiques Node.js           |
+| cve-canary                     | CVE spécifiques (expérimental)         |
 
 Niveaux de sensibilité: 0 (minimal) à 4 (paranoïaque)
 - 0-1: Peu de faux positifs, couverture basique
 - 2: Équilibré (recommandé pour commencer)
 - 3-4: Plus de faux positifs, couverture maximale
-EOF
-```
 
 #### Exercice 9.6.2 : Activer la protection SQL Injection
 
@@ -937,8 +913,7 @@ curl -s -o /dev/null -w "%{http_code}\n" "http://$LB_IP/?id=1%20OR%201=1"
 
 #### Exercice 9.7.1 : Comprendre les types de rate limiting
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                         TYPES DE RATE LIMITING
 ═══════════════════════════════════════════════════════════════════════════════
@@ -972,7 +947,6 @@ XFF_IP         │ Par IP dans X-Forwarded-For
 HTTP_COOKIE    │ Par valeur d'un cookie
 HTTP_PATH      │ Par chemin de requête
 REGION_CODE    │ Par pays d'origine
-EOF
 ```
 
 #### Exercice 9.7.2 : Configurer le Throttling
@@ -1150,8 +1124,7 @@ gcloud logging read "
 
 #### Exercice 9.8.4 : Structure des logs
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     STRUCTURE DES LOGS CLOUD ARMOR
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1181,19 +1154,18 @@ cat << 'EOF'
     }
   }
 }
+```
 
 Champs clés:
 - outcome: Résultat final (ACCEPT/DENY)
 - preview: true = règle en mode test
 - preconfiguredExprIds: ID de la règle WAF qui a matché
 - matchedFieldType: Où l'attaque a été détectée (ARGS, HEADERS, BODY...)
-EOF
-```
+
 
 #### Exercice 9.8.5 : Workflow de validation
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     WORKFLOW DE VALIDATION DES RÈGLES
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1226,7 +1198,6 @@ cat << 'EOF'
    - Ajuster si nouveaux faux positifs
 
 ⚠️ NE JAMAIS activer directement en Enforce sans période de Preview!
-EOF
 ```
 
 ---
@@ -1243,8 +1214,7 @@ EOF
 
 #### Exercice 9.9.1 : Named IP Lists disponibles
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                         NAMED IP LISTS DISPONIBLES
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1265,7 +1235,6 @@ iplist-search-engines-crawlers │ Tous les crawlers (moteurs de recherche)
 iplist-public-clouds-aws       │ Plages AWS
 iplist-public-clouds-azure     │ Plages Azure
 iplist-public-clouds-gcp       │ Plages GCP
-EOF
 ```
 
 #### Exercice 9.9.2 : Autoriser les crawlers Google
@@ -1331,8 +1300,7 @@ gcloud compute security-policies rules delete 20 \
 
 #### Exercice 9.10.1 : Edge vs Backend Security Policies
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                    EDGE vs BACKEND SECURITY POLICIES
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1342,7 +1310,7 @@ cat << 'EOF'
                                ▼
                     ┌─────────────────────┐
                     │   Google Edge       │
-                    │   (Point of Presence)│
+                    │  (Point of Presence)│
                     │                     │
                     │ ┌─────────────────┐ │
                     │ │ EDGE SECURITY   │ │ ◄── Filtrage très précoce
@@ -1379,7 +1347,6 @@ BACKEND SECURITY POLICY:
 ✅ Expressions avancées
 ❌ Filtrage plus tardif
 ❌ Requête a déjà traversé le CDN
-EOF
 ```
 
 #### Exercice 9.10.2 : Créer une Edge Security Policy
@@ -1428,8 +1395,7 @@ gcloud compute backend-services describe backend-web \
 
 #### Exercice 9.10.4 : Combiner Edge et Backend policies
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     STRATÉGIE RECOMMANDÉE
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1467,7 +1433,6 @@ Exemple de répartition:
 │ Priority 2000: Rate limit /api/login (5 req/min)                          │
 │ Default: ALLOW                                                            │
 └───────────────────────────────────────────────────────────────────────────┘
-EOF
 ```
 
 ---

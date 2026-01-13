@@ -69,8 +69,6 @@ gcloud iam roles describe roles/compute.networkAdmin \
 
 #### Exercice 8.1.2 : Tableau des rôles réseau
 
-```bash
-cat << 'EOF'
 === Rôles IAM Réseau Principaux ===
 
 | Rôle | Permissions | Cas d'usage |
@@ -82,13 +80,13 @@ cat << 'EOF'
 | roles/compute.xpnAdmin | Gérer Shared VPC | Admin Shared VPC |
 
 Granularité des permissions:
+```
 ┌─────────────────────────────────────────────────────────────────────┐
-│ Organisation (policies globales - équipe sécurité centrale)        │
-│   ├── Dossier (par département - délégation par BU)                │
-│   │     ├── Projet (par environnement - équipes projet)            │
-│   │     │     └── Ressource (par sous-réseau - accès fin)          │
+│ Organisation (policies globales - équipe sécurité centrale)         │
+│   ├── Dossier (par département - délégation par BU)                 │
+│   │     ├── Projet (par environnement - équipes projet)             │
+│   │     │     └── Ressource (par sous-réseau - accès fin)           │
 └─────────────────────────────────────────────────────────────────────┘
-EOF
 ```
 
 #### Exercice 8.1.3 : Configuration trop permissive vs correcte
@@ -244,8 +242,8 @@ gcloud compute instances create vm-db \
 gcloud compute firewall-rules list \
     --filter="network:$VPC_NAME" \
     --format="table(name,direction,priority,sourceRanges,allowed)"
+```
 
-cat << 'EOF'
 === Règles implicites (non visibles dans la liste) ===
 
 | Règle | Priorité | Comportement |
@@ -255,8 +253,6 @@ cat << 'EOF'
 
 Ces règles ne peuvent pas être supprimées mais peuvent être "overridées"
 par des règles avec une priorité plus haute (nombre plus bas).
-EOF
-```
 
 #### Exercice 8.2.3 : Créer les règles de pare-feu
 
@@ -403,8 +399,7 @@ EOF
 
 #### Exercice 8.3.1 : Comprendre les différences
 
-```bash
-cat << 'EOF'
+```
 === Tags Réseau vs Service Accounts ===
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -416,9 +411,9 @@ cat << 'EOF'
 │    - Flexible (plusieurs tags par VM)                                       │
 │                                                                             │
 │ ❌ Inconvénients:                                                           │
-│    - Modifiable par quiconque peut éditer la VM                            │
-│    - Pas de contrôle IAM fin                                               │
-│    - Risque d'erreur humaine                                               │
+│    - Modifiable par quiconque peut éditer la VM                             │
+│    - Pas de contrôle IAM fin                                                │
+│    - Risque d'erreur humaine                                                │
 │    - Pas d'audit des modifications                                          │
 └─────────────────────────────────────────────────────────────────────────────┘
 
@@ -438,7 +433,6 @@ cat << 'EOF'
 └─────────────────────────────────────────────────────────────────────────────┘
 
 Recommandation: En production, préférez les Service Accounts
-EOF
 ```
 
 #### Exercice 8.3.2 : Créer les Service Accounts
@@ -541,8 +535,6 @@ gcloud compute firewall-rules create ${VPC_NAME}-allow-http-web-sa \
 
 #### Exercice 8.3.5 : Comparer la sécurité
 
-```bash
-cat << 'EOF'
 === Comparaison de sécurité ===
 
 Scénario: Un développeur malveillant veut accéder à la base de données
@@ -565,8 +557,6 @@ Conclusion: Les Service Accounts offrent une sécurité renforcée car:
 - Les SA sont contrôlés par IAM
 - Les modifications sont auditées
 - La séparation des privilèges est respectée
-EOF
-```
 
 ---
 
@@ -582,8 +572,6 @@ EOF
 
 #### Exercice 8.4.1 : Comprendre les Network Firewall Policies
 
-```bash
-cat << 'EOF'
 === Network Firewall Policies vs VPC Firewall Rules ===
 
 | Critère | VPC Firewall Rules | Network Firewall Policies |
@@ -599,8 +587,6 @@ Ordre d'évaluation:
 2. Global Network Firewall Policies
 3. Regional Network Firewall Policies
 4. VPC Firewall Rules
-EOF
-```
 
 #### Exercice 8.4.2 : Créer une Global Network Firewall Policy
 
@@ -810,8 +796,6 @@ gcloud compute firewall-policies associations create \
 
 #### Exercice 8.5.2 : Comprendre les actions
 
-```bash
-cat << 'EOF'
 === Actions des règles hiérarchiques ===
 
 | Action | Comportement |
@@ -822,7 +806,7 @@ cat << 'EOF'
 | apply_security_profile_group | Applique inspection IDS/IPS |
 
 Flux d'évaluation avec GOTO_NEXT:
-
+```
 Requête HTTP arrive
        │
        ▼
@@ -837,13 +821,12 @@ Requête HTTP arrive
 │ (Dossier)               │
 │ Règle HTTP: ALLOW        │──► Autorise et ARRÊTE
 └──────────────────────────┘
+```
 
 Utilisations de GOTO_NEXT:
 - Déléguer des décisions aux équipes projet
 - Permettre des exceptions par dossier
 - Implémenter une politique "deny by default" avec exceptions
-EOF
-```
 
 #### Exercice 8.5.3 : Simulation au niveau projet
 
@@ -962,8 +945,7 @@ gcloud logging read "
 
 #### Exercice 8.6.4 : Structure des logs de pare-feu
 
-```bash
-cat << 'EOF'
+```
 === Structure des logs de pare-feu ===
 
 {
@@ -993,13 +975,12 @@ cat << 'EOF'
     }
   }
 }
+```
 
 Champs utiles pour l'analyse:
 - disposition: ALLOWED/DENIED (le plus important)
 - rule_details.reference: Quelle règle a pris la décision
 - connection.*: Détails de la connexion
-EOF
-```
 
 #### Exercice 8.6.5 : Créer des requêtes d'analyse avancées
 
@@ -1327,8 +1308,6 @@ echo "Cloud IDS nettoyé pour éviter les frais"
 
 #### Exercice 8.9.1 : Comprendre Secure Web Proxy
 
-```bash
-cat << 'EOF'
 === Secure Web Proxy (SWP) ===
 
 Secure Web Proxy est un proxy cloud-native pour filtrer le trafic 
@@ -1341,9 +1320,10 @@ Cas d'usage:
 - Conformité et audit
 - Bloquer l'exfiltration de données
 
+```
 Architecture:
 ┌──────────────────────────────────────────────────────────────┐
-│                           VPC                                 │
+│                           VPC                                │
 │                                                              │
 │   ┌──────────┐                    ┌──────────────────────┐   │
 │   │   VM     │───── HTTP/S ──────►│  Secure Web Proxy    │   │
@@ -1358,13 +1338,12 @@ Architecture:
                             │  (domaines autorisés only)   │
                             └──────────────────────────────┘
 
+```
 Fonctionnalités:
 - Filtrage par URL et domaine
 - Inspection TLS (décryptage/re-cryptage)
 - Intégration avec Cloud Logging
 - Politiques basées sur l'identité
-EOF
-```
 
 #### Exercice 8.9.2 : Configuration conceptuelle
 
@@ -1372,8 +1351,7 @@ EOF
 # Note: Ces commandes sont pour référence
 # Le déploiement réel nécessite plus de configuration
 
-cat << 'EOF'
-=== Configuration Secure Web Proxy ===
+# === Configuration Secure Web Proxy ===
 
 # 1. Créer un sous-réseau dédié pour le proxy
 gcloud compute networks subnets create subnet-proxy \
@@ -1422,13 +1400,10 @@ gcloud network-services gateways create swp-gateway \
     --subnetwork=subnet-proxy \
     --addresses=10.0.10.100 \
     --gateway-security-policy=swp-policy
-EOF
 ```
 
 #### Exercice 8.9.3 : Expressions de filtrage
 
-```bash
-cat << 'EOF'
 === Expressions de filtrage Secure Web Proxy ===
 
 | Expression | Signification |
@@ -1449,16 +1424,13 @@ Exemples de règles:
 
 # Autoriser uniquement certains chemins
 --session-matcher='host() == "api.example.com" && request.path().startsWith("/v1/")'
-EOF
-```
 
 #### Exercice 8.9.4 : Configuration des VMs pour utiliser le proxy
 
 ```bash
-cat << 'EOF'
-=== Configuration des VMs ===
+# === Configuration des VMs ===
 
-Sur chaque VM qui doit utiliser le proxy:
+# Sur chaque VM qui doit utiliser le proxy:
 
 # Variables d'environnement (temporaire)
 export HTTP_PROXY=http://10.0.10.100:443
@@ -1475,12 +1447,11 @@ cat > /etc/apt/apt.conf.d/proxy.conf << PROXY
 Acquire::http::Proxy "http://10.0.10.100:443";
 Acquire::https::Proxy "http://10.0.10.100:443";
 PROXY
+```
 
 Note: NO_PROXY est important pour ne pas proxifier:
 - Le serveur de métadonnées GCP (169.254.169.254)
 - Le trafic interne (10.0.0.0/8)
-EOF
-```
 
 ---
 
@@ -1496,8 +1467,6 @@ EOF
 
 #### Exercice 8.10.1 : Checklist de sécurité pare-feu
 
-```bash
-cat << 'EOF'
 === Checklist Sécurité Pare-feu ===
 
 ☐ Supprimer les règles default-allow-* du VPC default
@@ -1510,8 +1479,8 @@ cat << 'EOF'
 ☐ Réviser régulièrement les règles (trimestriel)
 ☐ Utiliser des Network Firewall Policies pour les règles globales
 ☐ Implémenter deny-all par défaut, puis autoriser explicitement
-EOF
 
+```bash
 # Audit des règles sans description
 echo "=== Règles sans description ==="
 gcloud compute firewall-rules list \
@@ -1527,8 +1496,6 @@ gcloud compute firewall-rules list \
 
 #### Exercice 8.10.2 : Checklist architecture
 
-```bash
-cat << 'EOF'
 === Checklist Architecture Réseau ===
 
 ☐ Segmenter par environnement (prod/dev/staging)
@@ -1539,9 +1506,9 @@ cat << 'EOF'
 ☐ Configurer IAP pour l'accès administrateur
 ☐ Implémenter VPC Service Controls pour les données sensibles
 ☐ Utiliser Shared VPC pour centraliser la gestion
-EOF
 
 # Audit des VMs avec IP publique
+```bash
 echo "=== VMs avec IP publique ==="
 gcloud compute instances list \
     --format="table(name,zone,networkInterfaces[0].accessConfigs[0].natIP)" \
@@ -1550,8 +1517,6 @@ gcloud compute instances list \
 
 #### Exercice 8.10.3 : Checklist surveillance
 
-```bash
-cat << 'EOF'
 === Checklist Surveillance ===
 
 ☐ Activer VPC Flow Logs sur les sous-réseaux sensibles
@@ -1560,9 +1525,9 @@ cat << 'EOF'
 ☐ Exporter les logs vers un SIEM (Chronicle, Splunk...)
 ☐ Auditer les accès IAM réseau périodiquement
 ☐ Monitorer les changements de configuration (Cloud Audit Logs)
-EOF
 
 # Vérifier si VPC Flow Logs est activé
+```bash
 echo "=== Statut VPC Flow Logs ==="
 gcloud compute networks subnets list \
     --format="table(name,region,enableFlowLogs)"

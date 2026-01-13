@@ -325,8 +325,7 @@ gcloud compute project-info describe \
 
 #### Exercice 6.2.3 : Comprendre les formats DNS
 
-```bash
-cat << 'EOF'
+```
 === Formats de noms DNS internes GCP ===
 
 FORMAT ZONAL (recommandé):
@@ -349,8 +348,9 @@ Inconvénients:
 NOMS COURTS:
 - vm1 (sans suffixe)
 - Fonctionnent grâce au search domain dans /etc/resolv.conf
-EOF
+```
 
+```bash
 # Voir le search domain configuré
 gcloud compute ssh vm1 --zone=$ZONE --tunnel-through-iap << 'EOF'
 echo "=== Configuration DNS de la VM ==="
@@ -1001,8 +1001,6 @@ exit
 
 #### Exercice 6.6.6 : Comprendre les limites
 
-```bash
-cat << 'EOF'
 === Peering DNS vs VPC Peering ===
 
 | Aspect | Peering DNS | VPC Peering |
@@ -1017,8 +1015,6 @@ Pour une connectivité complète Hub-Spoke :
 2. VPC Peering : Pour la connectivité réseau
    OU
    Shared VPC : Pour tout centraliser
-EOF
-```
 
 ---
 
@@ -1099,9 +1095,11 @@ gcloud logging read 'resource.type="dns_query" AND jsonPayload.responseCode!="NO
 gcloud logging read 'resource.type="dns_query"' \
     --limit=1 \
     --format=json
+```
 
-# Champs disponibles dans les logs DNS:
-cat << 'EOF'
+```
+Champs disponibles dans les logs DNS:
+
 === Structure des logs DNS ===
 
 {
@@ -1122,7 +1120,6 @@ Codes de réponse courants:
 - NXDOMAIN: Domaine inexistant
 - SERVFAIL: Erreur serveur
 - REFUSED: Requête refusée
-EOF
 ```
 
 #### Exercice 6.7.5 : Créer une alerte sur les requêtes DNS suspectes
@@ -1156,8 +1153,7 @@ gcloud logging metrics describe dns-nxdomain-count
 
 #### Exercice 6.8.1 : Comprendre DNSSEC
 
-```bash
-cat << 'EOF'
+```
 === DNSSEC - Sécurisation du DNS ===
 
 PROBLÈME:
@@ -1185,7 +1181,6 @@ TYPES DE CLÉS:
 CHAÎNE DE CONFIANCE:
 Root (.) → TLD (.com) → Votre domaine → Enregistrements
     DS        DS           KSK+ZSK         RRSIG
-EOF
 ```
 
 #### Exercice 6.8.2 : Activer DNSSEC sur la zone publique
@@ -1390,8 +1385,7 @@ echo "IP publique attendue: $PUBLIC_IP"
 
 #### Exercice 6.9.5 : Comprendre la priorité des zones
 
-```bash
-cat << 'EOF'
+```
 === Priorité de résolution DNS dans GCP ===
 
 Ordre de priorité (de la plus haute à la plus basse):
@@ -1415,7 +1409,6 @@ Conséquence pour le split-horizon:
 - La zone privée "example.com" a priorité sur la zone publique
 - Les VMs du VPC voient TOUJOURS l'IP privée
 - Les clients externes voient l'IP publique
-EOF
 ```
 
 ---
@@ -1432,8 +1425,7 @@ EOF
 
 #### Exercice 6.10.1 : Comprendre les routing policies
 
-```bash
-cat << 'EOF'
+```
 === Routing Policies Cloud DNS ===
 
 TYPE 1: Geolocation
@@ -1451,7 +1443,6 @@ TYPE 3: Failover
 PRÉREQUIS:
 - Zones publiques uniquement
 - Health checks configurés (pour WRR et Failover)
-EOF
 ```
 
 #### Exercice 6.10.2 : Routing Geolocation
@@ -1533,10 +1524,9 @@ chmod +x test_wrr.sh
 
 #### Exercice 6.10.5 : Geolocation avec health checks
 
-```bash
+```
 # Pour une configuration production avec failover géographique:
 
-cat << 'EOF'
 === Configuration avancée Geolocation + Health Check ===
 
 # 1. Créer des ressources dans chaque région
@@ -1560,7 +1550,6 @@ gcloud dns record-sets create "app.example.com." \
 
 Note: Si un backend régional échoue au health check,
 le trafic est automatiquement redirigé vers la région la plus proche.
-EOF
 ```
 
 #### Exercice 6.10.6 : Lister et gérer les routing policies

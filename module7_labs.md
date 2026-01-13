@@ -430,8 +430,7 @@ gcloud compute routers describe router-gcp --region=$REGION \
 
 #### Exercice 7.2.2 : Comprendre les routes échangées
 
-```bash
-cat << 'EOF'
+```
 === Fonctionnement de l'échange de routes BGP ===
 
 Cloud Router annonce automatiquement:
@@ -448,8 +447,9 @@ Après l'échange BGP:
 - router-gcp apprend 192.168.0.0/24 de router-onprem
 - router-onprem apprend 10.0.0.0/24 de router-gcp
 - Les routes sont installées automatiquement dans les VPC
-EOF
+```
 
+```bash
 # Voir les routes dans le VPC GCP
 echo "=== Routes dans VPC GCP ==="
 gcloud compute routes list --filter="network:vpc-gcp" \
@@ -509,8 +509,7 @@ gcloud compute routers get-status router-onprem --region=$REGION \
 
 #### Exercice 7.2.5 : Comprendre les attributs BGP
 
-```bash
-cat << 'EOF'
+```
 === Attributs BGP importants dans Cloud Router ===
 
 1. ASN (Autonomous System Number)
@@ -536,7 +535,6 @@ cat << 'EOF'
    - Keepalive: 20 secondes (par défaut Cloud Router)
    - Hold: 60 secondes (3x keepalive)
    - Si aucun message reçu pendant le hold timer, session down
-EOF
 ```
 
 ---
@@ -681,9 +679,7 @@ echo "Mode Actif/Actif restauré"
 
 #### Exercice 7.3.6 : Tableau comparatif
 
-```bash
-cat << 'EOF'
-=== Comparaison Actif/Actif vs Actif/Passif ===
+Comparaison Actif/Actif vs Actif/Passif
 
 | Critère | Actif/Actif (ECMP) | Actif/Passif |
 |---------|-------------------|--------------|
@@ -700,8 +696,6 @@ Recommandations:
 - Actif/Actif: Par défaut, pour maximiser la bande passante
 - Actif/Passif: Si problèmes avec firewalls stateful on-premise
                ou si besoin de simplifier le troubleshooting
-EOF
-```
 
 ---
 
@@ -801,15 +795,13 @@ gcloud compute routers get-status router-gcp --region=$REGION \
 
 #### Exercice 7.4.6 : Documenter les temps de convergence
 
-```bash
-cat << 'EOF'
-=== Temps de convergence typiques ===
+Temps de convergence typiques
 
-Événement                          | Temps typique
-----------------------------------|---------------
-Détection panne tunnel            | 10-30 secondes (BGP hold timer)
-Mise à jour table de routage      | 1-5 secondes
-Convergence complète              | 30-60 secondes
+| Événement                     | Temps typique                   |
+|-------------------------------|---------------------------------|
+| Détection panne tunnel        | 10-30 secondes (BGP hold timer) |
+| Mise à jour table de routage  | 1-5 secondes                    |
+| Convergence complète          | 30-60 secondes                  |
 
 Facteurs influençant le temps:
 - Hold timer BGP (par défaut 60s, détection après 20s sans keepalive)
@@ -820,8 +812,6 @@ Bonnes pratiques pour minimiser le temps de convergence:
 - Utiliser BFD (Bidirectional Forwarding Detection) si disponible
 - Configurer des timers BGP agressifs (avec précaution)
 - Avoir des tunnels sur des interfaces distinctes
-EOF
-```
 
 ---
 
@@ -837,8 +827,7 @@ EOF
 
 #### Exercice 7.5.1 : Comprendre l'architecture
 
-```bash
-cat << 'EOF'
+```
 === Architecture Dedicated Interconnect ===
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -879,13 +868,11 @@ Caractéristiques:
 - Latence très faible et stable
 - SLA jusqu'à 99.99%
 - Trafic à tarif réduit
-EOF
 ```
 
 #### Exercice 7.5.2 : Processus de provisioning
 
-```bash
-cat << 'EOF'
+```
 === Processus de provisioning Dedicated Interconnect ===
 
 Étape 1: Planification (1-2 semaines)
@@ -920,7 +907,6 @@ cat << 'EOF'
 - Valider la redondance
 
 DÉLAI TOTAL: 4-8 semaines
-EOF
 ```
 
 #### Exercice 7.5.3 : Explorer les commandes (simulation)
@@ -929,8 +915,7 @@ EOF
 # Ces commandes sont fournies à titre informatif
 # Elles nécessitent une vraie infrastructure pour fonctionner
 
-cat << 'EOF'
-=== Commandes Dedicated Interconnect (pour référence) ===
+# === Commandes Dedicated Interconnect (pour référence) ===
 
 # 1. Créer l'interconnect
 gcloud compute interconnects create mon-interconnect \
@@ -970,32 +955,29 @@ gcloud compute routers add-bgp-peer router-interconnect \
     --interface=if-attachment-1 \
     --peer-ip-address=169.254.100.2 \
     --region=europe-west1
-EOF
 ```
 
 #### Exercice 7.5.4 : Points de présence Google en Europe
 
-```bash
-cat << 'EOF'
+```
 === Points de Présence Google - Europe ===
 
-Ville          | Facility           | Location ID
----------------|--------------------|-----------------
-Paris          | Equinix PA2       | par-zone1-16
-Paris          | Equinix PA3       | par-zone1-4
-Paris          | Equinix PA4       | par-zone2-430
-Amsterdam      | Equinix AM1       | ams-zone1-5
-Amsterdam      | Equinix AM2       | ams-zone1-6
-Francfort      | Equinix FR2       | fra-zone1-6
-Francfort      | Equinix FR4       | fra-zone1-56
-Francfort      | Equinix FR5       | fra-zone2-57
-Londres        | Equinix LD4       | lon-zone1-8
-Londres        | Equinix LD5       | lon-zone1-56
-Zurich         | Equinix ZH4       | zrh-zone1-1
-Dublin         | Equinix DB1       | dub-zone1-8
+| Ville     | Facility      | Location ID   |
+|-----------|---------------|---------------|
+| Paris     | Equinix PA2   | par-zone1-16  |
+| Paris     | Equinix PA3   | par-zone1-4   |
+| Paris     | Equinix PA4   | par-zone2-430 |
+| Amsterdam | Equinix AM1   | ams-zone1-5   |
+| Amsterdam | Equinix AM2   | ams-zone1-6   |
+| Francfort | Equinix FR2   | fra-zone1-6   |
+| Francfort | Equinix FR4   | fra-zone1-56  |
+| Francfort | Equinix FR5   | fra-zone2-57  |
+| Londres   | Equinix LD4   | lon-zone1-8   |
+| Londres   | Equinix LD5   | lon-zone1-56  |
+| Zurich    | Equinix ZH4   | zrh-zone1-1   |
+| Dublin    | Equinix DB1   | dub-zone1-8   |
 
 Liste complète: https://cloud.google.com/network-connectivity/docs/interconnect/concepts/colocation-facilities
-EOF
 ```
 
 ---
@@ -1012,9 +994,7 @@ EOF
 
 #### Exercice 7.6.1 : Quand utiliser Partner Interconnect ?
 
-```bash
-cat << 'EOF'
-=== Partner Interconnect vs Dedicated Interconnect ===
+Partner Interconnect vs Dedicated Interconnect ===
 
 Choisir Partner Interconnect si:
 ✅ Pas de présence dans une colo où Google est présent
@@ -1032,13 +1012,10 @@ Choisir Dedicated Interconnect si:
 Capacités Partner Interconnect:
 - 50 Mbps à 50 Gbps
 - Par incréments: 50M, 100M, 200M, 300M, 400M, 500M, 1G, 2G, 5G, 10G, 20G, 50G
-EOF
-```
 
 #### Exercice 7.6.2 : Architecture Partner Interconnect
 
-```bash
-cat << 'EOF'
+```
 === Architecture Partner Interconnect ===
 
 ┌──────────────┐      ┌──────────────────────┐      ┌──────────────────┐
@@ -1061,38 +1038,32 @@ Avantages:
 - Le partenaire gère la connexion physique
 - Flexibilité des capacités
 - Déploiement plus rapide
-EOF
 ```
 
 #### Exercice 7.6.3 : Partenaires disponibles en France
 
-```bash
-cat << 'EOF'
-=== Partenaires Interconnect en France ===
+Partenaires Interconnect en France
 
-Partenaire              | Type de service      | Capacités
-------------------------|---------------------|------------------
-Orange Business Services| Layer 2 / Layer 3   | 50M - 10G
-Colt Technology Services| Layer 2             | 50M - 10G
-Equinix Fabric          | Layer 2             | 50M - 10G
-Megaport                | Layer 2             | 50M - 10G
-Console Connect         | Layer 2             | 50M - 10G
-PCCW Global             | Layer 2             | 50M - 10G
-Zayo                    | Layer 2             | 50M - 10G
+| Partenaire               | Type de service     | Capacités |
+|--------------------------|---------------------|-----------|
+| Orange Business Services | Layer 2 / Layer 3   | 50M - 10G |
+| Colt Technology Services | Layer 2             | 50M - 10G |
+| Equinix Fabric           | Layer 2             | 50M - 10G |
+| Megaport                 | Layer 2             | 50M - 10G |
+| Console Connect          | Layer 2             | 50M - 10G |
+| PCCW Global              | Layer 2             | 50M - 10G |
+| Zayo                     | Layer 2             | 50M - 10G |
 
 Layer 2 vs Layer 3:
 - Layer 2: Vous gérez BGP directement avec Google
 - Layer 3: Le partenaire gère BGP, vous recevez des routes
 
 Liste complète: https://cloud.google.com/network-connectivity/docs/interconnect/concepts/service-providers
-EOF
-```
 
 #### Exercice 7.6.4 : Processus de configuration
 
 ```bash
-cat << 'EOF'
-=== Configuration Partner Interconnect ===
+# === Configuration Partner Interconnect ===
 
 # Étape 1: Créer un Cloud Router
 gcloud compute routers create router-partner \
@@ -1125,7 +1096,6 @@ gcloud compute interconnects attachments partner update partner-attachment \
 # Étape 6: Vérifier le statut
 gcloud compute interconnects attachments describe partner-attachment \
     --region=europe-west1
-EOF
 ```
 
 ---
@@ -1142,8 +1112,7 @@ EOF
 
 #### Exercice 7.7.1 : Vue d'ensemble Cross-Cloud Interconnect
 
-```bash
-cat << 'EOF'
+```
 === Cross-Cloud Interconnect ===
 
 Cross-Cloud Interconnect fournit une connexion dédiée haute performance
@@ -1170,13 +1139,11 @@ Cas d'usage:
 3. Migration entre clouds
 4. Arbitrage de services (utiliser le meilleur service de chaque cloud)
 5. Conformité réglementaire (données dans plusieurs régions/providers)
-EOF
 ```
 
 #### Exercice 7.7.2 : Architecture Cross-Cloud
 
-```bash
-cat << 'EOF'
+```
 === Architecture Cross-Cloud Interconnect (exemple GCP ↔ AWS) ===
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -1205,14 +1172,12 @@ cat << 'EOF'
 │   │   10.0.0.0/16     │     │     │     │   172.16.0.0/16   │   │
 │   └───────────────────┘     │     │     └───────────────────┘   │
 └─────────────────────────────┘     └─────────────────────────────┘
-EOF
 ```
 
 #### Exercice 7.7.3 : Configuration conceptuelle
 
 ```bash
-cat << 'EOF'
-=== Configuration Cross-Cloud Interconnect (pour référence) ===
+# === Configuration Cross-Cloud Interconnect (pour référence) ===
 
 # Côté GCP:
 
@@ -1245,7 +1210,6 @@ gcloud compute interconnects attachments dedicated create xcloud-attachment \
 # 4. Configurer BGP
 
 # Configuration BGP des deux côtés pour échanger les routes
-EOF
 ```
 
 ---
@@ -1380,7 +1344,7 @@ done
 # Une fois les VPN établis, créer les spokes
 
 # Note: Cette commande nécessite que les tunnels VPN existent
-cat << 'EOF'
+
 # Exemple de création de spoke avec VPN
 gcloud network-connectivity spokes linked-vpn-tunnels create spoke-paris \
     --hub=hub-multisite \
@@ -1399,7 +1363,6 @@ gcloud network-connectivity spokes linked-vpn-tunnels create spoke-berlin \
     --vpn-tunnels=tunnel-hub-to-berlin-0,tunnel-hub-to-berlin-1 \
     --region=europe-west1 \
     --site-to-site-data-transfer
-EOF
 ```
 
 #### Exercice 7.8.5 : Vérifier la connectivité transitive
@@ -1410,8 +1373,8 @@ gcloud network-connectivity spokes list --hub=hub-multisite
 
 # Voir la topologie
 gcloud network-connectivity hubs describe hub-multisite
+```
 
-cat << 'EOF'
 === Connectivité transitive avec NCC ===
 
 Avec site-to-site-data-transfer activé:
@@ -1428,8 +1391,6 @@ Sans NCC, il faudrait:
 Avec 10 sites:
 - Sans NCC: 45 connexions (n*(n-1)/2)
 - Avec NCC: 10 connexions (une par site vers le hub)
-EOF
-```
 
 ---
 
@@ -1445,37 +1406,18 @@ EOF
 
 #### Exercice 7.9.1 : Tableau comparatif complet
 
-```bash
-cat << 'EOF'
-╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗
-║                        COMPARAISON DES SOLUTIONS DE CONNECTIVITÉ HYBRIDE                          ║
-╠═══════════════════════════════════════════════════════════════════════════════════════════════════╣
-║ Critère           │ Cloud VPN HA    │ Partner         │ Dedicated       │ Cross-Cloud     ║
-║                   │                 │ Interconnect    │ Interconnect    │ Interconnect    ║
-╠═══════════════════╪═════════════════╪═════════════════╪═════════════════╪═════════════════╣
-║ Bande passante    │ 3 Gbps/tunnel   │ 50M - 50 Gbps   │ 10 - 200 Gbps   │ 10 - 100 Gbps   ║
-║ max               │ (agrégeable)    │                 │                 │                 ║
-╠═══════════════════╪═════════════════╪═════════════════╪═════════════════╪═════════════════╣
-║ Latence           │ Variable        │ Faible          │ Très faible     │ Faible          ║
-║                   │ (Internet)      │                 │                 │                 ║
-╠═══════════════════╪═════════════════╪═════════════════╪═════════════════╪═════════════════╣
-║ Transit           │ Internet        │ Privé           │ Privé           │ Privé           ║
-╠═══════════════════╪═════════════════╪═════════════════╪═════════════════╪═════════════════╣
-║ Chiffrement       │ IPsec natif     │ À ajouter       │ MACsec option   │ MACsec option   ║
-╠═══════════════════╪═════════════════╪═════════════════╪═════════════════╪═════════════════╣
-║ Délai setup       │ Minutes         │ 1-2 semaines    │ 4-8 semaines    │ 4-8 semaines    ║
-╠═══════════════════╪═════════════════╪═════════════════╪═════════════════╪═════════════════╣
-║ Coût fixe         │ ~100-300€/mois  │ ~500-1500€/mois │ ~2000-5000€/mois│ Variable        ║
-╠═══════════════════╪═════════════════╪═════════════════╪═════════════════╪═════════════════╣
-║ Coût trafic       │ Standard        │ Réduit          │ Réduit          │ Réduit          ║
-╠═══════════════════╪═════════════════╪═════════════════╪═════════════════╪═════════════════╣
-║ SLA               │ 99.99%          │ 99.9-99.99%     │ 99.99%          │ 99.99%          ║
-╠═══════════════════╪═════════════════╪═════════════════╪═════════════════╪═════════════════╣
-║ Prérequis         │ Aucun           │ Contrat         │ Présence colo   │ Colo commune    ║
-║                   │                 │ partenaire      │ Google          │ avec autre cloud║
-╚═══════════════════╧═════════════════╧═════════════════╧═════════════════╧═════════════════╝
-EOF
-```
+| Critère            | Cloud VPN HA                  | Partner Interconnect     | Dedicated Interconnect       | Cross-Cloud Interconnect          |
+|--------------------|-------------------------------|--------------------------|------------------------------|-----------------------------------|
+| Bande passante max | 3 Gbps/tunnel (agrégeable)    | 50M - 50 Gbps            | 10 - 200 Gbps                | 10 - 100 Gbps                     |
+| Latence            | Variable (Internet)           | Faible                   | Très faible                  | Faible                            |
+| Transit            | Internet                      | Privé                    | Privé                        | Privé                             |
+| Chiffrement        | IPsec natif                   | À ajouter                | MACsec option                | MACsec option                     |
+| Délai setup        | Minutes                       | 1-2 semaines             | 4-8 semaines                 | 4-8 semaines                      |
+| Coût fixe          | ~100-300€/mois                | ~500-1500€/mois          | ~2000-5000€/mois             | Variable                          |
+| Coût trafic        | Standard                      | Réduit                   | Réduit                       | Réduit                            |
+| SLA                | 99.99%                        | 99.9-99.99%              | 99.99%                       | 99.99%                            |
+| Prérequis          | Aucun                         | Contrat partenaire       | Présence colo Google         | Colo commune avec autre cloud     |
+
 
 #### Exercice 7.9.2 : Arbre de décision
 
@@ -1521,8 +1463,7 @@ EOF
 
 #### Exercice 7.9.3 : Analyse de scénarios
 
-```bash
-cat << 'EOF'
+```
 === Scénario 1: Startup tech ===
 Contexte: 50 employés, infrastructure on-premise légère, budget limité
 Besoins: Backup, accès aux services GCP, <500 Mbps
@@ -1552,7 +1493,6 @@ Contexte: 20 bureaux dans le monde, hub central sur GCP
 Besoins: Tous les sites doivent communiquer entre eux
 → Recommandation: VPN HA + Network Connectivity Center
 Raisons: Connectivité transitive, gestion centralisée
-EOF
 ```
 
 ---

@@ -54,78 +54,75 @@ Ces travaux pratiques permettront aux apprenants de :
 
 #### Exercice 10.1.1 : Panorama des Load Balancers
 
-```bash
-cat << 'EOF'
+```
 ╔════════════════════════════════════════════════════════════════════════════════╗
 ║                     PANORAMA DES LOAD BALANCERS GCP                            ║
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                ║
-║  LAYER 7 (APPLICATION) - HTTP/HTTPS/HTTP2/gRPC                                ║
-║  ─────────────────────────────────────────────────────────────────────────────║
+║   LAYER 7 (APPLICATION) - HTTP/HTTPS/HTTP2/gRPC                                ║
+║   ─────────────────────────────────────────────────────────────────────────────║
 ║                                                                                ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Global External Application LB                                          │  ║
-║  │ • Portée: Globale (Anycast IP)                                          │  ║
-║  │ • Trafic: Externe (Internet)                                            │  ║
-║  │ • Usage: Web apps mondiales, APIs publiques                             │  ║
-║  │ • Fonctionnalités: CDN, Cloud Armor, IAP, routage URL                   │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Global External Application LB                                          │   ║
+║  │ • Portée: Globale (Anycast IP)                                          │   ║
+║  │ • Trafic: Externe (Internet)                                            │   ║
+║  │ • Usage: Web apps mondiales, APIs publiques                             │   ║
+║  │ • Fonctionnalités: CDN, Cloud Armor, IAP, routage URL                   │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Regional External Application LB                                        │  ║
-║  │ • Portée: Régionale                                                     │  ║
-║  │ • Trafic: Externe (Internet)                                            │  ║
-║  │ • Usage: Apps régionales, conformité data residency                     │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Regional External Application LB                                        │   ║
+║  │ • Portée: Régionale                                                     │   ║
+║  │ • Trafic: Externe (Internet)                                            │   ║
+║  │ • Usage: Apps régionales, conformité data residency                     │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Internal Application LB                                                 │  ║
-║  │ • Portée: Régionale                                                     │  ║
-║  │ • Trafic: Interne (VPC)                                                 │  ║
-║  │ • Usage: Microservices, APIs internes                                   │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Internal Application LB                                                 │   ║
+║  │ • Portée: Régionale                                                     │   ║
+║  │ • Trafic: Interne (VPC)                                                 │   ║
+║  │ • Usage: Microservices, APIs internes                                   │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Cross-Region Internal Application LB                                    │  ║
-║  │ • Portée: Globale                                                       │  ║
-║  │ • Trafic: Interne (VPC)                                                 │  ║
-║  │ • Usage: Microservices multi-régions                                    │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Cross-Region Internal Application LB                                    │   ║
+║  │ • Portée: Globale                                                       │   ║
+║  │ • Trafic: Interne (VPC)                                                 │   ║
+║  │ • Usage: Microservices multi-régions                                    │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
 ╠════════════════════════════════════════════════════════════════════════════════╣
 ║                                                                                ║
-║  LAYER 4 (NETWORK) - TCP/UDP/SSL                                              ║
-║  ─────────────────────────────────────────────────────────────────────────────║
+║  LAYER 4 (NETWORK) - TCP/UDP/SSL                                               ║
+║  ───────────────────────────────────────────────────────────────────────────── ║
 ║                                                                                ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Global External Proxy Network LB                                        │  ║
-║  │ • Mode: Proxy                                                           │  ║
-║  │ • Portée: Globale                                                       │  ║
-║  │ • Usage: TCP/SSL global (non-HTTP)                                      │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Global External Proxy Network LB                                        │   ║
+║  │ • Mode: Proxy                                                           │   ║
+║  │ • Portée: Globale                                                       │   ║
+║  │ • Usage: TCP/SSL global (non-HTTP)                                      │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Regional External Passthrough Network LB                                │  ║
-║  │ • Mode: Passthrough (DSR)                                               │  ║
-║  │ • Portée: Régionale                                                     │  ║
-║  │ • Usage: Jeux, VoIP, performance max                                    │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Regional External Passthrough Network LB                                │   ║
+║  │ • Mode: Passthrough (DSR)                                               │   ║
+║  │ • Portée: Régionale                                                     │   ║
+║  │ • Usage: Jeux, VoIP, performance max                                    │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
-║  ┌─────────────────────────────────────────────────────────────────────────┐  ║
-║  │ Regional Internal Passthrough Network LB                                │  ║
-║  │ • Mode: Passthrough                                                     │  ║
-║  │ • Portée: Régionale                                                     │  ║
-║  │ • Usage: Bases de données, services L4 internes                         │  ║
-║  └─────────────────────────────────────────────────────────────────────────┘  ║
+║  ┌─────────────────────────────────────────────────────────────────────────┐   ║
+║  │ Regional Internal Passthrough Network LB                                │   ║
+║  │ • Mode: Passthrough                                                     │   ║
+║  │ • Portée: Régionale                                                     │   ║
+║  │ • Usage: Bases de données, services L4 internes                         │   ║
+║  └─────────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                                ║
 ╚════════════════════════════════════════════════════════════════════════════════╝
-EOF
 ```
 
 #### Exercice 10.1.2 : Proxy vs Passthrough
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                          MODE PROXY vs PASSTHROUGH
 ═══════════════════════════════════════════════════════════════════════════════
@@ -164,13 +161,11 @@ Avantages:                        Inconvénients:
 ✅ IP client préservée            ❌ Pas de TLS termination
 ✅ Performance maximale           ❌ Pas de Cloud Armor
 ✅ Moins de ressources LB         ❌ Configuration backend spécifique
-EOF
 ```
 
 #### Exercice 10.1.3 : Arbre de décision
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                     ARBRE DE DÉCISION - QUEL LOAD BALANCER ?
 ═══════════════════════════════════════════════════════════════════════════════
@@ -215,7 +210,6 @@ RÉSUMÉ RAPIDE:
 • Jeux, VoIP, streaming    → Regional Passthrough Network LB
 • Base de données interne  → Internal Passthrough Network LB
 • Microservices multi-reg  → Cross-Region Internal Application LB
-EOF
 ```
 
 ---
@@ -532,8 +526,7 @@ curl -s http://$LB_IP/static/style.css
 
 #### Exercice 10.3.1 : Routage par Host
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                            ROUTAGE PAR HOST
 ═══════════════════════════════════════════════════════════════════════════════
@@ -551,8 +544,9 @@ cat << 'EOF'
     ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
     │ backend-web  │      │ backend-api  │      │backend-admin │
     └──────────────┘      └──────────────┘      └──────────────┘
-EOF
+```
 
+```bash
 # Créer un URL Map avec routage par host
 gcloud compute url-maps create urlmap-multihost \
     --default-service=backend-web
@@ -642,8 +636,7 @@ sed -i "s/PROJECT_ID/$PROJECT_ID/g" urlmap-advanced.yaml
 
 #### Exercice 10.3.4 : URL Rewrite
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                               URL REWRITE
 ═══════════════════════════════════════════════════════════════════════════════
@@ -662,7 +655,6 @@ routeRules:
     weightedBackendServices:
     - backendService: backend-api
       weight: 100
-EOF
 ```
 
 ---
@@ -794,7 +786,7 @@ gcloud compute backend-services add-backend backend-v2 \
 
 #### Exercice 10.4.2 : Configurer le Traffic Splitting (Canary)
 
-```bash
+```
 # Créer un URL Map avec traffic splitting
 cat > urlmap-canary.yaml << EOF
 name: urlmap-canary
@@ -816,8 +808,9 @@ pathMatchers:
         weight: 90
       - backendService: https://www.googleapis.com/compute/v1/projects/${PROJECT_ID}/global/backendServices/backend-v2
         weight: 10
-EOF
+```
 
+```bash
 gcloud compute url-maps import urlmap-canary \
     --source=urlmap-canary.yaml \
     --global
@@ -903,8 +896,7 @@ update_weights 0 100
 
 #### Exercice 10.4.5 : Déploiement Blue-Green
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                          DÉPLOIEMENT BLUE-GREEN
 ═══════════════════════════════════════════════════════════════════════════════
@@ -923,8 +915,9 @@ Principe:
               │     GREEN     │               │     BLUE      │
               │   (standby)   │               │   (standby)   │
               └───────────────┘               └───────────────┘
-EOF
+```
 
+```bash
 # Switch vers Green (v2)
 gcloud compute url-maps set-default-service urlmap-canary \
     --default-service=backend-v2 \
@@ -1002,8 +995,7 @@ curl -s -H "X-Beta-User: true" http://$LB_IP/ | grep "Version"
 
 #### Exercice 10.5.1 : Types de Session Affinity
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                         TYPES DE SESSION AFFINITY
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1020,7 +1012,6 @@ HTTP_COOKIE       │ Cookie applicatif existant   │ Sessions déjà gérées
 - L'affinité N'EST PAS garantie si le backend devient unhealthy
 - Le backend peut changer si le pool de backends change
 - Préférer des apps stateless + cache externe (Redis, Memorystore)
-EOF
 ```
 
 #### Exercice 10.5.2 : Configurer l'affinité par cookie
@@ -1358,8 +1349,7 @@ echo "Internal Network LB créé: 10.0.3.100:5432"
 
 #### Exercice 10.7.2 : Comparer Proxy vs Passthrough
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
               APPLICATION LB (L7) vs NETWORK LB PASSTHROUGH (L4)
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1380,7 +1370,6 @@ Health checks             │ HTTP/HTTPS/HTTP2         │ TCP/SSL/HTTP
 Cas d'usage:
 • Application LB: Web apps, APIs, microservices HTTP
 • Network LB: Bases de données, jeux, VoIP, streaming, protocoles custom
-EOF
 ```
 
 ---
@@ -1422,8 +1411,7 @@ EOF
 
 #### Exercice 10.8.1 : Comprendre les Hybrid NEGs
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                            HYBRID NEG
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1446,7 +1434,6 @@ Limites:
 • Uniquement pour Global external Application LB
 • Max 100 endpoints par NEG
 • Les endpoints doivent avoir des IPs privées (RFC 1918)
-EOF
 ```
 
 #### Exercice 10.8.2 : Créer un Hybrid NEG (simulation)
@@ -1542,8 +1529,7 @@ gcloud compute url-maps import urlmap-hybrid \
 
 #### Exercice 10.9.1 : Types de NEGs
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                         TYPES DE NETWORK ENDPOINT GROUPS
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1564,7 +1550,6 @@ Hybrid NEG                │ On-premise, autres clouds │ Zone
 ──────────────────────────┼───────────────────────────┼──────────────────
 PSC NEG                   │ Services via Private      │ Région
 (PRIVATE_SERVICE_CONNECT) │ Service Connect           │
-EOF
 ```
 
 #### Exercice 10.9.2 : Créer un Serverless NEG (Cloud Run)
@@ -1655,8 +1640,7 @@ gcloud compute backend-services describe backend-web \
 
 #### Exercice 10.10.2 : Modes de cache
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                           MODES DE CACHE CDN
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1681,8 +1665,9 @@ Paramètres TTL:
 - default-ttl: TTL par défaut si pas de header (défaut: 3600s)
 - max-ttl: TTL maximum (cap les valeurs trop longues)
 - client-ttl: TTL envoyé au client (Cache-Control: max-age)
-EOF
+```
 
+```bash
 # Configurer pour respecter les headers origin
 gcloud compute backend-services update backend-web \
     --cache-mode=USE_ORIGIN_HEADERS \
@@ -1747,9 +1732,8 @@ echo "⚠️ L'invalidation peut prendre quelques minutes à se propager"
 
 #### Exercice 10.10.6 : Métriques CDN
 
-```bash
+```
 # Métriques importantes
-cat << 'EOF'
 Métriques Cloud CDN:
 ──────────────────────────────────────────────────────────────────────────────
 cdn/cache_hit_count         │ Nombre de requêtes servies depuis le cache
@@ -1760,8 +1744,9 @@ cdn/cache_hit_bytes_count   │ Bytes servis depuis le cache
 
 Calcul du ratio:
 cache_hit_ratio = cache_hit_count / (cache_hit_count + cache_miss_count)
-EOF
+```
 
+```bash
 # Consulter les métriques via gcloud
 gcloud monitoring metrics list --filter="metric.type:cdn"
 ```
@@ -1780,8 +1765,7 @@ gcloud monitoring metrics list --filter="metric.type:cdn"
 
 #### Exercice 10.11.1 : Comprendre les Signed URLs
 
-```bash
-cat << 'EOF'
+```
 ═══════════════════════════════════════════════════════════════════════════════
                            SIGNED URLs
 ═══════════════════════════════════════════════════════════════════════════════
@@ -1805,7 +1789,6 @@ Signed Cookies:
 - Même principe mais via cookie HTTP
 - Permet l'accès à plusieurs ressources
 - Utile pour le streaming vidéo
-EOF
 ```
 
 #### Exercice 10.11.2 : Créer une clé de signature
