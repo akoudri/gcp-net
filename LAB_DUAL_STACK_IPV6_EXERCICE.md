@@ -1,4 +1,4 @@
-# Lab 2.9 : Activer le Dual-Stack et communiquer en IPv6
+# Extra Lab : Activer le Dual-Stack et communiquer en IPv6
 
 ## Objectifs
 
@@ -135,7 +135,7 @@ gcloud compute networks subnets create subnet-dual \
     --network=vpc-dual-stack \
     --region=$REGION \
     --range=10.0.1.0/24 \
-    --stack-type=IPV4_IPV6
+    --stack-type=IPV4_IPV6 \
     --ipv6-access-type=INTERNAL
 ```
 
@@ -175,11 +175,11 @@ gcloud compute firewall-rules create allow-icmp-ipv6 \
     --network=vpc-dual-stack \
     --direction=INGRESS \
     --action=ALLOW \
-    --rules=??? \
-    --source-ranges=???
+    --rules=58 \
+    --source-ranges=::/0
 ```
 
-> 💡 **Astuce** : Vous pouvez utiliser `::/0` pour autoriser toutes les sources IPv6, ou être plus restrictif avec la plage de votre subnet.
+> 💡 Vous pouvez utiliser `::/0` pour autoriser toutes les sources IPv6, ou être plus restrictif avec la plage de votre subnet.
 
 **Tâche 4.3** : Créez une règle pour autoriser SSH (pour l'administration).
 
