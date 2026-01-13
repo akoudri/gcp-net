@@ -1,8 +1,15 @@
 #!/bin/bash
-# Script pour supprimer toutes les ressources du VPC default
+# Script pour supprimer toutes les ressources d'un VPC
+
+# Vérifier si un nom de réseau est fourni
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <network-name>"
+    echo "Exemple: $0 my-vpc-network"
+    exit 1
+fi
 
 PROJECT_ID=$(gcloud config get-value project)
-NETWORK="default"
+NETWORK="$1"
 
 echo "=== Suppression des ressources du VPC $NETWORK ==="
 
