@@ -168,8 +168,6 @@ gcloud compute firewall-rules create allow-icmp-ipv4 \
 
 Pour IPv6, le protocole ICMP s'appelle `58` (ICMPv6) et vous devez utiliser `--source-ranges` avec la notation IPv6.
 
-Complétez la commande :
-
 ```bash
 gcloud compute firewall-rules create allow-icmp-ipv6 \
     --network=vpc-dual-stack \
