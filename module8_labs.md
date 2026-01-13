@@ -137,9 +137,6 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
     --role="projects/$PROJECT_ID/roles/NetworkViewerCustom"
 ```
 
-### Livrable
-Documentation des rôles IAM réseau avec recommandations.
-
 ---
 
 ## Lab 8.2 : Règles de pare-feu VPC - Fondamentaux
@@ -392,9 +389,6 @@ EOF
 1. Pourquoi utiliser des priorités différentes (500 vs 1000) ?
 2. Que se passe-t-il si deux règles ont la même priorité mais des actions différentes ?
 
-### Livrable
-Configuration complète des règles de pare-feu avec tests de validation.
-
 ---
 
 ## Lab 8.3 : Tags réseau vs Service Accounts
@@ -574,9 +568,6 @@ Conclusion: Les Service Accounts offrent une sécurité renforcée car:
 EOF
 ```
 
-### Livrable
-Configuration des règles de pare-feu basées sur Service Accounts.
-
 ---
 
 ## Lab 8.4 : Network Firewall Policies - Global et Regional
@@ -722,9 +713,6 @@ gcloud compute firewall-rules create ${VPC_NAME}-test-allow-telnet \
 # Nettoyer la règle de test
 gcloud compute firewall-rules delete ${VPC_NAME}-test-allow-telnet --quiet
 ```
-
-### Livrable
-Network Firewall Policies configurées avec documentation de l'ordre d'évaluation.
 
 ---
 
@@ -895,9 +883,6 @@ gcloud compute firewall-rules create ${VPC_NAME}-allow-rdp-internal \
 # Test: RDP depuis interne sera autorisé (la règle deny ne matche pas 10.0.0.0/8)
 ```
 
-### Livrable
-Documentation de la stratégie de politiques hiérarchiques.
-
 ---
 
 ## Lab 8.6 : Logging et analyse des règles de pare-feu
@@ -1039,9 +1024,6 @@ gcloud logging metrics create firewall-denied-count \
     --log-filter='resource.type="gce_subnetwork" AND jsonPayload.disposition="DENIED"'
 ```
 
-### Livrable
-Analyse des logs de pare-feu avec métriques configurées.
-
 ---
 
 ## Lab 8.7 : IAP (Identity-Aware Proxy) pour TCP
@@ -1165,9 +1147,6 @@ gcloud logging read '
     protoPayload.response.allowed
 )"
 ```
-
-### Livrable
-Configuration IAP fonctionnelle avec documentation.
 
 ---
 
@@ -1330,9 +1309,6 @@ gcloud ids endpoints delete ids-endpoint-lab \
 
 echo "Cloud IDS nettoyé pour éviter les frais"
 ```
-
-### Livrable
-Rapport des alertes IDS détectées avec analyse.
 
 ---
 
@@ -1506,9 +1482,6 @@ Note: NO_PROXY est important pour ne pas proxifier:
 EOF
 ```
 
-### Livrable
-Documentation de la stratégie de filtrage egress.
-
 ---
 
 ## Lab 8.10 : Bonnes pratiques et hardening
@@ -1640,9 +1613,6 @@ echo "=========================================="
 echo "  FIN DE L'AUDIT"
 echo "=========================================="
 ```
-
-### Livrable
-Rapport d'audit de sécurité avec recommandations.
 
 ---
 
@@ -1855,9 +1825,6 @@ echo "- Logging sur toutes les règles"
 echo "- Pas d'IP publiques sur les VMs"
 echo "- Egress restreint"
 ```
-
-### Livrable final
-Architecture sécurisée complète avec documentation.
 
 ---
 

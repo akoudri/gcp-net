@@ -100,9 +100,6 @@ route print
 2. Que signifie la route `default via X.X.X.X` ?
 3. Identifiez les routes vers vos sous-réseaux locaux.
 
-### Livrable
-Capture d'écran annotée montrant : interfaces, adresses MAC, adresses IP, masque et passerelle.
-
 ---
 
 ## Lab 1.2 : La table ARP et la résolution d'adresses (Couche 2)
@@ -176,8 +173,6 @@ ping -c 1 8.8.8.8
 1. Vers quelle IP la requête ARP est-elle envoyée ? Pourquoi ?
 2. Expliquez pourquoi on ne fait pas ARP directement vers 8.8.8.8.
 
-### Livrable
-Capture Wireshark montrant un échange ARP complet (requête + réponse) avec annotations.
 
 ---
 
@@ -255,9 +250,6 @@ ping -c 1 -t 64 8.8.8.8   # TTL = 64 (défaut Linux)
 2. Quel message ICMP est retourné (Type et Code) ?
 3. Qui envoie ce message ?
 
-### Livrable
-Tableau récapitulatif des champs d'une trame capturée avec valeurs et signification.
-
 ---
 
 ## Lab 1.4 : Traceroute - Comprendre le chemin des paquets (Couche 3)
@@ -330,9 +322,6 @@ mtr google.com
 
 # Observer les statistiques en temps réel
 ```
-
-### Livrable
-Schéma du chemin réseau vers une destination avec les routeurs identifiés.
 
 ---
 
@@ -429,9 +418,6 @@ sudo lsof -i :8080      # Notre serveur Python
 # Lister toutes les connexions réseau d'un processus
 sudo lsof -i -a -p <PID>
 ```
-
-### Livrable
-Capture annotée montrant le 3-way handshake TCP complet avec explication de chaque flag.
 
 ---
 
@@ -547,9 +533,6 @@ dig @9.9.9.9 google.com
 dig @8.8.8.8 google.com | grep "Query time"
 dig @1.1.1.1 google.com | grep "Query time"
 ```
-
-### Livrable
-Tableau comparatif des temps de réponse de différents serveurs DNS + capture Wireshark annotée.
 
 ---
 
@@ -675,9 +658,6 @@ exit
 - La décrémentation du TTL
 - Les tables de routage (`show ip route`)
 
-### Livrable
-Fichier Packet Tracer (.pkt) avec topologie fonctionnelle + captures d'écran du mode simulation.
-
 ---
 
 ## Lab 1.8 : Synthèse - Analyse d'une requête HTTP complète
@@ -721,13 +701,6 @@ curl -v http://example.com
 - Ports (source, destination)
 - Taille du paquet
 - Flags TCP (si applicable)
-
-### Livrable final
-Rapport d'analyse complet avec :
-1. Chronologie des échanges
-2. Capture Wireshark annotée
-3. Schéma de l'encapsulation à chaque étape
-4. Réponses aux questions de réflexion
 
 ---
 

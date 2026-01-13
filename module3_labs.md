@@ -140,9 +140,6 @@ gcloud compute routes list --filter="network=$VPC_NAME"
 1. Après suppression de la route par défaut, les VMs peuvent-elles accéder à Internet ?
 2. La route par défaut peut-elle être recréée avec une priorité différente ?
 
-### Livrable
-Tableau récapitulatif des routes du VPC avec leur type, destination et next-hop.
-
 ---
 
 ## Lab 3.2 : Routes statiques personnalisées et priorités
@@ -298,9 +295,6 @@ gcloud compute routes list \
 # Supprimer les routes personnalisées
 gcloud compute routes delete route-specific route-broad route-specific-backup --quiet
 ```
-
-### Livrable
-Document expliquant le fonctionnement du longest prefix match et des priorités avec des exemples.
 
 ---
 
@@ -474,9 +468,6 @@ gcloud compute instances remove-tags client2 \
 1. Le changement de tag est-il instantané ?
 2. Les connexions existantes sont-elles affectées ?
 
-### Livrable
-Captures tcpdump montrant le trafic transitant (ou non) par le proxy selon les tags.
-
 ---
 
 ## Lab 3.4 : Cloud Router et routes dynamiques (BGP)
@@ -569,9 +560,6 @@ gcloud compute routes list \
     --filter="network=$VPC_NAME" \
     --format="table(name,destRange,nextHopVpnTunnel,priority)"
 ```
-
-### Livrable
-Document expliquant le rôle de Cloud Router et le fonctionnement de BGP dans GCP.
 
 ---
 
@@ -771,9 +759,6 @@ EOF
 echo "Politique d'alerte définie. À créer via la Console Cloud Monitoring."
 ```
 
-### Livrable
-Capture d'écran des logs NAT et documentation de la configuration.
-
 ---
 
 ## Lab 3.6 : Private Google Access
@@ -875,9 +860,6 @@ exit
 | Trafic via Internet public | ✅ Oui | ❌ Non (réseau Google) |
 | Coût | Facturation NAT | Gratuit |
 | Configuration | Cloud Router + NAT | Par sous-réseau |
-
-### Livrable
-Tableau comparatif avec résultats des tests avant/après PGA.
 
 ---
 
@@ -1007,9 +989,6 @@ gcloud dns record-sets create "vm-eu.internal.lab." \
 gcloud dns record-sets list --zone=internal-zone --filter="name=vm-eu.internal.lab."
 ```
 
-### Livrable
-Liste des enregistrements DNS créés et captures des tests de résolution.
-
 ---
 
 ## Lab 3.8 : Cloud DNS - Zones publiques et forwarding
@@ -1111,9 +1090,6 @@ gcloud dns policies create outbound-dns-policy \
 **Questions :**
 1. Quand utiliserait-on une zone de forwarding ?
 2. Quelle est la différence entre une zone de forwarding et une politique DNS ?
-
-### Livrable
-Document décrivant les différents types de zones et politiques DNS.
 
 ---
 
@@ -1369,15 +1345,6 @@ gcloud compute ssh db-vm --zone=$ZONE --tunnel-through-iap << 'EOF'
 curl -s https://www.google.com > /dev/null && echo "OK via proxy"
 EOF
 ```
-
-### Livrable final
-
-Document d'architecture incluant :
-1. Schéma de l'architecture déployée
-2. Tableau des sous-réseaux et plages IP
-3. Liste des règles de pare-feu
-4. Configuration DNS
-5. Résultats des tests de validation
 
 ---
 

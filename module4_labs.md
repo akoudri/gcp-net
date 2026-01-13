@@ -243,9 +243,6 @@ exit
 1. Combien de sauts montre le traceroute ?
 2. Le trafic passe-t-il par Internet ?
 
-### Livrable
-Captures d'écran montrant le statut ACTIVE du peering et les tests de connectivité réussis.
-
 ---
 
 ## Lab 4.2 : VPC Peering - Options avancées et routes
@@ -352,9 +349,6 @@ EOF
 chmod +x document_peerings.sh
 ./document_peerings.sh
 ```
-
-### Livrable
-Rapport montrant les routes échangées avant/après activation de l'export.
 
 ---
 
@@ -605,9 +599,6 @@ gcloud compute routes create route-gamma-to-alpha-via-beta \
 
 **Note :** Cette configuration est complexe et nécessite que vm-beta soit dans le chemin réseau. En production, utilisez Network Connectivity Center pour un transit managé.
 
-### Livrable
-Document expliquant la non-transitivité avec schémas et les solutions possibles.
-
 ---
 
 ## Lab 4.4 : Shared VPC - Architecture et rôles IAM
@@ -730,9 +721,6 @@ EOF
 
 cat shared_vpc_plan.md
 ```
-
-### Livrable
-Document de planification Shared VPC complété pour votre organisation.
 
 ---
 
@@ -923,9 +911,6 @@ echo "=== Test de connectivité vers backend ==="
 ping -c 5 10.100.1.2  # IP de vm-backend
 EOF
 ```
-
-### Livrable
-Architecture Shared VPC fonctionnelle avec projets de service et VMs déployées.
 
 ---
 
@@ -1141,9 +1126,6 @@ cat << 'EOF'
 EOF
 ```
 
-### Livrable
-Architecture simulée fonctionnelle avec documentation des flux et des rôles.
-
 ---
 
 ## Lab 4.7 : Règles de pare-feu dans les réseaux partagés
@@ -1281,9 +1263,6 @@ EOF
 chmod +x audit_firewall.sh
 ./audit_firewall.sh $VPC_ALPHA
 ```
-
-### Livrable
-Rapport d'audit des règles de pare-feu avec recommandations.
 
 ---
 
@@ -1436,9 +1415,6 @@ RÉSUMÉ:
 └────────────────────┴─────────────────────────────────────────────┘
 EOF
 ```
-
-### Livrable
-Analyse de votre propre contexte avec recommandation justifiée.
 
 ---
 
@@ -1634,9 +1610,6 @@ echo "=== Prod → Dev (interne) ==="
 ping -c 3 10.30.0.10 && echo "SUCCESS" || echo "BLOCKED"
 EOF
 ```
-
-### Livrable
-Architecture complète documentée avec tests de connectivité et d'isolation.
 
 ---
 

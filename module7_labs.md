@@ -401,9 +401,6 @@ EOF
 1. Combien de "hops" montre le traceroute ? Pourquoi ?
 2. Pourquoi avons-nous créé 4 tunnels au total ?
 
-### Livrable
-HA VPN fonctionnel avec sessions BGP établies et connectivité validée.
-
 ---
 
 ## Lab 7.2 : BGP avec Cloud Router
@@ -541,9 +538,6 @@ cat << 'EOF'
    - Si aucun message reçu pendant le hold timer, session down
 EOF
 ```
-
-### Livrable
-Documentation des routes BGP échangées et configuration personnalisée.
 
 ---
 
@@ -709,9 +703,6 @@ Recommandations:
 EOF
 ```
 
-### Livrable
-Configuration fonctionnelle des deux modes avec documentation des différences.
-
 ---
 
 ## Lab 7.4 : Failover et haute disponibilité VPN
@@ -831,9 +822,6 @@ Bonnes pratiques pour minimiser le temps de convergence:
 - Avoir des tunnels sur des interfaces distinctes
 EOF
 ```
-
-### Livrable
-Rapport de test de failover avec temps de convergence mesurés.
 
 ---
 
@@ -1010,9 +998,6 @@ Liste complète: https://cloud.google.com/network-connectivity/docs/interconnect
 EOF
 ```
 
-### Livrable
-Documentation du processus de provisioning Dedicated Interconnect.
-
 ---
 
 ## Lab 7.6 : Partner Interconnect - Concepts et simulation
@@ -1143,9 +1128,6 @@ gcloud compute interconnects attachments describe partner-attachment \
 EOF
 ```
 
-### Livrable
-Comparaison documentée entre Partner et Dedicated Interconnect.
-
 ---
 
 ## Lab 7.7 : Cross-Cloud Interconnect - Multi-cloud
@@ -1265,9 +1247,6 @@ gcloud compute interconnects attachments dedicated create xcloud-attachment \
 # Configuration BGP des deux côtés pour échanger les routes
 EOF
 ```
-
-### Livrable
-Documentation des cas d'usage multi-cloud avec Cross-Cloud Interconnect.
 
 ---
 
@@ -1452,9 +1431,6 @@ Avec 10 sites:
 EOF
 ```
 
-### Livrable
-Hub NCC fonctionnel avec documentation de la connectivité transitive.
-
 ---
 
 ## Lab 7.9 : Comparaison et choix de solutions
@@ -1578,9 +1554,6 @@ Besoins: Tous les sites doivent communiquer entre eux
 Raisons: Connectivité transitive, gestion centralisée
 EOF
 ```
-
-### Livrable
-Document de recommandation personnalisé selon votre contexte.
 
 ---
 
@@ -1835,9 +1808,6 @@ echo "Vérification BGP:"
 gcloud compute routers get-status router-prod --region=$REGION \
     --format="table(result.bgpPeerStatus[].name,result.bgpPeerStatus[].status)"
 ```
-
-### Livrable final
-Architecture hybride multi-sites complète et documentée.
 
 ---
 

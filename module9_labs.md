@@ -225,9 +225,6 @@ Internal proxy Network LB                       │     ❌      │ Interne seu
 EOF
 ```
 
-### Livrable
-Documentation des concepts DDoS et des couches de protection GCP.
-
 ---
 
 ## Lab 9.2 : Déployer un Application Load Balancer
@@ -454,9 +451,6 @@ for i in {1..5}; do
 done
 ```
 
-### Livrable
-Application Load Balancer fonctionnel prêt pour Cloud Armor.
-
 ---
 
 ## Lab 9.3 : Créer une politique Cloud Armor de base
@@ -561,9 +555,6 @@ curl -s -o /dev/null -w "%{http_code}" http://$LB_IP
 # Les logs Cloud Armor sont générés même sans blocage
 # Voir dans Cloud Console > Network Security > Cloud Armor > Logs
 ```
-
-### Livrable
-Politique Cloud Armor créée et attachée au backend service.
 
 ---
 
@@ -670,9 +661,6 @@ Recommandations:
 - redirect: Pour les migrations ou pages de maintenance
 EOF
 ```
-
-### Livrable
-Règles de filtrage IP et géolocalisation configurées.
 
 ---
 
@@ -811,9 +799,6 @@ curl -s -o /dev/null -w "%{http_code}\n" "http://$LB_IP/?id=1%20OR%201=1"
 # 403 (si le pattern matche)
 ```
 
-### Livrable
-Règles CEL avancées configurées et testées.
-
 ---
 
 ## Lab 9.6 : Règles WAF préconfigurées (OWASP)
@@ -937,9 +922,6 @@ echo "Règles WAF activées en mode Enforce"
 curl -s -o /dev/null -w "%{http_code}\n" "http://$LB_IP/?id=1%20OR%201=1"
 # Devrait maintenant retourner 403
 ```
-
-### Livrable
-Règles WAF OWASP configurées et testées.
 
 ---
 
@@ -1084,9 +1066,6 @@ gcloud compute security-policies rules create 530 \
     --enforce-on-key-name=x-api-key \
     --description="API: max 1000 req/min par API key"
 ```
-
-### Livrable
-Configuration de rate limiting adaptée aux différents endpoints.
 
 ---
 
@@ -1250,9 +1229,6 @@ cat << 'EOF'
 EOF
 ```
 
-### Livrable
-Analyse des logs Cloud Armor et workflow de validation documenté.
-
 ---
 
 ## Lab 9.9 : Named IP Lists et Threat Intelligence
@@ -1340,9 +1316,6 @@ gcloud compute security-policies rules create 20 \
 gcloud compute security-policies rules delete 20 \
     --security-policy=policy-web-app --quiet
 ```
-
-### Livrable
-Configuration des Named IP Lists et Threat Intelligence.
 
 ---
 
@@ -1496,9 +1469,6 @@ Exemple de répartition:
 └───────────────────────────────────────────────────────────────────────────┘
 EOF
 ```
-
-### Livrable
-Edge Security Policy configurée pour Cloud CDN.
 
 ---
 
@@ -1714,9 +1684,6 @@ gcloud compute security-policies rules list \
     --security-policy=$POLICY_NAME \
     --format="table(priority,action,description)"
 ```
-
-### Livrable final
-Politique Cloud Armor complète avec documentation.
 
 ---
 

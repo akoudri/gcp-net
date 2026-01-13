@@ -159,9 +159,6 @@ Besoin                              │ Outil recommandé
 EOF
 ```
 
-### Livrable
-Documentation des enjeux et outils d'observabilité.
-
 ---
 
 ## Lab 11.2 : VPC Flow Logs - Activation et configuration
@@ -366,9 +363,6 @@ echo "Trafic généré!"
 EOF
 ```
 
-### Livrable
-VPC Flow Logs activés et configurés avec les paramètres appropriés.
-
 ---
 
 ## Lab 11.3 : VPC Flow Logs - Analyse et requêtes
@@ -542,9 +536,6 @@ jsonPayload.connection.dest_port!=8443
 ' --limit=50
 ```
 
-### Livrable
-Requêtes d'analyse des Flow Logs maîtrisées.
-
 ---
 
 ## Lab 11.4 : VPC Flow Logs - Export vers BigQuery
@@ -685,9 +676,6 @@ ORDER BY total_bytes DESC
 LIMIT 20
 '
 ```
-
-### Livrable
-Pipeline d'export vers BigQuery avec requêtes de sécurité.
 
 ---
 
@@ -835,9 +823,6 @@ cat << 'EOF'
 }
 EOF
 ```
-
-### Livrable
-Firewall Rules Logging configuré et analysé.
 
 ---
 
@@ -1000,9 +985,6 @@ curl -s http://vm-dest
 EOF
 ```
 
-### Livrable
-Architecture Packet Mirroring fonctionnelle.
-
 ---
 
 ## Lab 11.7 : Cloud Monitoring - Métriques réseau
@@ -1092,9 +1074,6 @@ gcloud monitoring time-series list \
 INSTANCE_ID=$(gcloud compute instances describe vm-source --zone=$ZONE --format="get(id)")
 echo "Instance ID: $INSTANCE_ID"
 ```
-
-### Livrable
-Compréhension des métriques réseau GCP.
 
 ---
 
@@ -1248,9 +1227,6 @@ Backend Health          │ backend healthy count             │ État des back
 EOF
 ```
 
-### Livrable
-Dashboard de monitoring réseau personnalisé.
-
 ---
 
 ## Lab 11.9 : Alerting - Configuration des alertes
@@ -1383,9 +1359,6 @@ cat > alert-firewall-denies.json << EOF
 }
 EOF
 ```
-
-### Livrable
-Système d'alertes réseau configuré.
 
 ---
 
@@ -1523,9 +1496,6 @@ EOF
 gcloud network-management operations list
 ```
 
-### Livrable
-Maîtrise de Network Intelligence Center.
-
 ---
 
 ## Lab 11.11 : Optimisation des coûts d'observabilité
@@ -1615,9 +1585,6 @@ gcloud logging sinks create archive-old-logs \
     storage.googleapis.com/${PROJECT_ID}-logs-archive \
     --log-filter='resource.type="gce_subnetwork" timestamp<"TIMESTAMP_30_DAYS_AGO"'
 ```
-
-### Livrable
-Configuration optimisée pour les coûts.
 
 ---
 
@@ -1716,9 +1683,6 @@ RÉTENTION & COÛTS
 ☐ Budget d'alerte configuré si nécessaire
 EOF
 ```
-
-### Livrable final
-Solution d'observabilité réseau complète documentée.
 
 ---
 

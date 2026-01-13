@@ -128,9 +128,6 @@ gcloud compute networks delete default --quiet
 gcloud compute networks list
 ```
 
-### Livrable
-Rapport d'audit identifiant les risques de sécurité du VPC default avec recommandations.
-
 ---
 
 ## Lab 2.2 : Créer un VPC custom multi-régions
@@ -318,9 +315,6 @@ ping -c 3 vm-us.us-central1-a
 1. Quel est le format complet du nom DNS interne d'une VM ?
 2. Le DNS interne fonctionne-t-il entre régions différentes ?
 
-### Livrable
-Schéma de l'architecture déployée avec les IPs et résultats des tests de connectivité.
-
 ---
 
 ## Lab 2.3 : Planification et extension des sous-réseaux
@@ -434,9 +428,6 @@ EOF
 chmod +x check_overlaps.sh
 ./check_overlaps.sh
 ```
-
-### Livrable
-Document de planification d'adressage IP pour l'entreprise avec justifications.
 
 ---
 
@@ -645,9 +636,6 @@ sudo tcpdump -i any icmp -n
 2. Que se passe-t-il si vous désactivez `ip_forward` sur l'appliance ?
 3. Comment cette architecture serait-elle utilisée en production ?
 
-### Livrable
-Captures tcpdump montrant le trafic transitant par l'appliance + schéma d'architecture annoté.
-
 ---
 
 ## Lab 2.5 : Comparaison des Network Tiers
@@ -780,9 +768,6 @@ gcloud compute instances list \
 1. Pour un workload transférant 1 To/mois, quelle serait l'économie avec Standard ?
 2. Le Standard Tier est-il adapté pour une API utilisée mondialement ?
 
-### Livrable
-Tableau comparatif des performances et coûts entre Premium et Standard Tier.
-
 ---
 
 ## Lab 2.6 : Mode de routage dynamique
@@ -893,9 +878,6 @@ gcloud compute networks describe vpc-regional \
 - La même route `192.168.0.0/16` est propagée à TOUTES les régions
 - Les VMs dans `us-central1` peuvent atteindre `192.168.0.0/16` via le VPN en Europe
 - Le trafic traverse le backbone Google entre les régions
-
-### Livrable
-Schéma illustrant la propagation des routes en mode régional vs global.
 
 ---
 
@@ -1121,9 +1103,6 @@ Créer un document incluant :
 3. Matrice des flux autorisés (règles de pare-feu)
 4. Procédure d'accès SSH
 
-### Livrable
-Documentation complète de l'architecture déployée.
-
 ---
 
 ## Lab 2.8 : Troubleshooting VPC
@@ -1215,9 +1194,6 @@ gcloud compute firewall-rules list \
 gcloud compute routers list --filter="network=$VPC_NAME"
 gcloud compute routers nats list --router=<ROUTER_NAME> --region=$REGION
 ```
-
-### Livrable
-Rapport de troubleshooting avec les commandes utilisées et les solutions appliquées.
 
 ---
 

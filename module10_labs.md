@@ -218,9 +218,6 @@ RÉSUMÉ RAPIDE:
 EOF
 ```
 
-### Livrable
-Documentation du choix de Load Balancer pour différents scénarios.
-
 ---
 
 ## Lab 10.2 : Global External Application LB - Configuration complète
@@ -521,9 +518,6 @@ echo -e "\n=== Test Static ==="
 curl -s http://$LB_IP/static/style.css
 ```
 
-### Livrable
-Application Load Balancer global fonctionnel avec routage.
-
 ---
 
 ## Lab 10.3 : URL Maps et routage avancé
@@ -670,9 +664,6 @@ routeRules:
       weight: 100
 EOF
 ```
-
-### Livrable
-URL Maps configurées avec routage avancé.
 
 ---
 
@@ -997,9 +988,6 @@ echo "=== Utilisateur beta (v2) ==="
 curl -s -H "X-Beta-User: true" http://$LB_IP/ | grep "Version"
 ```
 
-### Livrable
-Déploiements Canary et Blue-Green fonctionnels.
-
 ---
 
 ## Lab 10.5 : Session Affinity et persistance
@@ -1094,9 +1082,6 @@ curl -H "Authorization: Bearer tokenB" -s http://$LB_IP/api/ | head -1
 echo "=== Token A (même backend) ==="
 curl -H "Authorization: Bearer tokenA" -s http://$LB_IP/api/ | head -1
 ```
-
-### Livrable
-Configuration de session affinity fonctionnelle.
 
 ---
 
@@ -1288,9 +1273,6 @@ curl -s http://10.0.2.100/
 EOF
 ```
 
-### Livrable
-Internal Application Load Balancer fonctionnel.
-
 ---
 
 ## Lab 10.7 : Network Load Balancer (L4)
@@ -1400,9 +1382,6 @@ Cas d'usage:
 • Network LB: Bases de données, jeux, VoIP, streaming, protocoles custom
 EOF
 ```
-
-### Livrable
-Network Load Balancer passthrough fonctionnel.
 
 ---
 
@@ -1549,9 +1528,6 @@ gcloud compute url-maps import urlmap-hybrid \
     --global
 ```
 
-### Livrable
-Configuration Hybrid NEG documentée.
-
 ---
 
 ## Lab 10.9 : Network Endpoint Groups (NEGs)
@@ -1646,9 +1622,6 @@ gcloud compute backend-services add-backend backend-external \
     --global-network-endpoint-group \
     --global
 ```
-
-### Livrable
-NEGs de différents types configurés.
 
 ---
 
@@ -1792,9 +1765,6 @@ EOF
 # Consulter les métriques via gcloud
 gcloud monitoring metrics list --filter="metric.type:cdn"
 ```
-
-### Livrable
-Cloud CDN configuré avec métriques de performance.
 
 ---
 
@@ -1975,9 +1945,6 @@ gcloud compute backend-services add-signed-url-key backend-web \
 #     --global
 ```
 
-### Livrable
-Signed URLs fonctionnelles pour contenu protégé.
-
 ---
 
 ## Lab 10.12 : Scénario intégrateur - Architecture multi-tier
@@ -2082,9 +2049,6 @@ for BACKEND in backend-web backend-v1 backend-v2 backend-api; do
     gcloud compute backend-services get-health $BACKEND --global 2>/dev/null || echo "Non global"
 done
 ```
-
-### Livrable final
-Architecture multi-tier complète avec documentation.
 
 ---
 

@@ -214,9 +214,6 @@ gcloud compute routes list --filter="network=$VPC_NAME"
 # PGA "intercepte" ce trafic pour les APIs Google
 ```
 
-### Livrable
-Captures d'écran montrant les tests avant/après activation de PGA.
-
 ---
 
 ## Lab 5.2 : PGA - Configuration DNS avancée
@@ -354,9 +351,6 @@ gcloud dns record-sets create "*.googleapis.com." \
     --rrdatas="restricted.googleapis.com."
 EOF
 ```
-
-### Livrable
-Configuration DNS complète avec tests de résolution.
 
 ---
 
@@ -541,9 +535,6 @@ exit
 1. L'IP de Cloud SQL (10.100.0.x) fait-elle partie de vos sous-réseaux ?
 2. Pourquoi utiliser PSA plutôt qu'une IP publique pour Cloud SQL ?
 
-### Livrable
-Instance Cloud SQL fonctionnelle accessible uniquement via IP privée.
-
 ---
 
 ## Lab 5.4 : PSA - Memorystore Redis
@@ -629,9 +620,6 @@ gcloud compute networks peerings list --network=$VPC_NAME
 # Cloud SQL et Redis partagent la même connexion PSA
 # mais ont des IPs différentes dans la plage réservée
 ```
-
-### Livrable
-Instance Memorystore Redis fonctionnelle via PSA.
 
 ---
 
@@ -826,9 +814,6 @@ Quand PGA suffit :
 EOF
 ```
 
-### Livrable
-Endpoint PSC fonctionnel avec tests de connectivité.
-
 ---
 
 ## Lab 5.6 : PSC - Publier un service (Producteur)
@@ -1006,9 +991,6 @@ echo "Service Attachment URI: $SERVICE_ATTACHMENT_URI"
 1. Pourquoi avons-nous besoin d'un sous-réseau avec `purpose=PRIVATE_SERVICE_CONNECT` ?
 2. Quelle est la différence entre `ACCEPT_AUTOMATIC` et `ACCEPT_MANUAL` ?
 
-### Livrable
-Service Attachment PSC créé et prêt à être consommé.
-
 ---
 
 ## Lab 5.7 : PSC - Consommer un service (Consommateur)
@@ -1168,9 +1150,6 @@ curl http://myapi.service.internal
 EOF
 ```
 
-### Livrable
-Connexion PSC fonctionnelle entre producteur et consommateur.
-
 ---
 
 ## Lab 5.8 : Comparaison PGA vs PSA vs PSC
@@ -1295,9 +1274,6 @@ EOF
    │APIs │       │     │
    └─────┘       └─────┘
 ```
-
-### Livrable
-Document de recommandation pour votre cas d'usage spécifique.
 
 ---
 
@@ -1520,14 +1496,6 @@ echo "=== Test accès Internet (devrait échouer) ==="
 curl -v --connect-timeout 5 https://www.github.com 2>&1 | head -10
 EOF
 ```
-
-### Livrable final
-
-Document d'architecture incluant :
-1. Schéma de l'architecture déployée
-2. Liste des composants de connectivité privée
-3. Règles de pare-feu et leur justification
-4. Résultats des tests de validation
 
 ---
 

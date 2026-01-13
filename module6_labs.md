@@ -279,9 +279,6 @@ exit
 1. Quel serveur DNS est configuré sur les VMs GCP ?
 2. Pourquoi utiliser un CNAME plutôt qu'un second enregistrement A ?
 
-### Livrable
-Zone DNS privée fonctionnelle avec tests de résolution réussis.
-
 ---
 
 ## Lab 6.2 : DNS interne automatique GCP
@@ -375,9 +372,6 @@ gcloud compute project-info describe \
 # Note: Les VMs existantes peuvent nécessiter un redémarrage
 # pour prendre en compte le changement
 ```
-
-### Livrable
-Documentation du format DNS automatique utilisé dans votre projet.
 
 ---
 
@@ -557,9 +551,6 @@ gcloud dns record-sets create "blog.${DOMAIN}." \
     --rrdatas="203.0.113.100"
 ```
 
-### Livrable
-Zone publique avec tous les types d'enregistrements courants.
-
 ---
 
 ## Lab 6.4 : Forwarding DNS vers on-premise
@@ -729,9 +720,6 @@ exit
 1. Pourquoi le forwarding utilise-t-il le routage privé pour les IPs RFC 1918 ?
 2. Que se passe-t-il si le serveur DNS cible est injoignable ?
 
-### Livrable
-Zone de forwarding fonctionnelle avec tests de résolution.
-
 ---
 
 ## Lab 6.5 : Inbound Forwarding - Résolution depuis on-premise
@@ -850,9 +838,6 @@ exit
 ```
 
 **Note :** Dans un vrai scénario on-premise, vous configureriez vos serveurs DNS on-premise pour transférer les requêtes vers ces adresses via VPN/Interconnect.
-
-### Livrable
-Inbound forwarding configuré avec tests depuis le client simulé.
 
 ---
 
@@ -1035,9 +1020,6 @@ Pour une connectivité complète Hub-Spoke :
 EOF
 ```
 
-### Livrable
-Peering DNS fonctionnel entre VPC Hub et Spoke.
-
 ---
 
 ## Lab 6.7 : Politiques DNS et Logging
@@ -1160,9 +1142,6 @@ gcloud logging metrics create dns-nxdomain-count \
 gcloud logging metrics describe dns-nxdomain-count
 ```
 
-### Livrable
-Politique DNS avec logging activé et exemples d'analyse des logs.
-
 ---
 
 ## Lab 6.8 : DNSSEC - Sécurisation du DNS
@@ -1269,9 +1248,6 @@ gcloud dns dns-keys list --zone=zone-public-lab \
 # Note: La rotation KSK nécessite une mise à jour du DS record
 # chez le registrar, donc à faire avec précaution
 ```
-
-### Livrable
-Zone publique avec DNSSEC activé et DS record documenté.
 
 ---
 
@@ -1442,9 +1418,6 @@ Conséquence pour le split-horizon:
 EOF
 ```
 
-### Livrable
-Configuration split-horizon fonctionnelle avec tests des deux vues.
-
 ---
 
 ## Lab 6.10 : Routing Policies - Routage intelligent
@@ -1603,9 +1576,6 @@ gcloud dns record-sets delete "geo.example.com." \
     --zone=zone-public-lab \
     --type=A
 ```
-
-### Livrable
-Configuration de routing policies avec documentation des cas d'usage.
 
 ---
 
@@ -1861,15 +1831,6 @@ EOF
 echo "=== Logs DNS récents ==="
 gcloud logging read 'resource.type="dns_query"' --limit=10 \
     --format="table(timestamp,jsonPayload.queryName,jsonPayload.responseCode)"
-```
-
-### Livrable final
-
-Document d'architecture incluant :
-1. Schéma de l'architecture DNS
-2. Liste des zones et leur fonction
-3. Configuration des politiques DNS
-4. Résultats des tests de validation
 
 ---
 
