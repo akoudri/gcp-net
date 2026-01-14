@@ -1,0 +1,8 @@
+name: organizations/641164603980/policies/iam.allowedPolicyMemberDomains
+spec:
+  rules:
+  - values:
+      allowedValues:
+      - domains/hardis-group.com
+      - domains/gmail.com
+      - domains/reflex.hardis-group.com
