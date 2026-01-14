@@ -136,6 +136,7 @@ gcloud compute networks list
 ### Objectifs
 - Créer un VPC en mode custom
 - Configurer des sous-réseaux dans plusieurs régions
+- Configurer Cloud NAT pour l'accès sortant sécurisé
 - Déployer des VMs et tester la connectivité inter-régions
 - Comprendre le routage automatique au sein d'un VPC
 
@@ -243,7 +244,43 @@ gcloud compute firewall-rules list --filter="network=$VPC_NAME"
 1. Pourquoi utilise-t-on des tags (`--target-tags`) pour la règle SSH ?
 2. Est-il préférable d'utiliser `10.0.0.0/8` ou les plages exactes pour `source-ranges` ?
 
-#### Exercice 2.2.4 : Déployer les VMs dans chaque région
+#### Exercice 2.2.4 : Configurer Cloud NAT pour l'accès sortant
+
+```bash
+# Créer un Cloud Router (requis pour Cloud NAT)
+gcloud compute routers create router-nat-eu \
+    --network=$VPC_NAME \
+    --region=europe-west1
+
+gcloud compute routers create router-nat-us \
+    --network=$VPC_NAME \
+    --region=us-central1
+
+# Configurer Cloud NAT pour Europe
+gcloud compute routers nats create nat-eu \
+    --router=router-nat-eu \
+    --region=europe-west1 \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Configurer Cloud NAT pour US
+gcloud compute routers nats create nat-us \
+    --router=router-nat-us \
+    --region=us-central1 \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers nats list --router=router-nat-eu --region=europe-west1
+gcloud compute routers nats list --router=router-nat-us --region=us-central1
+```
+
+**Questions :**
+1. Pourquoi utiliser Cloud NAT plutôt que des IPs externes sur les VMs ?
+2. Quel est l'avantage sécuritaire de Cloud NAT ?
+3. Les VMs peuvent-elles recevoir du trafic entrant via Cloud NAT ?
+
+#### Exercice 2.2.5 : Déployer les VMs dans chaque région
 
 ```bash
 # VM en Europe
@@ -279,7 +316,7 @@ gcloud compute instances list --filter="network=$VPC_NAME" \
     --format="table(name,zone,networkInterfaces[0].networkIP)"
 ```
 
-#### Exercice 2.2.5 : Tester la connectivité inter-régions
+#### Exercice 2.2.6 : Tester la connectivité inter-régions
 
 ```bash
 # Se connecter à vm-eu via IAP (Identity-Aware Proxy)
@@ -301,7 +338,7 @@ mtr -c 10 --report <IP_VM_US>
 2. Quelle est la latence moyenne entre Europe et US ?
 3. Le trafic passe-t-il par Internet ou reste-t-il sur le backbone Google ?
 
-#### Exercice 2.2.6 : Vérifier le DNS interne automatique
+#### Exercice 2.2.7 : Vérifier le DNS interne automatique
 
 ```bash
 # Depuis vm-eu, tester la résolution DNS interne
@@ -886,6 +923,7 @@ gcloud compute networks describe vpc-regional \
 
 ### Objectifs
 - Concevoir et déployer une architecture VPC complète
+- Configurer Cloud NAT pour l'accès Internet sécurisé (sans IPs publiques)
 - Appliquer les bonnes pratiques de segmentation
 - Documenter l'architecture
 
@@ -974,6 +1012,19 @@ gcloud compute networks subnets create subnet-mgmt \
     --range=10.30.0.0/24 \
     --description="Management - Bastion et outils"
 
+echo "=== Configuration Cloud NAT pour accès sortant ==="
+# Créer un Cloud Router (requis pour Cloud NAT)
+gcloud compute routers create router-nat \
+    --network=$VPC_NAME \
+    --region=$REGION
+
+# Configurer Cloud NAT
+gcloud compute routers nats create nat-config \
+    --router=router-nat \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
 echo "=== Création des règles de pare-feu ==="
 # SSH vers bastion uniquement (via IAP)
 gcloud compute firewall-rules create ${VPC_NAME}-allow-iap-ssh \
@@ -1014,7 +1065,8 @@ gcloud compute firewall-rules create ${VPC_NAME}-allow-internal-icmp \
     --description="Ping interne"
 
 echo "=== Création des VMs ==="
-# Bastion
+# Bastion (conserve une IP externe pour simplifier l'accès initial)
+# Note: Accessible uniquement via IAP (35.235.240.0/20)
 gcloud compute instances create bastion \
     --zone=$ZONE \
     --machine-type=e2-micro \
@@ -1025,6 +1077,7 @@ gcloud compute instances create bastion \
     --image-project=debian-cloud
 
 # Web Prod (Frontend)
+# Note: --no-address = pas d'IP externe, accès Internet via Cloud NAT
 gcloud compute instances create web-prod \
     --zone=$ZONE \
     --machine-type=e2-small \
@@ -1231,9 +1284,21 @@ done
 echo "=== Suppression des adresses IP ==="
 gcloud compute addresses delete ip-standard --region=europe-west1 --quiet 2>/dev/null
 
+echo "=== Suppression des Cloud NAT ==="
+for ROUTER in $(gcloud compute routers list --format="get(name,region)"); do
+    ROUTER_NAME=$(echo $ROUTER | awk '{print $1}')
+    ROUTER_REGION=$(echo $ROUTER | awk '{print $2}')
+    # Supprimer les configurations NAT du routeur
+    for NAT in $(gcloud compute routers nats list --router=$ROUTER_NAME --region=$ROUTER_REGION --format="get(name)" 2>/dev/null); do
+        gcloud compute routers nats delete $NAT --router=$ROUTER_NAME --region=$ROUTER_REGION --quiet 2>/dev/null
+    done
+done
+
 echo "=== Suppression des Cloud Routers ==="
-for ROUTER in $(gcloud compute routers list --format="get(name)"); do
-    gcloud compute routers delete $ROUTER --region=europe-west1 --quiet 2>/dev/null
+for ROUTER in $(gcloud compute routers list --format="get(name,region)"); do
+    ROUTER_NAME=$(echo $ROUTER | awk '{print $1}')
+    ROUTER_REGION=$(echo $ROUTER | awk '{print $2}')
+    gcloud compute routers delete $ROUTER_NAME --region=$ROUTER_REGION --quiet 2>/dev/null
 done
 
 echo "=== Suppression des sous-réseaux ==="

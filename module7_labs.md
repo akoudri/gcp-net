@@ -53,6 +53,7 @@ Les labs VPN sont entièrement réalisables dans un environnement GCP standard.
 - Créer une passerelle HA VPN
 - Configurer les tunnels VPN avec BGP
 - Établir la connectivité entre deux VPC simulant GCP et on-premise
+- Configurer Cloud NAT pour permettre l'accès Internet sortant depuis les VMs
 
 ### Architecture cible
 
@@ -124,7 +125,41 @@ for VPC in vpc-gcp vpc-onprem; do
 done
 ```
 
-#### Exercice 7.1.2 : Déployer les VMs de test
+#### Exercice 7.1.2 : Configurer Cloud NAT pour l'accès Internet
+
+```bash
+# Cloud NAT pour le VPC GCP
+gcloud compute routers nats create nat-vpn-gcp \
+    --router=router-gcp \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Cloud NAT pour le VPC On-premise
+gcloud compute routers nats create nat-vpn-onprem \
+    --router=router-onprem \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration Cloud NAT
+echo "=== Cloud NAT VPC GCP ==="
+gcloud compute routers nats describe nat-vpn-gcp \
+    --router=router-gcp \
+    --region=$REGION
+
+echo "=== Cloud NAT VPC On-premise ==="
+gcloud compute routers nats describe nat-vpn-onprem \
+    --router=router-onprem \
+    --region=$REGION
+```
+
+**Questions :**
+1. Pourquoi avons-nous besoin de Cloud NAT dans cette architecture avec VPN ?
+2. Que se passerait-il si les VMs tentaient d'accéder à Internet sans Cloud NAT ?
+3. Comment Cloud NAT interagit-il avec BGP et les tunnels VPN ?
+
+#### Exercice 7.1.3 : Déployer les VMs de test
 
 ```bash
 # VM dans le VPC GCP
@@ -154,7 +189,7 @@ gcloud compute instances create vm-onprem \
         apt-get update && apt-get install -y dnsutils traceroute mtr'
 ```
 
-#### Exercice 7.1.3 : Vérifier l'absence de connectivité initiale
+#### Exercice 7.1.4 : Vérifier l'absence de connectivité initiale
 
 ```bash
 # Se connecter à vm-gcp et tenter de joindre vm-onprem
@@ -165,7 +200,7 @@ EOF
 # Résultat attendu: Network unreachable ou timeout
 ```
 
-#### Exercice 7.1.4 : Créer les Cloud Routers
+#### Exercice 7.1.5 : Créer les Cloud Routers
 
 ```bash
 # Cloud Router pour VPC GCP (ASN 65001)
@@ -186,7 +221,7 @@ gcloud compute routers create router-onprem \
 gcloud compute routers list --filter="region:$REGION"
 ```
 
-#### Exercice 7.1.5 : Créer les passerelles HA VPN
+#### Exercice 7.1.6 : Créer les passerelles HA VPN
 
 ```bash
 # Passerelle HA VPN pour VPC GCP
@@ -211,7 +246,7 @@ gcloud compute vpn-gateways describe vpn-gw-onprem \
     --format="yaml(vpnInterfaces)"
 ```
 
-#### Exercice 7.1.6 : Créer les tunnels VPN (4 tunnels au total)
+#### Exercice 7.1.7 : Créer les tunnels VPN (4 tunnels au total)
 
 ```bash
 # Générer des secrets partagés sécurisés
@@ -275,7 +310,7 @@ gcloud compute vpn-tunnels create tunnel-onprem-to-gcp-1 \
 gcloud compute vpn-tunnels list --filter="region:$REGION"
 ```
 
-#### Exercice 7.1.7 : Configurer les interfaces et peers BGP
+#### Exercice 7.1.8 : Configurer les interfaces et peers BGP
 
 ```bash
 # ===== Interfaces BGP côté GCP =====
@@ -343,7 +378,7 @@ gcloud compute routers add-bgp-peer router-onprem \
     --region=$REGION
 ```
 
-#### Exercice 7.1.8 : Vérifier l'état des tunnels et sessions BGP
+#### Exercice 7.1.9 : Vérifier l'état des tunnels et sessions BGP
 
 ```bash
 # Attendre quelques secondes pour l'établissement
@@ -370,7 +405,7 @@ gcloud compute routers get-status router-gcp --region=$REGION \
     --format="yaml(result.bestRoutes)"
 ```
 
-#### Exercice 7.1.9 : Tester la connectivité
+#### Exercice 7.1.10 : Tester la connectivité
 
 ```bash
 # Test depuis vm-gcp vers vm-onprem
@@ -387,6 +422,10 @@ traceroute -n 192.168.0.10
 echo ""
 echo "=== MTR (si disponible) ==="
 mtr -r -c 10 192.168.0.10 2>/dev/null || echo "MTR non disponible"
+
+echo ""
+echo "=== Test accès Internet via Cloud NAT ==="
+curl -s ifconfig.me
 EOF
 
 # Test inverse depuis vm-onprem vers vm-gcp
@@ -394,12 +433,17 @@ gcloud compute ssh vm-onprem --zone=$ZONE --tunnel-through-iap << 'EOF'
 echo "=== Test depuis On-premise vers GCP ==="
 ping -c 5 10.0.0.10
 traceroute -n 10.0.0.10
+
+echo ""
+echo "=== Test accès Internet via Cloud NAT ==="
+curl -s ifconfig.me
 EOF
 ```
 
 **Questions :**
 1. Combien de "hops" montre le traceroute ? Pourquoi ?
 2. Pourquoi avons-nous créé 4 tunnels au total ?
+3. Comment vérifier que Cloud NAT fonctionne correctement ?
 
 ---
 
@@ -1485,6 +1529,7 @@ Raisons: Connectivité transitive, gestion centralisée
 ### Objectifs
 - Déployer une architecture hybride complète
 - Combiner VPN HA avec monitoring
+- Configurer Cloud NAT pour tous les sites
 - Documenter l'architecture
 
 ### Architecture cible
@@ -1606,19 +1651,34 @@ gcloud compute vpn-gateways create vpn-gw-prod \
     --network=vpc-production \
     --region=$REGION
 
-# ===== 6. CONFIGURATION PAR SITE =====
+# ===== 6. CLOUD NAT POUR LE VPC PRODUCTION =====
+echo ">>> Configuration Cloud NAT Production..."
+gcloud compute routers nats create nat-hybrid-prod \
+    --router=router-prod \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# ===== 7. CONFIGURATION PAR SITE =====
 echo ">>> Configuration VPN par site..."
 for SITE in "${!SITES[@]}"; do
     IFS=':' read -r RANGE ASN <<< "${SITES[$SITE]}"
-    
+
     echo "    Configuration site: $SITE (ASN: $ASN)"
-    
+
     # Cloud Router du site
     gcloud compute routers create router-${SITE} \
         --network=vpc-site-${SITE} \
         --region=$REGION \
         --asn=$ASN
-    
+
+    # Cloud NAT pour le site
+    gcloud compute routers nats create nat-hybrid-${SITE} \
+        --router=router-${SITE} \
+        --region=$REGION \
+        --nat-all-subnet-ip-ranges \
+        --auto-allocate-nat-external-ips
+
     # VPN Gateway du site
     gcloud compute vpn-gateways create vpn-gw-${SITE} \
         --network=vpc-site-${SITE} \
@@ -1652,7 +1712,7 @@ for SITE in "${!SITES[@]}"; do
         --router-region=$REGION
 done
 
-# ===== 7. CONFIGURATION BGP =====
+# ===== 8. CONFIGURATION BGP =====
 echo ">>> Configuration BGP..."
 INDEX=0
 for SITE in "${!SITES[@]}"; do
@@ -1696,7 +1756,7 @@ for SITE in "${!SITES[@]}"; do
     ((INDEX++))
 done
 
-# ===== 8. VMs DE TEST =====
+# ===== 9. VMs DE TEST =====
 echo ">>> Déploiement VMs de test..."
 gcloud compute instances create vm-prod \
     --zone=$ZONE \
@@ -1705,7 +1765,9 @@ gcloud compute instances create vm-prod \
     --subnet=subnet-apps \
     --no-address \
     --image-family=debian-11 \
-    --image-project=debian-cloud
+    --image-project=debian-cloud \
+    --metadata=startup-script='#!/bin/bash
+        apt-get update && apt-get install -y dnsutils traceroute mtr'
 
 for SITE in paris lyon berlin; do
     gcloud compute instances create vm-${SITE} \
@@ -1715,7 +1777,9 @@ for SITE in paris lyon berlin; do
         --subnet=subnet-${SITE} \
         --no-address \
         --image-family=debian-11 \
-        --image-project=debian-cloud
+        --image-project=debian-cloud \
+        --metadata=startup-script='#!/bin/bash
+            apt-get update && apt-get install -y dnsutils traceroute mtr'
 done
 
 echo "=========================================="
@@ -1729,7 +1793,18 @@ echo ""
 echo "Vérification BGP:"
 gcloud compute routers get-status router-prod --region=$REGION \
     --format="table(result.bgpPeerStatus[].name,result.bgpPeerStatus[].status)"
+echo ""
+echo "Vérification Cloud NAT:"
+gcloud compute routers nats list --router=router-prod --region=$REGION
+for SITE in paris lyon berlin; do
+    gcloud compute routers nats list --router=router-${SITE} --region=$REGION
+done
 ```
+
+**Questions de validation :**
+1. Comment Cloud NAT facilite-t-il la gestion d'une architecture hybride multi-sites ?
+2. Quel est l'impact de Cloud NAT sur le routage BGP dans cette architecture ?
+3. Comment tester que chaque site peut accéder à Internet via Cloud NAT tout en communiquant entre eux via VPN ?
 
 ---
 
@@ -1760,6 +1835,13 @@ done
 echo "=== Suppression des passerelles VPN ==="
 for GW in $(gcloud compute vpn-gateways list --format="get(name)" 2>/dev/null); do
     gcloud compute vpn-gateways delete $GW --region=europe-west1 --quiet 2>/dev/null
+done
+
+echo "=== Suppression des configurations Cloud NAT ==="
+for ROUTER in $(gcloud compute routers list --format="get(name)" 2>/dev/null); do
+    for NAT in $(gcloud compute routers nats list --router=$ROUTER --region=europe-west1 --format="get(name)" 2>/dev/null); do
+        gcloud compute routers nats delete $NAT --router=$ROUTER --region=europe-west1 --quiet 2>/dev/null
+    done
 done
 
 echo "=== Suppression des Cloud Routers ==="

@@ -144,6 +144,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 - Comprendre les règles de pare-feu VPC
 - Configurer les règles ingress et egress
 - Utiliser les priorités efficacement
+- Configurer Cloud NAT pour l'accès Internet sortant
 
 ### Architecture cible
 
@@ -200,7 +201,42 @@ gcloud compute networks subnets create subnet-backend \
     --network=$VPC_NAME \
     --region=$REGION \
     --range=10.0.2.0/24
+```
 
+#### Exercice 8.2.2 : Configurer Cloud NAT
+
+```bash
+# Créer un Cloud Router
+gcloud compute routers create router-nat-security \
+    --network=$VPC_NAME \
+    --region=$REGION
+
+# Configurer Cloud NAT
+gcloud compute routers nats create nat-security \
+    --router=router-nat-security \
+    --region=$REGION \
+    --auto-allocate-nat-external-ips \
+    --nat-all-subnet-ip-ranges \
+    --enable-logging
+
+# Vérifier la configuration Cloud NAT
+gcloud compute routers nats describe nat-security \
+    --router=router-nat-security \
+    --region=$REGION
+
+# Vérifier le Cloud Router
+gcloud compute routers describe router-nat-security \
+    --region=$REGION
+```
+
+**Questions pédagogiques :**
+1. Pourquoi Cloud NAT est-il nécessaire pour les VMs sans IP publique ?
+2. Quelle est la différence entre `--nat-all-subnet-ip-ranges` et `--nat-custom-subnet-ip-ranges` ?
+3. Comment Cloud NAT améliore-t-il la sécurité par rapport aux IP publiques sur chaque VM ?
+
+#### Exercice 8.2.3 : Créer les VMs
+
+```bash
 # VMs avec tags
 gcloud compute instances create vm-web \
     --zone=$ZONE \
@@ -235,7 +271,7 @@ gcloud compute instances create vm-db \
     --metadata=startup-script='apt-get update && apt-get install -y dnsutils netcat-openbsd'
 ```
 
-#### Exercice 8.2.2 : Comprendre les règles par défaut
+#### Exercice 8.2.4 : Comprendre les règles par défaut
 
 ```bash
 # Lister les règles de pare-feu par défaut du VPC
@@ -254,7 +290,7 @@ gcloud compute firewall-rules list \
 Ces règles ne peuvent pas être supprimées mais peuvent être "overridées"
 par des règles avec une priorité plus haute (nombre plus bas).
 
-#### Exercice 8.2.3 : Créer les règles de pare-feu
+#### Exercice 8.2.5 : Créer les règles de pare-feu
 
 ```bash
 # 1. Autoriser SSH via IAP (pour administration)
@@ -316,7 +352,7 @@ gcloud compute firewall-rules list \
     --format="table(name,direction,priority,sourceRanges,sourceTags,targetTags,allowed)"
 ```
 
-#### Exercice 8.2.4 : Ajouter des règles de blocage explicites
+#### Exercice 8.2.6 : Ajouter des règles de blocage explicites
 
 ```bash
 # Bloquer les ports dangereux (priorité haute)
@@ -360,7 +396,7 @@ gcloud compute firewall-rules create ${VPC_NAME}-allow-egress-internal \
     --description="Egress interne"
 ```
 
-#### Exercice 8.2.5 : Tester les règles
+#### Exercice 8.2.7 : Tester les règles
 
 ```bash
 # Test depuis vm-web
@@ -394,6 +430,7 @@ EOF
 - Comprendre les différences entre tags et service accounts
 - Migrer des règles basées sur tags vers service accounts
 - Appliquer les bonnes pratiques
+- Configurer Cloud NAT pour les VMs sans IP publique
 
 ### Exercices
 
@@ -453,7 +490,37 @@ gcloud iam service-accounts list \
     --format="table(email,displayName)"
 ```
 
-#### Exercice 8.3.3 : Créer de nouvelles VMs avec Service Accounts
+#### Exercice 8.3.3 : Configurer Cloud NAT pour les VMs sans IP publique
+
+```bash
+# Note: Nous réutilisons le Cloud NAT créé dans le Lab 8.2
+# Si vous n'avez pas créé de Cloud NAT, exécutez:
+
+# Créer un Cloud Router (si non existant)
+gcloud compute routers create router-nat-firewall \
+    --network=$VPC_NAME \
+    --region=$REGION
+
+# Configurer Cloud NAT
+gcloud compute routers nats create nat-firewall \
+    --router=router-nat-firewall \
+    --region=$REGION \
+    --auto-allocate-nat-external-ips \
+    --nat-all-subnet-ip-ranges \
+    --enable-logging
+
+# Vérifier la configuration
+gcloud compute routers nats describe nat-firewall \
+    --router=router-nat-firewall \
+    --region=$REGION
+```
+
+**Questions pédagogiques :**
+1. Comment Cloud NAT interagit-il avec les règles de pare-feu basées sur Service Accounts ?
+2. Pourquoi est-il important de combiner Cloud NAT avec l'absence d'IP publique sur les VMs ?
+3. Quels sont les avantages de Cloud NAT en termes d'audit et de traçabilité ?
+
+#### Exercice 8.3.4 : Créer de nouvelles VMs avec Service Accounts
 
 ```bash
 # Supprimer les anciennes VMs
@@ -496,7 +563,7 @@ gcloud compute instances create vm-db-sa \
     --image-project=debian-cloud
 ```
 
-#### Exercice 8.3.4 : Créer des règles basées sur Service Accounts
+#### Exercice 8.3.5 : Créer des règles basées sur Service Accounts
 
 ```bash
 # Règle: web → api (basée sur Service Accounts)
@@ -533,7 +600,7 @@ gcloud compute firewall-rules create ${VPC_NAME}-allow-http-web-sa \
     --description="HTTP/HTTPS vers web (Service Account)"
 ```
 
-#### Exercice 8.3.5 : Comparer la sécurité
+#### Exercice 8.3.6 : Comparer la sécurité
 
 === Comparaison de sécurité ===
 

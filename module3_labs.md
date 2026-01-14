@@ -146,6 +146,7 @@ gcloud compute routes list --filter="network=$VPC_NAME"
 **Difficulté : ⭐⭐**
 
 ### Objectifs
+- Configurer Cloud NAT pour l'accès Internet sortant
 - Créer des routes statiques vers différents next-hop
 - Comprendre le mécanisme de priorité
 - Observer le longest prefix match en action
@@ -174,7 +175,7 @@ gcloud compute routes list --filter="network=$VPC_NAME"
 
 ### Exercices
 
-#### Exercice 3.2.1 : Déployer les VMs de test
+#### Exercice 3.2.1 : Configurer les règles de pare-feu
 
 ```bash
 # Règles de pare-feu
@@ -187,7 +188,37 @@ gcloud compute firewall-rules create ${VPC_NAME}-allow-ssh-iap \
     --network=$VPC_NAME \
     --allow=tcp:22 \
     --source-ranges=35.235.240.0/20
+```
 
+#### Exercice 3.2.2 : Configurer Cloud NAT pour l'accès sortant
+
+```bash
+# Créer un Cloud Router (requis pour Cloud NAT)
+gcloud compute routers create router-nat-routes \
+    --network=$VPC_NAME \
+    --region=$REGION_EU
+
+# Configurer Cloud NAT pour Europe
+gcloud compute routers nats create nat-routes-eu \
+    --router=router-nat-routes \
+    --region=$REGION_EU \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers nats describe nat-routes-eu \
+    --router=router-nat-routes \
+    --region=$REGION_EU
+```
+
+**Questions :**
+1. Pourquoi configurer Cloud NAT avant de créer les VMs sans IP externe ?
+2. Cloud NAT permet-il aux VMs de recevoir du trafic entrant depuis Internet ?
+3. Combien d'IPs publiques Cloud NAT alloue-t-il automatiquement ?
+
+#### Exercice 3.2.3 : Déployer les VMs de test
+
+```bash
 # VM en Europe
 gcloud compute instances create vm-eu \
     --zone=${REGION_EU}-b \
@@ -217,7 +248,7 @@ gcloud compute instances create vm-us \
         apt-get update && apt-get install -y tcpdump traceroute'
 ```
 
-#### Exercice 3.2.2 : Créer des routes avec différentes priorités
+#### Exercice 3.2.4 : Créer des routes avec différentes priorités
 
 ```bash
 # Route vers 10.99.0.0/24 via vm-eu (priorité haute = 100)
@@ -249,7 +280,7 @@ gcloud compute routes list \
 1. Un paquet vers 10.99.0.50 utilisera quelle route ? Pourquoi ?
 2. Un paquet vers 10.99.1.50 utilisera quelle route ? Pourquoi ?
 
-#### Exercice 3.2.3 : Observer le longest prefix match
+#### Exercice 3.2.5 : Observer le longest prefix match
 
 ```bash
 # Se connecter à vm-us
@@ -265,7 +296,7 @@ traceroute -n 10.99.0.50
 traceroute -n 10.99.1.50
 ```
 
-#### Exercice 3.2.4 : Tester les priorités avec même destination
+#### Exercice 3.2.6 : Tester les priorités avec même destination
 
 ```bash
 # Créer une deuxième route vers 10.99.0.0/24 avec priorité plus basse
@@ -289,7 +320,7 @@ gcloud compute routes list \
 1. Si on supprime route-specific, quelle route sera utilisée pour 10.99.0.50 ?
 2. Deux routes avec même destination ET même priorité : que se passe-t-il ?
 
-#### Exercice 3.2.5 : Nettoyer les routes de test
+#### Exercice 3.2.7 : Nettoyer les routes de test
 
 ```bash
 # Supprimer les routes personnalisées
@@ -302,6 +333,7 @@ gcloud compute routes delete route-specific route-broad route-specific-backup --
 **Difficulté : ⭐⭐⭐**
 
 ### Objectifs
+- Configurer Cloud NAT pour l'accès Internet sortant
 - Router sélectivement le trafic via une appliance
 - Utiliser les tags réseau pour cibler des VMs
 - Vérifier le transit du trafic avec tcpdump
@@ -328,7 +360,33 @@ gcloud compute routes delete route-specific route-broad route-specific-backup --
 
 ### Exercices
 
-#### Exercice 3.3.1 : Déployer l'infrastructure
+#### Exercice 3.3.1 : Configurer Cloud NAT pour l'accès sortant
+
+```bash
+# Créer un Cloud Router (requis pour Cloud NAT)
+gcloud compute routers create router-nat-appliance \
+    --network=$VPC_NAME \
+    --region=$REGION_EU
+
+# Configurer Cloud NAT
+gcloud compute routers nats create nat-appliance \
+    --router=router-nat-appliance \
+    --region=$REGION_EU \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers nats describe nat-appliance \
+    --router=router-nat-appliance \
+    --region=$REGION_EU
+```
+
+**Questions :**
+1. Pourquoi est-il important de configurer Cloud NAT avant de créer des VMs sans IP externe ?
+2. Les VMs avec le tag "needs-proxy" utiliseront-elles Cloud NAT pour accéder à Internet ?
+3. Quelle est la différence entre router le trafic via une appliance et utiliser Cloud NAT ?
+
+#### Exercice 3.3.2 : Déployer l'infrastructure
 
 ```bash
 # VM Proxy/Appliance avec IP forwarding
@@ -389,7 +447,7 @@ gcloud compute instances create server \
         echo "Server OK - $(hostname)" > /var/www/html/index.html'
 ```
 
-#### Exercice 3.3.2 : Créer la route avec tag
+#### Exercice 3.3.3 : Créer la route avec tag
 
 ```bash
 # Route vers subnet-us via proxy, uniquement pour les VMs avec tag "needs-proxy"
@@ -410,7 +468,7 @@ gcloud compute routes describe route-via-proxy
 1. Cette route s'applique-t-elle à client2 ? Pourquoi ?
 2. Sans le tag, quel chemin prend le trafic de client2 vers server ?
 
-#### Exercice 3.3.3 : Vérifier le routage différencié
+#### Exercice 3.3.4 : Vérifier le routage différencié
 
 **Terminal 1 - Capturer sur le proxy :**
 ```bash
@@ -447,7 +505,7 @@ traceroute -n 10.2.0.50
 2. Le tcpdump sur proxy-vm voit-il le trafic de client2 ?
 3. Comparez les traceroutes des deux clients.
 
-#### Exercice 3.3.4 : Ajouter/Retirer des tags dynamiquement
+#### Exercice 3.3.5 : Ajouter/Retirer des tags dynamiquement
 
 ```bash
 # Ajouter le tag à client2
@@ -1366,11 +1424,15 @@ gcloud compute instances delete server --zone=us-central1-a --quiet 2>/dev/null
 echo "=== Suppression des Cloud NAT ==="
 gcloud compute routers nats delete my-cloud-nat --router=nat-router --region=europe-west1 --quiet 2>/dev/null
 gcloud compute routers nats delete hybrid-nat --router=hybrid-router --region=europe-west1 --quiet 2>/dev/null
+gcloud compute routers nats delete nat-routes-eu --router=router-nat-routes --region=europe-west1 --quiet 2>/dev/null
+gcloud compute routers nats delete nat-appliance --router=router-nat-appliance --region=europe-west1 --quiet 2>/dev/null
 
 echo "=== Suppression des Cloud Routers ==="
 gcloud compute routers delete nat-router --region=europe-west1 --quiet 2>/dev/null
 gcloud compute routers delete my-cloud-router --region=europe-west1 --quiet 2>/dev/null
 gcloud compute routers delete hybrid-router --region=europe-west1 --quiet 2>/dev/null
+gcloud compute routers delete router-nat-routes --region=europe-west1 --quiet 2>/dev/null
+gcloud compute routers delete router-nat-appliance --region=europe-west1 --quiet 2>/dev/null
 
 echo "=== Suppression des zones DNS ==="
 # Supprimer les enregistrements puis les zones

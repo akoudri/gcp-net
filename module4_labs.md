@@ -915,6 +915,7 @@ EOF
 - Simuler l'architecture Shared VPC dans un seul projet
 - Comprendre les concepts sans organisation GCP
 - Pratiquer la séparation des responsabilités
+- Configurer Cloud NAT pour l'accès sortant sécurisé
 
 ### Architecture simulée
 
@@ -1012,7 +1013,33 @@ gcloud compute firewall-rules create ${VPC_SHARED}-backend-to-data \
     --description="Flux backend vers bases de données"
 ```
 
-#### Exercice 4.6.3 : Déployer les VMs (simulant les projets de service)
+#### Exercice 4.6.3 : Configurer Cloud NAT pour l'accès sortant
+
+```bash
+# Créer un Cloud Router (requis pour Cloud NAT)
+gcloud compute routers create router-nat-shared \
+    --network=$VPC_SHARED \
+    --region=$REGION
+
+# Configurer Cloud NAT pour permettre l'accès Internet sortant
+gcloud compute routers nats create nat-shared-vpc \
+    --router=router-nat-shared \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers nats describe nat-shared-vpc \
+    --router=router-nat-shared \
+    --region=$REGION
+```
+
+**Questions :**
+1. Pourquoi configurer Cloud NAT avant de déployer les VMs sans IP externe ?
+2. Dans un vrai Shared VPC, quelle équipe serait responsable de la configuration Cloud NAT ?
+3. Les VMs peuvent-elles recevoir du trafic entrant depuis Internet via Cloud NAT ?
+
+#### Exercice 4.6.4 : Déployer les VMs (simulant les projets de service)
 
 ```bash
 # VM Frontend (simule déploiement par équipe frontend)
@@ -1064,7 +1091,7 @@ gcloud compute instances create vm-database \
     --image-project=debian-cloud
 ```
 
-#### Exercice 4.6.4 : Tester les flux autorisés
+#### Exercice 4.6.5 : Tester les flux autorisés
 
 ```bash
 # Test: Frontend → Backend (port 8080) - Autorisé
@@ -1086,7 +1113,7 @@ ping -c 3 10.100.2.10
 EOF
 ```
 
-#### Exercice 4.6.5 : Simuler les rôles IAM
+#### Exercice 4.6.6 : Simuler les rôles IAM
 
 Dans un vrai Shared VPC, les permissions seraient:
 
@@ -1615,6 +1642,12 @@ for VPC in vpc-alpha vpc-beta vpc-gamma shared-vpc-sim vpc-hub vpc-partner; do
         gcloud compute firewall-rules delete $RULE --quiet 2>/dev/null
     done
 done
+
+echo "=== Suppression des Cloud NAT ==="
+gcloud compute routers nats delete nat-shared-vpc --router=router-nat-shared --region=europe-west1 --quiet 2>/dev/null
+
+echo "=== Suppression des Cloud Routers ==="
+gcloud compute routers delete router-nat-shared --region=europe-west1 --quiet 2>/dev/null
 
 echo "=== Suppression des sous-réseaux ==="
 for SUBNET in subnet-alpha subnet-beta subnet-gamma subnet-frontend subnet-backend \

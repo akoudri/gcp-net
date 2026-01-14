@@ -357,6 +357,7 @@ gcloud dns record-sets create "*.googleapis.com." \
 - Configurer Private Services Access
 - Déployer Cloud SQL avec IP privée uniquement
 - Comprendre le VPC Peering automatique avec Google
+- Configurer Cloud NAT pour l'accès Internet sortant
 
 ### Architecture cible
 
@@ -470,7 +471,33 @@ export SQL_IP=$(gcloud sql instances describe sql-private \
 echo "IP Cloud SQL: $SQL_IP"
 ```
 
-#### Exercice 5.3.6 : Créer une VM pour tester la connexion
+#### Exercice 5.3.6 : Configurer Cloud NAT pour l'accès Internet sortant
+
+```bash
+# Créer un Cloud Router (requis pour Cloud NAT)
+gcloud compute routers create router-nat-psa \
+    --network=$VPC_NAME \
+    --region=$REGION
+
+# Configurer Cloud NAT
+gcloud compute routers nats create nat-psa-config \
+    --router=router-nat-psa \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers nats describe nat-psa-config \
+    --router=router-nat-psa \
+    --region=$REGION
+```
+
+**Questions :**
+1. Pourquoi configurer Cloud NAT avant de créer la VM cliente ?
+2. Cloud NAT permet-il aux VMs de recevoir du trafic entrant depuis Internet ?
+3. Comment Cloud NAT se combine-t-il avec Private Google Access ?
+
+#### Exercice 5.3.7 : Créer une VM pour tester la connexion
 
 ```bash
 # Créer un sous-réseau pour les applications
@@ -500,7 +527,7 @@ gcloud compute instances create vm-sql-client \
         apt-get install -y postgresql-client'
 ```
 
-#### Exercice 5.3.7 : Tester la connexion à Cloud SQL
+#### Exercice 5.3.8 : Tester la connexion à Cloud SQL
 
 ```bash
 # Se connecter à la VM
@@ -1523,6 +1550,12 @@ for ZONE in googleapis-private googleapis-psc service-internal googleapis-hub; d
     done
     gcloud dns managed-zones delete $ZONE --quiet 2>/dev/null
 done
+
+echo "=== Suppression des Cloud NAT ==="
+gcloud compute routers nats delete nat-psa-config --router=router-nat-psa --region=europe-west1 --quiet 2>/dev/null
+
+echo "=== Suppression des Cloud Routers ==="
+gcloud compute routers delete router-nat-psa --region=europe-west1 --quiet 2>/dev/null
 
 echo "=== Suppression des connexions PSA ==="
 gcloud services vpc-peerings delete \

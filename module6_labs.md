@@ -47,6 +47,7 @@ Ces travaux pratiques permettront aux apprenants de :
 ### Objectifs
 - Créer une zone DNS privée
 - Ajouter des enregistrements DNS
+- Configurer Cloud NAT pour l'accès Internet sortant
 - Tester la résolution depuis les VMs
 
 ### Architecture cible
@@ -115,7 +116,34 @@ gcloud compute firewall-rules create ${VPC_NAME}-allow-ssh-iap \
     --source-ranges=35.235.240.0/20
 ```
 
-#### Exercice 6.1.2 : Créer les VMs
+#### Exercice 6.1.2 : Configurer Cloud NAT
+
+```bash
+# Créer un Cloud Router
+gcloud compute routers create router-nat-dns \
+    --network=$VPC_NAME \
+    --region=$REGION
+
+# Configurer Cloud NAT pour l'accès Internet sortant
+gcloud compute routers nats create nat-dns-lab \
+    --router=router-nat-dns \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers describe router-nat-dns --region=$REGION
+gcloud compute routers nats describe nat-dns-lab \
+    --router=router-nat-dns \
+    --region=$REGION
+```
+
+**Questions :**
+1. Pourquoi Cloud NAT est-il nécessaire pour les VMs sans IP publique ?
+2. Quelle est la différence entre Cloud NAT et une passerelle NAT traditionnelle ?
+3. Comment Cloud NAT gère-t-il la scalabilité automatique ?
+
+#### Exercice 6.1.3 : Créer les VMs
 
 ```bash
 # VM 1 - Serveur web
@@ -159,7 +187,7 @@ gcloud compute instances create db \
         apt-get update && apt-get install -y dnsutils'
 ```
 
-#### Exercice 6.1.3 : Créer la zone DNS privée
+#### Exercice 6.1.4 : Créer la zone DNS privée
 
 ```bash
 # Créer la zone privée
@@ -176,7 +204,7 @@ gcloud dns managed-zones describe zone-lab-internal
 gcloud dns managed-zones list
 ```
 
-#### Exercice 6.1.4 : Ajouter les enregistrements DNS
+#### Exercice 6.1.5 : Ajouter les enregistrements DNS
 
 ```bash
 # Méthode 1: Commandes individuelles
@@ -219,7 +247,7 @@ gcloud dns record-sets create "www.lab.internal." \
 gcloud dns record-sets list --zone=zone-lab-internal
 ```
 
-#### Exercice 6.1.5 : Méthode par transaction
+#### Exercice 6.1.6 : Méthode par transaction
 
 ```bash
 # Méthode 2: Transaction (atomique, recommandée pour plusieurs enregistrements)
@@ -242,7 +270,7 @@ gcloud dns record-sets list --zone=zone-lab-internal \
     --format="table(name,type,ttl,rrdatas)"
 ```
 
-#### Exercice 6.1.6 : Tester la résolution DNS
+#### Exercice 6.1.7 : Tester la résolution DNS
 
 ```bash
 # Se connecter à vm1
@@ -557,6 +585,7 @@ gcloud dns record-sets create "blog.${DOMAIN}." \
 ### Objectifs
 - Configurer une zone de forwarding
 - Simuler un serveur DNS on-premise
+- Configurer Cloud NAT pour l'accès Internet sortant
 - Tester la résolution via forwarding
 
 ### Architecture cible
@@ -594,7 +623,33 @@ gcloud compute networks subnets create subnet-onprem \
     --range=10.0.1.0/24
 ```
 
-#### Exercice 6.4.2 : Créer un serveur DNS simulé (dnsmasq)
+#### Exercice 6.4.2 : Configurer Cloud NAT
+
+```bash
+# Créer un Cloud Router (si pas déjà créé)
+gcloud compute routers create router-nat-dns \
+    --network=$VPC_NAME \
+    --region=$REGION 2>/dev/null || echo "Router already exists"
+
+# Configurer Cloud NAT pour l'accès Internet sortant
+gcloud compute routers nats create nat-dns-forward \
+    --router=router-nat-dns \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers describe router-nat-dns --region=$REGION
+gcloud compute routers nats describe nat-dns-forward \
+    --router=router-nat-dns \
+    --region=$REGION
+```
+
+**Questions :**
+1. Pourquoi le serveur DNS on-premise simulé a-t-il besoin de Cloud NAT ?
+2. Comment Cloud NAT permet-il au serveur dnsmasq d'installer des paquets depuis Internet ?
+
+#### Exercice 6.4.3 : Créer un serveur DNS simulé (dnsmasq)
 
 ```bash
 # VM serveur DNS avec dnsmasq
@@ -646,7 +701,7 @@ echo "DNS Server configuré!"'
 sleep 30
 ```
 
-#### Exercice 6.4.3 : Tester le serveur DNS directement
+#### Exercice 6.4.4 : Tester le serveur DNS directement
 
 ```bash
 # Se connecter au serveur DNS pour vérifier
@@ -665,7 +720,7 @@ dig @127.0.0.1 app.corp.local
 exit
 ```
 
-#### Exercice 6.4.4 : Créer la zone de forwarding
+#### Exercice 6.4.5 : Créer la zone de forwarding
 
 ```bash
 # Créer la zone de forwarding vers le serveur DNS "on-premise"
@@ -680,7 +735,7 @@ gcloud dns managed-zones create zone-forward-corp \
 gcloud dns managed-zones describe zone-forward-corp
 ```
 
-#### Exercice 6.4.5 : Tester le forwarding depuis une VM cliente
+#### Exercice 6.4.6 : Tester le forwarding depuis une VM cliente
 
 ```bash
 # Se connecter à vm1 (client)
@@ -699,7 +754,7 @@ nslookup vm2.lab.internal
 exit
 ```
 
-#### Exercice 6.4.6 : Observer le flux DNS
+#### Exercice 6.4.7 : Observer le flux DNS
 
 ```bash
 # Sur le serveur DNS, observer les requêtes reçues
@@ -726,6 +781,7 @@ exit
 ### Objectifs
 - Configurer l'inbound forwarding
 - Permettre la résolution Cloud DNS depuis "on-premise"
+- Configurer Cloud NAT pour l'accès Internet sortant
 - Comprendre les adresses de forwarding
 
 ### Architecture cible
@@ -782,7 +838,33 @@ export INBOUND_IP=$(gcloud compute addresses list \
 echo "Adresse Inbound Forwarder: $INBOUND_IP"
 ```
 
-#### Exercice 6.5.3 : Créer un client "on-premise"
+#### Exercice 6.5.3 : Configurer Cloud NAT
+
+```bash
+# Créer un Cloud Router (si pas déjà créé)
+gcloud compute routers create router-nat-dns \
+    --network=$VPC_NAME \
+    --region=$REGION 2>/dev/null || echo "Router already exists"
+
+# Configurer Cloud NAT pour l'accès Internet sortant
+gcloud compute routers nats create nat-dns-inbound \
+    --router=router-nat-dns \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers describe router-nat-dns --region=$REGION
+gcloud compute routers nats describe nat-dns-inbound \
+    --router=router-nat-dns \
+    --region=$REGION
+```
+
+**Questions :**
+1. Pourquoi le client on-premise a-t-il besoin de Cloud NAT ?
+2. Cloud NAT est-il nécessaire pour l'inbound forwarding DNS lui-même ?
+
+#### Exercice 6.5.4 : Créer un client "on-premise"
 
 ```bash
 # VM simulant un client on-premise
@@ -799,7 +881,7 @@ gcloud compute instances create client-onprem \
         apt-get update && apt-get install -y dnsutils'
 ```
 
-#### Exercice 6.5.4 : Tester l'inbound forwarding
+#### Exercice 6.5.5 : Tester l'inbound forwarding
 
 ```bash
 # Se connecter au client on-premise
@@ -819,7 +901,7 @@ dig @<INBOUND_IP> vm1.europe-west1-b.c.$(gcloud config get-value project).intern
 exit
 ```
 
-#### Exercice 6.5.5 : Configurer le client pour utiliser l'inbound forwarder
+#### Exercice 6.5.6 : Configurer le client pour utiliser l'inbound forwarder
 
 ```bash
 # Sur le client on-premise, configurer le DNS
@@ -845,6 +927,7 @@ exit
 ### Objectifs
 - Comprendre le peering DNS
 - Configurer le peering DNS entre deux VPC
+- Configurer Cloud NAT pour l'accès Internet sortant
 - Résoudre des noms d'un VPC depuis un autre
 
 ### Architecture cible
@@ -947,6 +1030,24 @@ gcloud compute firewall-rules create vpc-spoke-allow-ssh-iap \
     --allow=tcp:22 \
     --source-ranges=35.235.240.0/20
 
+# Créer un Cloud Router pour le VPC Spoke
+gcloud compute routers create router-nat-spoke \
+    --network=vpc-spoke \
+    --region=$REGION
+
+# Configurer Cloud NAT pour l'accès Internet sortant
+gcloud compute routers nats create nat-dns-peering \
+    --router=router-nat-spoke \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers describe router-nat-spoke --region=$REGION
+gcloud compute routers nats describe nat-dns-peering \
+    --router=router-nat-spoke \
+    --region=$REGION
+
 # VM dans le spoke
 gcloud compute instances create vm-spoke \
     --zone=$ZONE \
@@ -959,6 +1060,10 @@ gcloud compute instances create vm-spoke \
     --image-project=debian-cloud \
     --metadata=startup-script='apt-get update && apt-get install -y dnsutils'
 ```
+
+**Questions :**
+1. Pourquoi créer un Cloud Router séparé pour chaque VPC ?
+2. Le peering DNS nécessite-t-il Cloud NAT pour fonctionner ?
 
 #### Exercice 6.6.4 : Créer le peering DNS
 

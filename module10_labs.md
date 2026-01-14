@@ -1082,6 +1082,7 @@ curl -H "Authorization: Bearer tokenA" -s http://$LB_IP/api/ | head -1
 
 ### Objectifs
 - Déployer un Internal Application LB
+- Configurer Cloud NAT pour l'accès sortant des VMs sans IP publique
 - Configurer le routage interne
 - Tester la communication entre services
 
@@ -1135,7 +1136,42 @@ gcloud compute networks subnets create subnet-internal \
     --range=10.0.2.0/24
 ```
 
-#### Exercice 10.6.2 : Créer les backends internes
+#### Exercice 10.6.2 : Configurer Cloud NAT pour l'accès sortant
+
+```bash
+# Cloud NAT est nécessaire pour que les VMs sans IP externe puissent:
+# - Télécharger des paquets (apt-get install)
+# - Accéder aux services Google APIs
+# - Se connecter à Internet de manière sécurisée
+
+# Créer un Cloud Router (requis pour Cloud NAT)
+gcloud compute routers create router-nat-lb \
+    --network=vpc-lb-lab \
+    --region=$REGION
+
+# Configurer Cloud NAT pour l'accès sortant
+gcloud compute routers nats create nat-internal-lb \
+    --router=router-nat-lb \
+    --region=$REGION \
+    --nat-all-subnet-ip-ranges \
+    --auto-allocate-nat-external-ips
+
+# Vérifier la configuration
+gcloud compute routers nats list \
+    --router=router-nat-lb \
+    --region=$REGION
+
+gcloud compute routers describe router-nat-lb \
+    --region=$REGION \
+    --format="yaml(nats)"
+```
+
+**Questions :**
+1. Pourquoi utiliser Cloud NAT pour les microservices internes plutôt que des IPs externes ?
+2. Quel est l'impact de Cloud NAT sur la sécurité de l'architecture ?
+3. Les VMs derrière Cloud NAT peuvent-elles recevoir du trafic entrant depuis Internet ?
+
+#### Exercice 10.6.3 : Créer les backends internes
 
 ```bash
 # Template pour les microservices
@@ -1178,7 +1214,7 @@ gcloud compute firewall-rules create vpc-lb-lab-allow-internal-lb \
     --target-tags=internal-service
 ```
 
-#### Exercice 10.6.3 : Créer l'Internal Application LB
+#### Exercice 10.6.4 : Créer l'Internal Application LB
 
 ```bash
 # Health check régional
@@ -1237,7 +1273,7 @@ gcloud compute forwarding-rules create fr-internal \
     --region=$REGION
 ```
 
-#### Exercice 10.6.4 : Tester l'Internal LB
+#### Exercice 10.6.5 : Tester l'Internal LB
 
 ```bash
 # Créer une VM client pour tester
@@ -2053,6 +2089,12 @@ echo "=== Suppression des règles de pare-feu ==="
 for RULE in $(gcloud compute firewall-rules list --filter="network:vpc-lb-lab" --format="get(name)" 2>/dev/null); do
     gcloud compute firewall-rules delete $RULE --quiet 2>/dev/null
 done
+
+echo "=== Suppression des Cloud NAT ==="
+gcloud compute routers nats delete nat-internal-lb --router=router-nat-lb --region=europe-west1 --quiet 2>/dev/null
+
+echo "=== Suppression des Cloud Routers ==="
+gcloud compute routers delete router-nat-lb --region=europe-west1 --quiet 2>/dev/null
 
 echo "=== Suppression des sous-réseaux ==="
 for SUBNET in subnet-web subnet-internal subnet-db subnet-proxy-only; do
