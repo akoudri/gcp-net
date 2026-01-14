@@ -48,6 +48,16 @@ Ces travaux pratiques permettront aux apprenants de :
 
 #### Exercice 2.1.1 : Explorer le VPC default
 
+**💡 Script disponible** : [lab2.1_ex1_explore-default-vpc.sh](scripts/module2/lab2.1_ex1_explore-default-vpc.sh)
+
+```bash
+# Exécuter le script
+./scripts/module2/lab2.1_ex1_explore-default-vpc.sh
+```
+
+<details>
+<summary>Ou exécuter manuellement les commandes :</summary>
+
 ```bash
 # Définir le projet
 export PROJECT_ID=$(gcloud config get-value project)
@@ -62,6 +72,7 @@ gcloud compute networks describe default
 # Lister les sous-réseaux du VPC default
 gcloud compute networks subnets list --network=default
 ```
+</details>
 
 **Questions :**
 1. Combien de sous-réseaux le VPC default possède-t-il ?
@@ -69,6 +80,16 @@ gcloud compute networks subnets list --network=default
 3. Quel est le mode de création du VPC default (auto ou custom) ?
 
 #### Exercice 2.1.2 : Auditer les règles de pare-feu par défaut
+
+**💡 Script disponible** : [lab2.1_ex2_audit-firewall-rules.sh](scripts/module2/lab2.1_ex2_audit-firewall-rules.sh)
+
+```bash
+# Exécuter le script
+./scripts/module2/lab2.1_ex2_audit-firewall-rules.sh
+```
+
+<details>
+<summary>Ou exécuter manuellement les commandes :</summary>
 
 ```bash
 # Lister les règles de pare-feu du VPC default
@@ -80,6 +101,7 @@ gcloud compute firewall-rules describe default-allow-rdp
 gcloud compute firewall-rules describe default-allow-icmp
 gcloud compute firewall-rules describe default-allow-internal
 ```
+</details>
 
 **Questions :**
 1. Quelles sont les sources autorisées pour SSH ? Est-ce sécurisé ?
@@ -87,6 +109,16 @@ gcloud compute firewall-rules describe default-allow-internal
 3. Identifiez au moins 3 risques de sécurité avec ces règles par défaut.
 
 #### Exercice 2.1.3 : Créer une VM dans le VPC default (pour démonstration)
+
+**💡 Script disponible** : [lab2.1_ex3_create-test-vm.sh](scripts/module2/lab2.1_ex3_create-test-vm.sh)
+
+```bash
+# Exécuter le script
+./scripts/module2/lab2.1_ex3_create-test-vm.sh
+```
+
+<details>
+<summary>Ou exécuter manuellement les commandes :</summary>
 
 ```bash
 # Créer une VM de test
@@ -104,6 +136,7 @@ gcloud compute instances describe test-default-vpc \
     --zone=europe-west1-b \
     --format="get(networkInterfaces[0].accessConfigs[0].natIP)"
 ```
+</details>
 
 **Questions :**
 1. La VM a-t-elle une IP externe ? Pourquoi est-ce un risque potentiel ?
@@ -623,6 +656,9 @@ sudo iptables -t nat -L -v -n
 #### Exercice 2.4.5 : Créer des routes personnalisées
 
 ```bash
+# S'assurer que les variables sont définies
+export ZONE="europe-west1-b"
+
 # Route dans VPC-A pour atteindre VPC-B via l'appliance
 gcloud compute routes create route-a-to-b \
     --network=vpc-a \
