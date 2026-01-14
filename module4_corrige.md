@@ -187,6 +187,54 @@
 
 ## Lab 4.6 : Shared VPC - Simulation
 
+### Exercice 4.6.3
+
+**Q1 : Pourquoi configurer Cloud NAT avant de déployer les VMs sans IP externe ?**
+
+> **Pour garantir que les VMs auront un accès Internet dès leur démarrage.**
+>
+> Raisons :
+> 1. **Scripts de démarrage** : Les `startup-script` nécessitent souvent `apt-get update` et l'installation de packages depuis Internet
+> 2. **Configuration initiale** : Sans Cloud NAT, les VMs sans IP externe ne peuvent pas télécharger de dépendances
+> 3. **Éviter les échecs** : Si Cloud NAT est configuré après la création, les scripts de démarrage auront déjà échoué
+> 4. **Simplification** : Toutes les VMs fonctionnent immédiatement sans configuration supplémentaire
+>
+> Sans Cloud NAT, une VM sans IP externe est complètement isolée d'Internet (sauf accès aux APIs Google si Private Google Access est activé).
+
+**Q2 : Dans un vrai Shared VPC, quelle équipe serait responsable de la configuration Cloud NAT ?**
+
+> Dans un vrai Shared VPC, c'est l'**équipe réseau (Network Team)** qui serait responsable de Cloud NAT.
+>
+> Responsabilités de l'équipe réseau :
+> - Configuration du Cloud Router dans le projet hôte
+> - Configuration et gestion de Cloud NAT
+> - Monitoring de l'utilisation des ports NAT
+> - Ajustement des quotas d'IPs et de ports
+> - Création d'alertes sur la saturation
+>
+> Les projets de service bénéficient automatiquement de Cloud NAT sans avoir à le configurer eux-mêmes, ce qui garantit :
+> - **Cohérence** : Configuration uniforme pour tous les projets
+> - **Sécurité** : Contrôle centralisé de l'accès Internet sortant
+> - **Coûts** : Optimisation des IPs publiques utilisées
+
+**Q3 : Les VMs peuvent-elles recevoir du trafic entrant depuis Internet via Cloud NAT ?**
+
+> **Non**, Cloud NAT ne permet **PAS** de recevoir du trafic entrant non sollicité depuis Internet.
+>
+> Cloud NAT est **unidirectionnel** :
+> - ✅ Permet les connexions **sortantes** depuis les VMs vers Internet
+> - ✅ Permet les réponses aux connexions initiées par les VMs
+> - ❌ Bloque les connexions **entrantes** initiées depuis Internet
+>
+> Pour recevoir du trafic entrant depuis Internet, il faut :
+> 1. **Load Balancer** (HTTP(S), TCP/UDP, SSL Proxy)
+> 2. **IP externe assignée** à la VM directement
+> 3. **Cloud IAP** pour l'accès administratif (SSH/RDP)
+>
+> Cette limitation est une **caractéristique de sécurité importante** : les VMs backend restent inaccessibles depuis Internet.
+
+---
+
 ### Exercice 4.6.4
 
 **Explication des tests de flux :**

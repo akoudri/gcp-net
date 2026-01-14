@@ -84,6 +84,54 @@
 
 ### Exercice 3.2.2
 
+**Q1 : Pourquoi configurer Cloud NAT avant de créer les VMs sans IP externe ?**
+
+> **Pour assurer que les VMs auront accès à Internet dès leur démarrage.**
+>
+> Sans Cloud NAT :
+> - Les VMs sans IP externe ne peuvent pas télécharger de packages
+> - Les scripts de démarrage (`startup-script`) qui nécessitent `apt-get` échoueront
+> - La configuration initiale sera incomplète
+>
+> Avec Cloud NAT configuré avant :
+> - Les VMs peuvent immédiatement accéder à Internet via NAT
+> - Les scripts de démarrage fonctionnent correctement
+> - L'installation de packages (tcpdump, traceroute, etc.) réussit
+
+**Q2 : Cloud NAT permet-il aux VMs de recevoir du trafic entrant depuis Internet ?**
+
+> **Non**, Cloud NAT permet uniquement le trafic **sortant** (outbound).
+>
+> Explications :
+> - Cloud NAT fait de la **traduction d'adresse sortante** uniquement
+> - Les connexions entrantes non sollicitées depuis Internet sont bloquées
+> - C'est une caractéristique de sécurité importante
+>
+> Pour recevoir du trafic entrant :
+> - Utilisez un Load Balancer (HTTP(S), TCP/UDP)
+> - Ou assignez une IP externe à la VM
+> - Ou utilisez Cloud IAP pour l'accès SSH/RDP
+
+**Q3 : Combien d'IPs publiques Cloud NAT alloue-t-il automatiquement ?**
+
+> Par défaut, Cloud NAT alloue **automatiquement le nombre minimum d'IPs** nécessaires.
+>
+> Calcul :
+> - Minimum 1 IP pour démarrer
+> - Ajout automatique d'IPs supplémentaires si le nombre de ports est insuffisant
+> - Formule approximative : `nombre_d'IPs = ceil(nombre_de_VMs × min_ports_per_vm / 64000)`
+>
+> Exemple :
+> - 10 VMs avec 64 ports minimum chacune : 1 IP suffit (640 ports utilisés sur 64000 disponibles)
+> - 1000 VMs avec 64 ports : ~1 IP (64000 ports disponibles)
+> - 1000 VMs avec 256 ports : ~4 IPs (256000 ports nécessaires / 64000 par IP)
+>
+> Vous pouvez aussi spécifier des IPs manuellement avec `--nat-external-ip-pool`.
+
+---
+
+### Exercice 3.2.4
+
 **Q1 : Un paquet vers 10.99.0.50 utilisera quelle route ? Pourquoi ?**
 
 > Le paquet utilisera **route-specific** (10.99.0.0/24, priorité 100).
@@ -131,7 +179,50 @@
 
 ## Lab 3.3 : Routage via appliance avec tags réseau
 
-### Exercice 3.3.2
+### Exercice 3.3.1
+
+**Q1 : Pourquoi est-il important de configurer Cloud NAT avant de créer des VMs sans IP externe ?**
+
+> **Pour permettre aux VMs d'accéder à Internet dès leur création**, notamment pour :
+>
+> 1. **Exécuter les scripts de démarrage** : Les `startup-script` nécessitent souvent `apt-get update` et l'installation de packages
+> 2. **Télécharger des dépendances** : Sans accès Internet, les VMs ne peuvent pas installer de logiciels
+> 3. **Éviter les échecs de configuration** : Si le NAT est configuré après, les scripts de démarrage auront déjà échoué
+>
+> Sans Cloud NAT configuré, une VM sans IP externe est complètement isolée d'Internet (sauf pour les APIs Google si PGA est activé).
+
+**Q2 : Les VMs avec le tag "needs-proxy" utiliseront-elles Cloud NAT pour accéder à Internet ?**
+
+> **Non**, les VMs avec le tag "needs-proxy" utiliseront la **route personnalisée via le proxy**, pas Cloud NAT.
+>
+> Explication :
+> - La route personnalisée (priorité 100) avec le tag "needs-proxy" est plus spécifique
+> - Elle intercepte le trafic vers 10.2.0.0/24 et le dirige vers proxy-vm
+> - Cloud NAT s'applique uniquement pour les destinations non couvertes par des routes personnalisées plus spécifiques
+>
+> Cependant :
+> - Pour les autres destinations (Internet général), elles utiliseront Cloud NAT
+> - Sauf si une autre route personnalisée avec le tag les intercepte
+
+**Q3 : Quelle est la différence entre router le trafic via une appliance et utiliser Cloud NAT ?**
+
+> | Aspect | Appliance (route personnalisée) | Cloud NAT |
+> |--------|--------------------------------|-----------|
+> | **Contrôle** | Total : inspection, filtrage, modification du trafic | Limité : translation d'adresse uniquement |
+> | **Visibilité** | Complète : logs, tcpdump, analyse | Logs NAT uniquement (connexions, erreurs) |
+> | **Use cases** | Firewall, IDS/IPS, proxy, DLP | Accès Internet sortant simple |
+> | **Performance** | Limitée par la VM appliance | Scalabilité automatique Google |
+> | **Coût** | VM + compute + egress | NAT gateway + egress |
+> | **Complexité** | Configuration manuelle (iptables, etc.) | Configuration simple (quelques commandes) |
+> | **HA** | À configurer (instance groups, health checks) | Intégrée automatiquement |
+>
+> **Quand utiliser quoi** :
+> - **Appliance** : Besoin d'inspection, de filtrage avancé, de conformité, de logs détaillés
+> - **Cloud NAT** : Simplement donner accès Internet aux VMs backend sans IP publique
+
+---
+
+### Exercice 3.3.3
 
 **Q1 : Cette route s'applique-t-elle à client2 ? Pourquoi ?**
 
