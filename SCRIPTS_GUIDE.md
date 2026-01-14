@@ -215,7 +215,6 @@ Chaque module dispose d'un script `cleanup-moduleX.sh` qui :
 
 - **Documentation GCP** : https://cloud.google.com/vpc/docs
 - **gcloud CLI Reference** : https://cloud.google.com/sdk/gcloud/reference
-- **CLAUDE.md** : Instructions pour l'assistant IA
 
 ---
 

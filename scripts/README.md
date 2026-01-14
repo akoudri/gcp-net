@@ -232,7 +232,6 @@ Pour extraire et créer les scripts des autres modules :
 
 - [Documentation gcloud](https://cloud.google.com/sdk/gcloud/reference)
 - [Documentation GCP Networking](https://cloud.google.com/vpc/docs)
-- [CLAUDE.md](../CLAUDE.md) : Instructions pour l'assistant IA
 
 ## Support
 
