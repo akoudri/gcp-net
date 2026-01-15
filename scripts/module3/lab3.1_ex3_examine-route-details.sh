@@ -14,6 +14,7 @@ export VPC_NAME="routing-lab-vpc"
 echo "Recherche de la route par défaut..."
 DEFAULT_ROUTE=$(gcloud compute routes list \
     --filter="network=$VPC_NAME AND destRange=0.0.0.0/0" \
+    --limit=1 \
     --format="get(name)")
 
 echo "Route par défaut : $DEFAULT_ROUTE"
@@ -27,7 +28,8 @@ echo ""
 # Examiner une route de sous-réseau
 echo "Recherche d'une route de sous-réseau..."
 SUBNET_ROUTE=$(gcloud compute routes list \
-    --filter="network=$VPC_NAME AND destRange=10.1.0.0/24" \
+    --filter="network=$VPC_NAME AND destRange=10.11.0.0/24" \
+    --limit=1 \
     --format="get(name)")
 
 echo "Route de sous-réseau : $SUBNET_ROUTE"
