@@ -9,12 +9,12 @@ echo ""
 
 export ZONE="europe-west1-b"
 
-echo "Exécution des tests sur app-vm..."
+echo "Exécution des tests sur app-vm-hub..."
 echo ""
 
 # Test 1: Vérifier que la VM peut accéder à Cloud Storage via PSC
 echo "=== Test 1 : Accès à Cloud Storage via PSC ==="
-gcloud compute ssh app-vm --zone=$ZONE --tunnel-through-iap --command="
+gcloud compute ssh app-vm-hub --zone=$ZONE --tunnel-through-iap --command="
 echo 'Test de résolution DNS :'
 nslookup storage.googleapis.com
 echo ''
@@ -31,7 +31,7 @@ echo ""
 
 # Test 2: Vérifier que l'accès Internet direct est bloqué
 echo "=== Test 2 : Vérification du blocage Internet ==="
-gcloud compute ssh app-vm --zone=$ZONE --tunnel-through-iap --command="
+gcloud compute ssh app-vm-hub --zone=$ZONE --tunnel-through-iap --command="
 echo 'Test d accès à Internet (devrait échouer) :'
 timeout 5 curl -v --connect-timeout 5 https://www.github.com 2>&1 | head -10 || echo 'ATTENDU: Accès Internet bloqué par les règles de pare-feu'
 echo ''
@@ -43,7 +43,7 @@ echo ""
 
 # Test 3: Vérifier les routes et le DNS
 echo "=== Test 3 : Vérification de la configuration réseau ==="
-gcloud compute ssh app-vm --zone=$ZONE --tunnel-through-iap --command="
+gcloud compute ssh app-vm-hub --zone=$ZONE --tunnel-through-iap --command="
 echo 'Résolution DNS des APIs Google :'
 for api in storage.googleapis.com www.googleapis.com bigquery.googleapis.com; do
     echo -n \"\$api : \"

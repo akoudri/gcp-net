@@ -16,6 +16,7 @@ echo ""
 echo "Création de la zone DNS privée..."
 gcloud dns managed-zones create service-internal \
     --dns-name="service.internal." \
+    --description="Zone DNS privée pour le service PSC" \
     --visibility=private \
     --networks=$VPC_CONSUMER
 

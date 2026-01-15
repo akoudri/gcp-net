@@ -15,9 +15,10 @@ echo "VPC : $VPC_PRODUCER"
 echo "Région : $REGION"
 echo ""
 
-# Health check
+# Health check (regional pour INTERNAL LB)
 echo "Création du health check..."
 gcloud compute health-checks create http hc-backend \
+    --region=$REGION \
     --port=80 \
     --request-path=/
 

@@ -20,12 +20,9 @@ echo "Région : $REGION"
 echo ""
 echo "⚠️  Ce déploiement peut prendre 15-20 minutes."
 echo ""
-read -p "Continuer ? (y/N) " -n 1 -r
-echo ""
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo "Déploiement annulé."
-    exit 0
-fi
+# Mode automatique pour scripts - continuez sans interaction
+REPLY="y"
+echo "Mode automatique activé - déploiement en cours..."
 
 echo ""
 echo "=== 1. Création du VPC Hub ==="
@@ -36,24 +33,24 @@ gcloud compute networks create $VPC_HUB \
 echo ""
 echo "=== 2. Création des sous-réseaux ==="
 # Sous-réseau pour PSC
-echo "- subnet-psc (10.0.1.0/24)"
-gcloud compute networks subnets create subnet-psc \
+echo "- subnet-psc-hub (10.0.1.0/24)"
+gcloud compute networks subnets create subnet-psc-hub \
     --network=$VPC_HUB \
     --region=$REGION \
     --range=10.0.1.0/24 \
     --enable-private-ip-google-access
 
 # Sous-réseau pour les applications
-echo "- subnet-app (10.0.2.0/24)"
-gcloud compute networks subnets create subnet-app \
+echo "- subnet-app-hub (10.0.2.0/24)"
+gcloud compute networks subnets create subnet-app-hub \
     --network=$VPC_HUB \
     --region=$REGION \
     --range=10.0.2.0/24 \
     --enable-private-ip-google-access
 
 # Sous-réseau pour les données (utilisé par PSA)
-echo "- subnet-data (10.0.3.0/24)"
-gcloud compute networks subnets create subnet-data \
+echo "- subnet-data-hub (10.0.3.0/24)"
+gcloud compute networks subnets create subnet-data-hub \
     --network=$VPC_HUB \
     --region=$REGION \
     --range=10.0.3.0/24 \
@@ -88,7 +85,7 @@ echo "=== 4. Configuration PSC pour APIs Google ==="
 echo "Réservation de l'IP pour l'endpoint PSC..."
 gcloud compute addresses create psc-apis \
     --region=$REGION \
-    --subnet=subnet-psc \
+    --subnet=subnet-psc-hub \
     --addresses=10.0.1.100
 
 # Créer endpoint PSC
@@ -171,11 +168,11 @@ echo ""
 echo "=== 7. Déploiement des VMs ==="
 # VM applicative
 echo "Création de la VM applicative..."
-gcloud compute instances create app-vm \
+gcloud compute instances create app-vm-hub \
     --zone=$ZONE \
     --machine-type=e2-small \
     --network=$VPC_HUB \
-    --subnet=subnet-app \
+    --subnet=subnet-app-hub \
     --no-address \
     --scopes=storage-ro,logging-write,monitoring-write \
     --image-family=debian-11 \
@@ -205,12 +202,12 @@ echo "- PSA Range: 10.100.0.0/20 (Services managés)"
 echo "- Egress: Restreint aux services autorisés uniquement"
 echo ""
 echo "Sous-réseaux :"
-echo "- subnet-psc: 10.0.1.0/24 (PSC endpoint)"
-echo "- subnet-app: 10.0.2.0/24 (Applications)"
-echo "- subnet-data: 10.0.3.0/24 (Données)"
+echo "- subnet-psc-hub: 10.0.1.0/24 (PSC endpoint)"
+echo "- subnet-app-hub: 10.0.2.0/24 (Applications)"
+echo "- subnet-data-hub: 10.0.3.0/24 (Données)"
 echo ""
 echo "Ressources :"
-echo "- app-vm: VM applicative dans subnet-app"
+echo "- app-vm-hub: VM applicative dans subnet-app-hub"
 echo "- sql-secure: Instance Cloud SQL avec IP privée"
 echo ""
 echo "Tests de validation :"
