@@ -24,11 +24,18 @@ echo ""
 
 # Configurer Cloud NAT pour l'accès Internet sortant
 echo "Configuration de Cloud NAT..."
-gcloud compute routers nats create nat-dns-forward \
-    --router=router-nat-dns \
-    --region=$REGION \
-    --nat-all-subnet-ip-ranges \
-    --auto-allocate-nat-external-ips
+# Vérifier si NAT existe déjà
+if gcloud compute routers nats describe nat-dns-forward --router=router-nat-dns --region=$REGION &>/dev/null; then
+    echo "NAT nat-dns-forward existe déjà"
+elif gcloud compute routers nats describe nat-dns-lab --router=router-nat-dns --region=$REGION &>/dev/null; then
+    echo "NAT nat-dns-lab existe déjà et couvre tous les sous-réseaux (réutilisation)"
+else
+    gcloud compute routers nats create nat-dns-forward \
+        --router=router-nat-dns \
+        --region=$REGION \
+        --nat-all-subnet-ip-ranges \
+        --auto-allocate-nat-external-ips
+fi
 echo ""
 
 echo "Cloud NAT configuré avec succès !"
@@ -40,9 +47,13 @@ gcloud compute routers describe router-nat-dns --region=$REGION
 echo ""
 
 echo "=== Vérification de Cloud NAT ==="
-gcloud compute routers nats describe nat-dns-forward \
-    --router=router-nat-dns \
-    --region=$REGION
+# Décrire le NAT qui existe (nat-dns-forward ou nat-dns-lab)
+if gcloud compute routers nats describe nat-dns-forward --router=router-nat-dns --region=$REGION &>/dev/null; then
+    gcloud compute routers nats describe nat-dns-forward --router=router-nat-dns --region=$REGION
+else
+    echo "Utilisation du NAT existant: nat-dns-lab"
+    gcloud compute routers nats describe nat-dns-lab --router=router-nat-dns --region=$REGION
+fi
 echo ""
 
 echo "Questions à considérer :"

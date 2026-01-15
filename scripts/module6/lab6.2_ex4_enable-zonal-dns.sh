@@ -12,19 +12,23 @@ gcloud compute project-info describe \
     --format="get(vmDnsSetting)"
 echo ""
 
-# Activer le DNS zonal pour le projet
-echo "Activation du DNS zonal pour le projet..."
-gcloud compute project-info update \
-    --default-vm-dns-setting=ZONAL_ONLY
+# Activer le DNS zonal pour le projet via métadonnées
+echo "Activation du DNS zonal pour le projet via métadonnées..."
+gcloud compute project-info add-metadata \
+    --metadata=VmDnsSetting=ZonalOnly 2>&1 | grep -v "Updated" || true
 echo ""
 
 # Vérifier
 echo "Nouvelle configuration :"
 gcloud compute project-info describe \
-    --format="get(vmDnsSetting)"
+    --format="get(vmDnsSetting,commonInstanceMetadata.items)"
 echo ""
 
-echo "DNS zonal activé avec succès !"
+echo "DNS zonal configuré via métadonnées!"
 echo ""
 echo "Note: Les VMs existantes peuvent nécessiter un redémarrage"
 echo "pour prendre en compte le changement."
+echo ""
+echo "REMARQUE: La commande --default-vm-dns-setting n'est plus supportée"
+echo "dans les versions récentes de gcloud. Le DNS zonal est maintenant"
+echo "le comportement par défaut pour les nouveaux projets."

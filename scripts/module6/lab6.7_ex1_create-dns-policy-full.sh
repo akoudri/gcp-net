@@ -12,18 +12,23 @@ export VPC_NAME="vpc-dns-lab"
 echo "VPC : $VPC_NAME"
 echo ""
 
-# Supprimer la politique existante si elle existe
-echo "Suppression de la politique existante (si présente)..."
-gcloud dns policies delete policy-inbound --quiet 2>/dev/null || echo "Aucune politique existante"
+# Supprimer les politiques existantes si présentes
+echo "Suppression des politiques existantes (si présentes)..."
+gcloud dns policies delete policy-inbound --quiet 2>/dev/null && echo "policy-inbound supprimée" || true
+gcloud dns policies delete policy-dns-full --quiet 2>/dev/null && echo "policy-dns-full supprimée" || true
 echo ""
 
 # Créer une nouvelle politique DNS complète
 echo "Création de la politique DNS complète..."
-gcloud dns policies create policy-dns-full \
-    --networks=$VPC_NAME \
-    --enable-inbound-forwarding \
-    --enable-logging \
-    --description="Politique DNS complète avec logging"
+if gcloud dns policies describe policy-dns-full &>/dev/null; then
+    echo "La politique policy-dns-full existe déjà"
+else
+    gcloud dns policies create policy-dns-full \
+        --networks=$VPC_NAME \
+        --enable-inbound-forwarding \
+        --enable-logging \
+        --description="Politique DNS complète avec logging"
+fi
 echo ""
 
 echo "Politique DNS créée avec succès !"
