@@ -17,7 +17,7 @@ gcloud compute security-policies rules create 530 \
     --rate-limit-threshold-interval-sec=60 \
     --conform-action=allow \
     --exceed-action=deny-429 \
-    --enforce-on-key=HTTP_HEADER \
+    --enforce-on-key=http-header \
     --enforce-on-key-name=x-api-key \
     --description="API: max 1000 req/min par API key"
 

@@ -12,7 +12,7 @@ echo ""
 # 1. Règles de pare-feu ouvertes à Internet
 echo "=== 1. Règles de pare-feu ouvertes à Internet ==="
 gcloud compute firewall-rules list \
-    --filter="sourceRanges:0.0.0.0/0 AND direction:INGRESS" \
+    --filter="sourceRanges:0.0.0.0/0 direction:INGRESS" \
     --format="table(name,network,allowed,priority)"
 
 echo ""

@@ -23,7 +23,7 @@ gcloud compute health-checks create http hc-http-80 \
     --check-interval=10s \
     --timeout=5s \
     --healthy-threshold=2 \
-    --unhealthy-threshold=3
+    --unhealthy-threshold=3 2>/dev/null || echo "Health check hc-http-80 existe déjà"
 
 echo ""
 echo "Création du backend service..."
@@ -31,7 +31,7 @@ gcloud compute backend-services create backend-web \
     --protocol=HTTP \
     --port-name=http \
     --health-checks=hc-http-80 \
-    --global
+    --global 2>/dev/null || echo "Backend service backend-web existe déjà"
 
 echo ""
 echo "Ajout du groupe d'instances au backend..."

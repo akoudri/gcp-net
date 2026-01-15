@@ -16,7 +16,7 @@ gcloud compute backend-services create backend-web \
     --protocol=HTTP \
     --port-name=http \
     --health-checks=hc-web \
-    --global
+    --global 2>/dev/null || echo "Backend service backend-web existe déjà"
 
 echo ""
 echo "Ajout de ig-web au backend-web..."
@@ -25,7 +25,7 @@ gcloud compute backend-services add-backend backend-web \
     --instance-group-zone=$ZONE \
     --balancing-mode=UTILIZATION \
     --max-utilization=0.8 \
-    --global
+    --global 2>&1 | grep -v "already contains" || true
 
 echo ""
 echo "Création du backend service backend-api..."
@@ -35,7 +35,7 @@ gcloud compute backend-services create backend-api \
     --protocol=HTTP \
     --port-name=http \
     --health-checks=hc-api \
-    --global
+    --global 2>/dev/null || echo "Backend service backend-api existe déjà"
 
 echo ""
 echo "Ajout de ig-api au backend-api..."
@@ -44,7 +44,7 @@ gcloud compute backend-services add-backend backend-api \
     --instance-group-zone=$ZONE \
     --balancing-mode=UTILIZATION \
     --max-utilization=0.8 \
-    --global
+    --global 2>&1 | grep -v "already contains" || true
 
 echo ""
 echo "Backend Services créés avec succès !"

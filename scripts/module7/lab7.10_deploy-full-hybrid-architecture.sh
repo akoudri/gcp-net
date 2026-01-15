@@ -20,17 +20,17 @@ echo ""
 # ===== 1. VPC PRODUCTION GCP =====
 echo ">>> Création VPC Production..."
 gcloud compute networks create vpc-production \
-    --subnet-mode=custom
+    --subnet-mode=custom 2>/dev/null || echo "VPC vpc-production existe déjà"
 
 gcloud compute networks subnets create subnet-apps \
     --network=vpc-production \
     --region=$REGION \
-    --range=10.0.1.0/24
+    --range=10.0.1.0/24 2>/dev/null || echo "Subnet subnet-apps existe déjà"
 
 gcloud compute networks subnets create subnet-data \
     --network=vpc-production \
     --region=$REGION \
-    --range=10.0.2.0/24
+    --range=10.0.2.0/24 2>/dev/null || echo "Subnet subnet-data existe déjà"
 
 echo ""
 
@@ -46,12 +46,12 @@ for SITE in "${!SITES[@]}"; do
     IFS=':' read -r RANGE ASN <<< "${SITES[$SITE]}"
 
     echo "  - Site $SITE ($RANGE, ASN: $ASN)"
-    gcloud compute networks create vpc-site-${SITE} --subnet-mode=custom
+    gcloud compute networks create vpc-site-${SITE} --subnet-mode=custom 2>/dev/null || echo "VPC vpc-site-${SITE} existe déjà"
 
     gcloud compute networks subnets create subnet-${SITE} \
         --network=vpc-site-${SITE} \
         --region=$REGION \
-        --range=$RANGE
+        --range=$RANGE 2>/dev/null || echo "Subnet subnet-${SITE} existe déjà"
 done
 
 echo ""

@@ -10,6 +10,12 @@ echo "=========================================="
 echo "  DÉPLOIEMENT POLITIQUE CLOUD ARMOR"
 echo "=========================================="
 echo ""
+echo "⚠️  AVERTISSEMENT : Ce script utilise certaines fonctionnalités Cloud Armor Plus"
+echo "    (Threat Intelligence, Named IP Lists) qui nécessitent un tier payant."
+echo "    Les règles utilisant ces fonctionnalités seront ignorées si vous utilisez"
+echo "    le tier standard. Pour activer Cloud Armor Plus:"
+echo "    gcloud compute security-policies update $POLICY_NAME --tier=PLUS"
+echo ""
 
 # ===== CRÉER LA POLITIQUE =====
 echo ">>> Création de la politique..."
@@ -20,12 +26,12 @@ echo ""
 # ===== RÈGLES DE PRIORITÉ HAUTE (10-99): AUTORISATIONS EXPLICITES =====
 echo ">>> Règles d'autorisation..."
 
-# Autoriser Googlebot
+# Autoriser Googlebot (nécessite Cloud Armor Plus)
 gcloud compute security-policies rules create 10 \
     --security-policy=$POLICY_NAME \
     --expression="origin.ip.matches(getNamedIpList('sourceiplist-google-crawlers'))" \
     --action=allow \
-    --description="Autoriser Googlebot"
+    --description="Autoriser Googlebot" 2>&1 || echo "⚠️  Règle Googlebot ignorée (nécessite Cloud Armor Plus)"
 
 echo ""
 # ===== RÈGLES DE BLOCAGE IP (100-199) =====
@@ -38,19 +44,19 @@ gcloud compute security-policies rules create 100 \
     --action=deny-403 \
     --description="IPs blacklistées manuelles"
 
-# Bloquer Tor
+# Bloquer Tor (nécessite Cloud Armor Plus)
 gcloud compute security-policies rules create 150 \
     --security-policy=$POLICY_NAME \
     --expression="evaluateThreatIntelligence('iplist-tor-exit-nodes')" \
     --action=deny-403 \
-    --description="Bloquer Tor"
+    --description="Bloquer Tor" 2>&1 || echo "⚠️  Règle Tor ignorée (nécessite Cloud Armor Plus)"
 
-# Bloquer IPs malveillantes connues
+# Bloquer IPs malveillantes connues (nécessite Cloud Armor Plus)
 gcloud compute security-policies rules create 160 \
     --security-policy=$POLICY_NAME \
     --expression="evaluateThreatIntelligence('iplist-known-malicious-ips')" \
     --action=deny-403 \
-    --description="IPs malveillantes"
+    --description="IPs malveillantes" 2>&1 || echo "⚠️  Règle IPs malveillantes ignorée (nécessite Cloud Armor Plus)"
 
 echo ""
 # ===== RÈGLES GÉOGRAPHIQUES (200-299) =====

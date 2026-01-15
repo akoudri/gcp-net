@@ -14,11 +14,12 @@ gcloud compute security-policies rules delete 200 \
 
 echo ""
 echo "Création d'une règle pour bloquer certains pays (exemple)..."
+# Utilisation de pays fictifs mais valides pour l'exemple (AQ=Antarctique, BV=Bouvet Island)
 gcloud compute security-policies rules create 200 \
     --security-policy=policy-web-app \
-    --expression="origin.region_code == 'XX' || origin.region_code == 'YY'" \
+    --expression="origin.region_code == 'AQ' || origin.region_code == 'BV'" \
     --action=deny-403 \
-    --description="Bloquer pays XX et YY (exemple)"
+    --description="Bloquer pays AQ et BV (exemple)"
 
 echo ""
 echo "Règle créée avec succès !"
@@ -30,5 +31,5 @@ gcloud compute security-policies rules describe 200 \
     --security-policy=policy-web-app
 
 echo ""
-echo "REMARQUE : 'XX' et 'YY' ne sont pas des codes pays valides."
-echo "Pour bloquer des pays réels, utilisez les codes ISO 3166-1 alpha-2 (ex: 'CN', 'RU', 'KP')."
+echo "REMARQUE : 'AQ' (Antarctique) et 'BV' (Bouvet Island) sont des codes pays valides mais peu utilisés."
+echo "Pour bloquer des pays réels dans un contexte de production, utilisez les codes ISO 3166-1 alpha-2 appropriés (ex: 'CN', 'RU', 'KP')."

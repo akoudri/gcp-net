@@ -29,8 +29,7 @@ echo ""
 
 # Vérifier
 echo "=== Règles en mode Preview ==="
-gcloud compute security-policies rules list --security-policy=policy-web-app \
-    | grep -i preview
+gcloud compute security-policies describe policy-web-app --format="table(rules.priority,rules.description,rules.preview)"
 
 echo ""
 echo "REMARQUE : En mode Preview, les règles détectent mais ne bloquent pas."

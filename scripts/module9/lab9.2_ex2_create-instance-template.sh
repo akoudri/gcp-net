@@ -22,6 +22,7 @@ gcloud compute instance-templates create web-template \
     --machine-type=e2-small \
     --network=vpc-armor-lab \
     --subnet=subnet-web \
+    --region=$REGION \
     --tags=web-server \
     --image-family=debian-11 \
     --image-project=debian-cloud \

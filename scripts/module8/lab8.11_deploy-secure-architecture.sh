@@ -20,18 +20,18 @@ echo ""
 
 # ===== 1. VPC et sous-réseaux =====
 echo ">>> 1. Création du VPC..."
-gcloud compute networks create $VPC_NAME --subnet-mode=custom
+gcloud compute networks create $VPC_NAME --subnet-mode=custom 2>/dev/null || echo "VPC $VPC_NAME existe déjà"
 
 echo ""
 echo ">>> Création des sous-réseaux avec VPC Flow Logs..."
 gcloud compute networks subnets create subnet-dmz \
     --network=$VPC_NAME --region=$REGION --range=10.0.1.0/24 \
-    --enable-flow-logs --logging-flow-sampling=1.0
+    --enable-flow-logs --logging-flow-sampling=1.0 2>/dev/null || echo "Subnet subnet-dmz existe déjà"
 
 gcloud compute networks subnets create subnet-backend \
     --network=$VPC_NAME --region=$REGION --range=10.0.2.0/24 \
     --enable-flow-logs --logging-flow-sampling=1.0 \
-    --enable-private-ip-google-access
+    --enable-private-ip-google-access 2>/dev/null || echo "Subnet subnet-backend existe déjà"
 
 echo ""
 

@@ -17,7 +17,7 @@ echo ">>> Activation du logging sur la règle allow-http-web-sa..."
 if gcloud compute firewall-rules describe ${VPC_NAME}-allow-http-web-sa &>/dev/null; then
     gcloud compute firewall-rules update ${VPC_NAME}-allow-http-web-sa \
         --enable-logging \
-        --logging-metadata=INCLUDE_ALL_METADATA
+        --logging-metadata=include-all
     echo "Logging activé !"
 else
     echo "AVERTISSEMENT : Règle ${VPC_NAME}-allow-http-web-sa non trouvée."
@@ -31,7 +31,7 @@ echo ">>> Activation du logging sur la règle deny-dangerous-ports..."
 if gcloud compute firewall-rules describe ${VPC_NAME}-deny-dangerous-ports &>/dev/null; then
     gcloud compute firewall-rules update ${VPC_NAME}-deny-dangerous-ports \
         --enable-logging \
-        --logging-metadata=INCLUDE_ALL_METADATA
+        --logging-metadata=include-all
     echo "Logging activé !"
 else
     echo "AVERTISSEMENT : Règle ${VPC_NAME}-deny-dangerous-ports non trouvée."
@@ -51,5 +51,5 @@ gcloud compute firewall-rules list \
 echo ""
 echo "Questions à considérer :"
 echo "1. Quel est l'impact du logging sur les performances ?"
-echo "2. Pourquoi utiliser INCLUDE_ALL_METADATA ?"
+echo "2. Pourquoi utiliser include-all ?"
 echo "3. Combien de temps les logs sont-ils conservés par défaut ?"

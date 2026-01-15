@@ -22,7 +22,7 @@ gcloud compute security-policies describe policy-web-app
 
 echo ""
 echo "=== Règles de la politique ==="
-gcloud compute security-policies rules list --security-policy=policy-web-app
+gcloud compute security-policies describe policy-web-app --format="get(rules)"
 
 echo ""
 echo "REMARQUE : La politique a une règle par défaut (priority=2147483647) qui autorise tout le trafic."

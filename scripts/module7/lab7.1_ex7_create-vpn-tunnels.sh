@@ -28,28 +28,26 @@ echo ">>> Création des tunnels côté GCP..."
 echo "  - Tunnel 0 (Interface 0 GCP → Interface 0 On-premise)"
 gcloud compute vpn-tunnels create tunnel-gcp-to-onprem-0 \
     --vpn-gateway=vpn-gw-gcp \
-    --vpn-gateway-region=$REGION \
+    --region=$REGION \
     --peer-gcp-gateway=vpn-gw-onprem \
-    --peer-gcp-gateway-region=$REGION \
+     \
     --interface=0 \
     --ike-version=2 \
     --shared-secret="$SECRET_0" \
     --router=router-gcp \
-    --router-region=$REGION
-
+    
 # Tunnel 1: Interface 1 GCP → Interface 1 On-premise
 echo "  - Tunnel 1 (Interface 1 GCP → Interface 1 On-premise)"
 gcloud compute vpn-tunnels create tunnel-gcp-to-onprem-1 \
     --vpn-gateway=vpn-gw-gcp \
-    --vpn-gateway-region=$REGION \
+    --region=$REGION \
     --peer-gcp-gateway=vpn-gw-onprem \
-    --peer-gcp-gateway-region=$REGION \
+     \
     --interface=1 \
     --ike-version=2 \
     --shared-secret="$SECRET_1" \
     --router=router-gcp \
-    --router-region=$REGION
-
+    
 echo ""
 
 # ===== Tunnels côté On-premise =====
@@ -59,28 +57,26 @@ echo ">>> Création des tunnels côté On-premise..."
 echo "  - Tunnel 0 (Interface 0 On-premise → Interface 0 GCP)"
 gcloud compute vpn-tunnels create tunnel-onprem-to-gcp-0 \
     --vpn-gateway=vpn-gw-onprem \
-    --vpn-gateway-region=$REGION \
+    --region=$REGION \
     --peer-gcp-gateway=vpn-gw-gcp \
-    --peer-gcp-gateway-region=$REGION \
+     \
     --interface=0 \
     --ike-version=2 \
     --shared-secret="$SECRET_0" \
     --router=router-onprem \
-    --router-region=$REGION
-
+    
 # Tunnel 1: Interface 1 On-premise → Interface 1 GCP
 echo "  - Tunnel 1 (Interface 1 On-premise → Interface 1 GCP)"
 gcloud compute vpn-tunnels create tunnel-onprem-to-gcp-1 \
     --vpn-gateway=vpn-gw-onprem \
-    --vpn-gateway-region=$REGION \
+    --region=$REGION \
     --peer-gcp-gateway=vpn-gw-gcp \
-    --peer-gcp-gateway-region=$REGION \
+     \
     --interface=1 \
     --ike-version=2 \
     --shared-secret="$SECRET_1" \
     --router=router-onprem \
-    --router-region=$REGION
-
+    
 echo ""
 
 # Vérifier les tunnels

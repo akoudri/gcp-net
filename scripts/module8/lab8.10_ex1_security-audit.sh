@@ -20,7 +20,7 @@ echo ""
 echo ">>> Règles autorisant 0.0.0.0/0..."
 echo ""
 gcloud compute firewall-rules list \
-    --filter="sourceRanges:0.0.0.0/0 AND allowed:*" \
+    --filter="sourceRanges:0.0.0.0/0" \
     --format="table(name,sourceRanges,allowed,targetTags,targetServiceAccounts)"
 
 echo ""

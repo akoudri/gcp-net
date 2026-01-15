@@ -23,13 +23,13 @@ gcloud compute security-policies rules create 100 \
     --description="Bloquer IPs au edge"
 
 echo ""
-# Ajouter une règle de géolocalisation
+# Ajouter une règle de géolocalisation (AQ=Antarctique)
 echo "Ajout d'une règle de géolocalisation au edge..."
 gcloud compute security-policies rules create 200 \
     --security-policy=edge-policy \
-    --expression="origin.region_code == 'XX'" \
+    --expression="origin.region_code == 'AQ'" \
     --action=deny-403 \
-    --description="Bloquer pays XX au edge"
+    --description="Bloquer pays AQ au edge (exemple)"
 
 echo ""
 echo "Edge Security Policy créée avec succès !"
@@ -41,7 +41,7 @@ gcloud compute security-policies describe edge-policy
 
 echo ""
 echo "=== Règles de l'Edge Policy ==="
-gcloud compute security-policies rules list --security-policy=edge-policy
+gcloud compute security-policies describe edge-policy --format="table(rules.priority,rules.description,rules.action)"
 
 echo ""
 echo "REMARQUE : L'Edge Policy filtre le trafic au niveau du CDN, avant qu'il atteigne les backends."

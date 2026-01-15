@@ -11,10 +11,11 @@ echo ""
 LB_IP=$(gcloud compute addresses describe lb-ip --global --format="get(address)")
 
 # Bloquer les requêtes avec des paramètres suspects
+# Note: capture groups () not allowed in Cloud Armor regex, using alternation without grouping
 echo "Création d'une règle pour bloquer les query strings suspectes..."
 gcloud compute security-policies rules create 340 \
     --security-policy=policy-web-app \
-    --expression="request.query.matches('.*(<script>|SELECT|UNION|DROP).*')" \
+    --expression="request.query.matches('.*<script>.*') || request.query.matches('.*SELECT.*') || request.query.matches('.*UNION.*') || request.query.matches('.*DROP.*')" \
     --action=deny-403 \
     --description="Bloquer query strings suspectes"
 

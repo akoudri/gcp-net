@@ -17,7 +17,7 @@ echo ""
 echo "Création du sink 'flow-logs-to-bq'..."
 gcloud logging sinks create flow-logs-to-bq \
     bigquery.googleapis.com/projects/${PROJECT_ID}/datasets/network_logs \
-    --log-filter='resource.type="gce_subnetwork"'
+    --log-filter='resource.type="gce_subnetwork"' 2>&1 | grep -v "already exists" || echo "Sink flow-logs-to-bq existe déjà"
 
 echo ""
 echo "Sink créé avec succès !"

@@ -1,0 +1,7 @@
+creationTimestamp: '2026-01-15T10:18:59.805-08:00'
+defaultService: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/backendServices/backend-web
+fingerprint: 2ptQXmU9naA=
+id: 7377614298362974588
+kind: compute#urlMap
+name: urlmap-app
+selfLink: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/urlMaps/urlmap-app

@@ -1,0 +1,19 @@
+name: urlmap-canary
+defaultService: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/backendServices/backend-v1
+hostRules:
+- hosts:
+  - "*"
+  pathMatcher: canary-matcher
+pathMatchers:
+- name: canary-matcher
+  defaultService: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/backendServices/backend-v1
+  routeRules:
+  - priority: 1
+    matchRules:
+    - prefixMatch: /
+    routeAction:
+      weightedBackendServices:
+      - backendService: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/backendServices/backend-v1
+        weight: 90
+      - backendService: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/backendServices/backend-v2
+        weight: 10

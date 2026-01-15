@@ -1,0 +1,23 @@
+name: urlmap-header-routing
+defaultService: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/backendServices/backend-v1
+hostRules:
+- hosts:
+  - "*"
+  pathMatcher: header-matcher
+pathMatchers:
+- name: header-matcher
+  defaultService: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/backendServices/backend-v1
+  routeRules:
+  # Les utilisateurs beta (header X-Beta-User: true) vont vers v2
+  - priority: 1
+    matchRules:
+    - prefixMatch: /
+      headerMatches:
+      - headerName: X-Beta-User
+        exactMatch: "true"
+    service: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/backendServices/backend-v2
+  # Tous les autres vont vers v1
+  - priority: 2
+    matchRules:
+    - prefixMatch: /
+    service: https://www.googleapis.com/compute/v1/projects/formation-gcp-networking-2025/global/backendServices/backend-v1

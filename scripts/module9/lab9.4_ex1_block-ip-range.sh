@@ -12,6 +12,15 @@ MY_IP=$(curl -s ifconfig.me)
 echo "Votre IP publique : $MY_IP"
 echo ""
 
+# Déterminer si c'est IPv4 ou IPv6 et ajuster le CIDR
+if [[ $MY_IP == *":"* ]]; then
+    # IPv6
+    IP_CIDR="$MY_IP/128"
+else
+    # IPv4
+    IP_CIDR="$MY_IP/32"
+fi
+
 # Récupérer l'IP du Load Balancer
 LB_IP=$(gcloud compute addresses describe lb-ip --global --format="get(address)")
 
@@ -19,7 +28,7 @@ LB_IP=$(gcloud compute addresses describe lb-ip --global --format="get(address)"
 echo "Création d'une règle pour bloquer votre IP (test)..."
 gcloud compute security-policies rules create 100 \
     --security-policy=policy-web-app \
-    --src-ip-ranges="$MY_IP/32" \
+    --src-ip-ranges="$IP_CIDR" \
     --action=deny-403 \
     --description="Bloquer mon IP pour test"
 

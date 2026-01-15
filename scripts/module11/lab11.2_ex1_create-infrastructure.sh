@@ -20,7 +20,7 @@ echo ""
 # Créer le VPC
 echo "Création du VPC vpc-observability..."
 gcloud compute networks create vpc-observability \
-    --subnet-mode=custom
+    --subnet-mode=custom 2>/dev/null || echo "VPC vpc-observability existe déjà"
 
 echo ""
 echo "VPC créé avec succès !"
@@ -31,7 +31,7 @@ echo "Création du sous-réseau subnet-monitored..."
 gcloud compute networks subnets create subnet-monitored \
     --network=vpc-observability \
     --region=$REGION \
-    --range=10.0.1.0/24
+    --range=10.0.1.0/24 2>/dev/null || echo "Sous-réseau subnet-monitored existe déjà"
 
 echo ""
 echo "Sous-réseau créé !"
@@ -45,21 +45,21 @@ gcloud compute firewall-rules create vpc-obs-allow-internal \
     --action=ALLOW \
     --direction=INGRESS \
     --rules=all \
-    --source-ranges=10.0.0.0/8
+    --source-ranges=10.0.0.0/8 2>/dev/null || echo "Règle vpc-obs-allow-internal existe déjà"
 
 gcloud compute firewall-rules create vpc-obs-allow-ssh \
     --network=vpc-observability \
     --action=ALLOW \
     --direction=INGRESS \
     --rules=tcp:22 \
-    --source-ranges=35.235.240.0/20
+    --source-ranges=35.235.240.0/20 2>/dev/null || echo "Règle vpc-obs-allow-ssh existe déjà"
 
 gcloud compute firewall-rules create vpc-obs-allow-icmp \
     --network=vpc-observability \
     --action=ALLOW \
     --direction=INGRESS \
     --rules=icmp \
-    --source-ranges=0.0.0.0/0
+    --source-ranges=0.0.0.0/0 2>/dev/null || echo "Règle vpc-obs-allow-icmp existe déjà"
 
 echo ""
 echo "Règles de pare-feu créées !"
@@ -77,7 +77,7 @@ for VM in vm-source vm-dest; do
         --image-project=debian-cloud \
         --metadata=startup-script='#!/bin/bash
 apt-get update && apt-get install -y nginx iperf3 tcpdump
-systemctl start nginx'
+systemctl start nginx' 2>/dev/null || echo "VM $VM existe déjà"
 done
 
 echo ""

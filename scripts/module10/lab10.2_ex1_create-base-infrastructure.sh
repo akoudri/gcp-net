@@ -20,14 +20,14 @@ echo ""
 # Créer le VPC
 echo "Création du VPC vpc-lb-lab..."
 gcloud compute networks create vpc-lb-lab \
-    --subnet-mode=custom
+    --subnet-mode=custom 2>/dev/null || echo "VPC vpc-lb-lab existe déjà"
 
 echo ""
 echo "Création du sous-réseau subnet-web..."
 gcloud compute networks subnets create subnet-web \
     --network=vpc-lb-lab \
     --region=$REGION \
-    --range=10.0.1.0/24
+    --range=10.0.1.0/24 2>/dev/null || echo "Sous-réseau subnet-web existe déjà"
 
 echo ""
 echo "Création des règles de pare-feu..."
@@ -39,7 +39,7 @@ gcloud compute firewall-rules create vpc-lb-lab-allow-health-check \
     --direction=INGRESS \
     --rules=tcp:80,tcp:8080 \
     --source-ranges=35.191.0.0/16,130.211.0.0/22 \
-    --target-tags=web-server
+    --target-tags=web-server 2>/dev/null || echo "Règle vpc-lb-lab-allow-health-check existe déjà"
 
 # Règle pour IAP
 gcloud compute firewall-rules create vpc-lb-lab-allow-iap \
@@ -47,7 +47,7 @@ gcloud compute firewall-rules create vpc-lb-lab-allow-iap \
     --action=ALLOW \
     --direction=INGRESS \
     --rules=tcp:22 \
-    --source-ranges=35.235.240.0/20
+    --source-ranges=35.235.240.0/20 2>/dev/null || echo "Règle vpc-lb-lab-allow-iap existe déjà"
 
 echo ""
 echo "Infrastructure de base créée avec succès !"

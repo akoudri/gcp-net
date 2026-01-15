@@ -28,7 +28,7 @@ gcloud compute instances create vm-collector \
 apt-get update
 apt-get install -y tcpdump tshark
 # Le trafic arrive encapsulé en VXLAN sur le port 4789
-'
+' 2>/dev/null || echo "VM vm-collector existe déjà"
 
 echo ""
 echo "VM collecteur créée !"
@@ -42,7 +42,7 @@ gcloud compute firewall-rules create vpc-obs-allow-mirroring \
     --direction=INGRESS \
     --rules=udp:4789 \
     --source-ranges=10.0.0.0/8 \
-    --target-tags=collector
+    --target-tags=collector 2>/dev/null || echo "Règle vpc-obs-allow-mirroring existe déjà"
 
 echo ""
 echo "Règle de pare-feu créée !"
@@ -51,11 +51,11 @@ echo ""
 # Créer un Instance Group pour le collecteur
 echo "Création du groupe d'instances..."
 gcloud compute instance-groups unmanaged create ig-collector \
-    --zone=$ZONE
+    --zone=$ZONE 2>/dev/null || echo "Groupe ig-collector existe déjà"
 
 gcloud compute instance-groups unmanaged add-instances ig-collector \
     --zone=$ZONE \
-    --instances=vm-collector
+    --instances=vm-collector 2>&1 | grep -v "already a member" || true
 
 echo ""
 echo "Groupe d'instances créé avec succès !"

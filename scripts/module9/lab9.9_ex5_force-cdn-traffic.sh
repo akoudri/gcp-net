@@ -7,13 +7,30 @@ set -e
 echo "=== Lab 9.9 - Exercice 5 : Forcer le passage par un CDN ==="
 echo ""
 
+echo "⚠️  AVERTISSEMENT : Cette fonctionnalité nécessite Cloud Armor Plus (tier payant)."
+echo "Les Named IP Lists ne sont pas disponibles dans le tier standard."
+echo ""
+echo "Pour activer Cloud Armor Plus:"
+echo "gcloud compute security-policies update policy-web-app --tier=PLUS"
+echo ""
+echo "Tentative de création de la règle..."
+
 # Accepter uniquement le trafic venant de Cloudflare ou Fastly
 echo "Création d'une règle pour forcer le passage par CDN..."
 gcloud compute security-policies rules create 20 \
     --security-policy=policy-web-app \
     --expression="!origin.ip.matches(getNamedIpList('sourceiplist-fastly')) && !origin.ip.matches(getNamedIpList('sourceiplist-cloudflare'))" \
     --action=deny-403 \
-    --description="Trafic doit passer par CDN"
+    --description="Trafic doit passer par CDN" 2>&1 || {
+    echo ""
+    echo "❌ ERREUR : Named IP Lists nécessitent Cloud Armor Plus tier."
+    echo "Cette fonctionnalité n'est pas disponible avec le tier standard."
+    echo ""
+    echo "Alternative: Utiliser les plages IP CDN publiquement documentées"
+    echo "Cloudflare: https://www.cloudflare.com/ips/"
+    echo "Fastly: https://api.fastly.com/public-ip-list"
+    exit 0
+}
 
 echo ""
 echo "Règle créée avec succès !"

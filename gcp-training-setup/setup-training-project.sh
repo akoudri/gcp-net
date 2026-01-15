@@ -603,6 +603,25 @@ if [ -n "$TRAINEES" ]; then
                 --role="roles/serviceusage.serviceUsageConsumer" \
                 --quiet 2>/dev/null || true
 
+            gcloud projects add-iam-policy-binding $PROJECT_ID \
+                --member="user:$trainee" \
+                --role="roles/serviceusage.serviceUsageAdmin"
+
+            gcloud projects add-iam-policy-binding $PROJECT_ID \
+                --member="user:$trainee" \
+                --role="roles/dns.admin" \
+                --quiet 2>/dev/null || true
+
+            gcloud projects add-iam-policy-binding $PROJECT_ID \
+                --member="user:$trainee" \
+                --role="roles/iap.tunnelResourceAccessor" \
+                --quiet 2>/dev/null || true
+
+            gcloud projects add-iam-policy-binding $PROJECT_ID \
+                --member="user:$trainee" \
+                --role="roles/compute.networkAdmin" \
+                --quiet 2>/dev/null || true
+
             log_success "  $trainee ajouté"
         fi
     done

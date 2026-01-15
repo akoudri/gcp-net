@@ -22,6 +22,7 @@ gcloud compute instance-templates create web-template \
     --machine-type=e2-small \
     --network=vpc-lb-lab \
     --subnet=subnet-web \
+    --region=$REGION \
     --tags=web-server \
     --image-family=debian-11 \
     --image-project=debian-cloud \
@@ -43,7 +44,7 @@ cat > /var/www/html/index.html << EOF
 EOF
 mkdir -p /var/www/html/health
 echo "OK" > /var/www/html/health/index.html
-systemctl restart nginx'
+systemctl restart nginx' 2>/dev/null || echo "Template web-template existe déjà"
 
 echo ""
 echo "Création du template api-template..."
@@ -53,6 +54,7 @@ gcloud compute instance-templates create api-template \
     --machine-type=e2-small \
     --network=vpc-lb-lab \
     --subnet=subnet-web \
+    --region=$REGION \
     --tags=web-server \
     --image-family=debian-11 \
     --image-project=debian-cloud \
@@ -65,7 +67,7 @@ EOF
 mkdir -p /var/www/html/health /var/www/html/api
 echo "OK" > /var/www/html/health/index.html
 echo "{\"status\": \"ok\", \"service\": \"api\"}" > /var/www/html/api/index.html
-systemctl restart nginx'
+systemctl restart nginx' 2>/dev/null || echo "Template api-template existe déjà"
 
 echo ""
 echo "Création des Managed Instance Groups..."
@@ -74,12 +76,12 @@ echo "Création des Managed Instance Groups..."
 gcloud compute instance-groups managed create ig-web \
     --template=web-template \
     --size=2 \
-    --zone=$ZONE
+    --zone=$ZONE 2>/dev/null || echo "Instance group ig-web existe déjà"
 
 gcloud compute instance-groups managed create ig-api \
     --template=api-template \
     --size=2 \
-    --zone=$ZONE
+    --zone=$ZONE 2>/dev/null || echo "Instance group ig-api existe déjà"
 
 echo ""
 echo "Configuration des named ports..."
