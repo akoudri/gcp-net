@@ -27,15 +27,15 @@ echo ""
 echo "Création des sous-réseaux..."
 
 # Créer deux sous-réseaux dans différentes régions
-gcloud compute networks subnets create subnet-eu \
+gcloud compute networks subnets create routing-subnet-eu \
     --network=$VPC_NAME \
     --region=$REGION_EU \
-    --range=10.1.0.0/24
+    --range=10.11.0.0/24
 
-gcloud compute networks subnets create subnet-us \
+gcloud compute networks subnets create routing-subnet-us \
     --network=$VPC_NAME \
     --region=$REGION_US \
-    --range=10.2.0.0/24
+    --range=10.12.0.0/24
 
 echo ""
 echo "VPC et sous-réseaux créés avec succès !"

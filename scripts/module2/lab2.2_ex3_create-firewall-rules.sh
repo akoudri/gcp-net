@@ -13,13 +13,23 @@ export VPC_NAME="production-vpc"
 # Règle pour autoriser SSH depuis votre IP uniquement
 export MY_IP=$(curl -s ifconfig.me)
 echo "Votre IP publique : $MY_IP"
+
+# Déterminer si c'est IPv4 ou IPv6
+if [[ $MY_IP =~ .*:.* ]]; then
+    # IPv6
+    export IP_CIDR="$MY_IP/128"
+else
+    # IPv4
+    export IP_CIDR="$MY_IP/32"
+fi
+echo "CIDR utilisé : $IP_CIDR"
 echo ""
 
 echo "Création de la règle SSH restreinte..."
 gcloud compute firewall-rules create ${VPC_NAME}-allow-ssh \
     --network=$VPC_NAME \
     --allow=tcp:22 \
-    --source-ranges=$MY_IP/32 \
+    --source-ranges=$IP_CIDR \
     --target-tags=allow-ssh \
     --description="SSH depuis IP admin uniquement"
 
