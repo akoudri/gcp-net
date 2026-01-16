@@ -22,7 +22,7 @@ gcloud compute networks subnets update subnet-monitored \
     --region=$REGION \
     --logging-aggregation-interval=INTERVAL_30_SEC \
     --logging-flow-sampling=0.5 \
-    --logging-metadata=INCLUDE_ALL_METADATA
+    --logging-metadata=INCLUDE_ALL
 
 echo ""
 echo "Configuration mise à jour avec succès !"
@@ -38,4 +38,4 @@ echo ""
 echo "Paramètres appliqués :"
 echo "  - INTERVAL_30_SEC : Bon compromis entre granularité et coût"
 echo "  - Sampling 0.5 : Capture 50% des flux (réduit les coûts)"
-echo "  - INCLUDE_ALL_METADATA : Enrichit les logs avec noms de VMs, VPC, etc."
+echo "  - INCLUDE_ALL : Enrichit les logs avec noms de VMs, VPC, etc."

@@ -19,7 +19,7 @@ gcloud compute firewall-rules create vpc-obs-deny-telnet \
     --source-ranges=0.0.0.0/0 \
     --priority=100 \
     --enable-logging \
-    --logging-metadata=INCLUDE_ALL_METADATA \
+    --logging-metadata=INCLUDE_ALL \
     --description="Bloquer Telnet avec logging"
 
 echo ""

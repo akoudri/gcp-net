@@ -22,13 +22,13 @@ echo ""
 echo "Activation du logging sur vpc-obs-allow-ssh..."
 gcloud compute firewall-rules update vpc-obs-allow-ssh \
     --enable-logging \
-    --logging-metadata=INCLUDE_ALL_METADATA
+    --logging-metadata=INCLUDE_ALL
 
 echo ""
 echo "Activation du logging sur vpc-obs-allow-icmp..."
 gcloud compute firewall-rules update vpc-obs-allow-icmp \
     --enable-logging \
-    --logging-metadata=INCLUDE_ALL_METADATA
+    --logging-metadata=INCLUDE_ALL
 
 echo ""
 echo "Logging activé sur les règles de pare-feu !"
